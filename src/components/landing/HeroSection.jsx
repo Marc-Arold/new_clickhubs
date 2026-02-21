@@ -38,10 +38,11 @@ export default function HeroSection() {
             <ArrowRight size={20} />
           </Link>
           <Link
-            to="/kijan-li-mache"
+            to="/dashboard"
             className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-white/10 transition-all no-underline"
           >
-            Wè Tout Jwèt yo
+            Antre nan Dashboard
+            <ArrowRight size={20} />
           </Link>
         </div>
 
