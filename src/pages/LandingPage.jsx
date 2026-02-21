@@ -11,6 +11,18 @@ export default function LandingPage() {
   return (
     <div>
       <HeroSection />
+
+      {/* Temporary demo access button */}
+      <div className="bg-gold/10 border-b border-gold/20 py-3 text-center">
+        <Link
+          to="/dashboard"
+          className="inline-flex items-center gap-2 text-gold hover:text-gold-light font-bold text-sm no-underline transition-colors"
+        >
+          🧪 Mode Demo — Antre nan Dashboard san koneksyon
+          <ArrowRight size={16} />
+        </Link>
+      </div>
+
       <LiveActivityFeed />
 
       {/* Game Previews */}
