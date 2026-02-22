@@ -2,16 +2,60 @@ import { Wallet, Lock, Gift, Info } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
-function TooltipCard({ icon: Icon, label, amount, color, tooltip }) {
-  const [showTip, setShowTip] = useState(false);
+const cards = [
+  {
+    icon: Wallet,
+    label: "Balans Disponib",
+    field: "availableBalance",
+    color: "text-gold",
+    bg: "bg-gold/10",
+    borderColor: "border-gold/20",
+    glowColor: "shadow-[0_0_15px_rgba(212,168,67,0.08)]",
+    tooltip: "Lajan ou ka jwe oswa retire. Sa enkli tout genyen ki konfime.",
+  },
+  {
+    icon: Lock,
+    label: "Balans Fich Aktif",
+    field: "escrowedBalance",
+    color: "text-blue-400",
+    bg: "bg-blue-400/10",
+    borderColor: "border-blue-400/20",
+    glowColor: "shadow-[0_0_15px_rgba(96,165,250,0.08)]",
+    tooltip: "Lajan ki bloke nan fich aktif. Yo retounen nan balans ou lè jwèt la fini.",
+  },
+  {
+    icon: Gift,
+    label: "Balans Bonus",
+    field: "bonusBalance",
+    color: "text-purple-400",
+    bg: "bg-purple-400/10",
+    borderColor: "border-purple-400/20",
+    glowColor: "shadow-[0_0_15px_rgba(192,132,252,0.08)]",
+    tooltip: "Bonus referans — ou ka jwe ak li men ou pa ka retire li dirèkteman.",
+  },
+];
+
+export default function BalanceSummary() {
+  const { user } = useAuth();
 
   return (
-    <div className="bg-dark-surface border border-white/10 rounded-xl p-5 relative">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {cards.map((card) => (
+        <BalanceCard key={card.field} card={card} amount={user[card.field]} />
+      ))}
+    </div>
+  );
+}
+
+function BalanceCard({ card, amount }) {
+  const [showTip, setShowTip] = useState(false);
+  const Icon = card.icon;
+
+  return (
+    <div className={`glass-card rounded-xl p-5 relative card-shine border ${card.borderColor} ${card.glowColor}`}>
       <div className="flex items-center justify-between mb-3">
-        <div
-          className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center`}
-        >
-          <Icon size={18} />
+        <div className={`w-11 h-11 rounded-lg ${card.bg} flex items-center justify-center`}>
+          <Icon size={18} className={card.color} />
         </div>
         <button
           onMouseEnter={() => setShowTip(true)}
@@ -22,47 +66,17 @@ function TooltipCard({ icon: Icon, label, amount, color, tooltip }) {
           <Info size={14} />
         </button>
       </div>
-      <p className="text-gray-400 text-xs mb-1">{label}</p>
-      <p className="text-white text-2xl font-bold">
+      <p className="text-gray-400 text-xs mb-1">{card.label}</p>
+      <p className="text-white text-2xl font-black">
         {amount.toLocaleString()}{" "}
-        <span className="text-sm font-normal text-gray-400">HTG</span>
+        <span className="text-sm font-normal text-gray-500">HTG</span>
       </p>
 
       {showTip && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-dark-accent border border-white/10 rounded-lg p-3 shadow-xl z-10">
-          <p className="text-gray-300 text-xs">{tooltip}</p>
+        <div className="absolute top-full left-0 right-0 mt-2 glass-card rounded-lg p-3 shadow-xl z-10 border border-white/10">
+          <p className="text-gray-300 text-xs">{card.tooltip}</p>
         </div>
       )}
-    </div>
-  );
-}
-
-export default function BalanceSummary() {
-  const { user } = useAuth();
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <TooltipCard
-        icon={Wallet}
-        label="Balans Disponib"
-        amount={user.availableBalance}
-        color="bg-gold/10 text-gold"
-        tooltip="Lajan ou ka jwe oswa retire. Sa enkli tout genyen ki konfime."
-      />
-      <TooltipCard
-        icon={Lock}
-        label="Balans Fich Aktif"
-        amount={user.escrowedBalance}
-        color="bg-blue-400/10 text-blue-400"
-        tooltip="Lajan ki bloke nan fich aktif. Yo retounen nan balans ou lè jwèt la fini."
-      />
-      <TooltipCard
-        icon={Gift}
-        label="Balans Bonus"
-        amount={user.bonusBalance}
-        color="bg-purple-400/10 text-purple-400"
-        tooltip="Bonus referans — ou ka jwe ak li men ou pa ka retire li dirèkteman. Genyen yo ale nan balans disponib."
-      />
     </div>
   );
 }

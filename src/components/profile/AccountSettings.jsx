@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Settings } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 export default function AccountSettings() {
@@ -18,10 +19,16 @@ export default function AccountSettings() {
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-white font-semibold text-lg">Paramèt Kont lan</h2>
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <div className="w-1 h-5 rounded-full bg-gray-400" />
+        <h2 className="text-white font-bold text-lg flex items-center gap-2">
+          <Settings size={18} className="text-gray-400" />
+          Paramèt Kont lan
+        </h2>
+      </div>
 
-      <div className="bg-dark-surface border border-white/10 rounded-xl divide-y divide-white/5">
+      <div className="glass-card rounded-xl divide-y divide-white/5 overflow-hidden">
         {/* Display name */}
         <div className="p-5">
           <label className="block text-sm font-medium text-gray-300 mb-1.5">
@@ -32,9 +39,9 @@ export default function AccountSettings() {
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="flex-1 px-4 py-2.5 bg-dark-accent border border-white/10 rounded-lg text-white text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="flex-1 px-4 py-2.5 bg-dark-accent/50 border border-white/10 rounded-lg text-white text-sm focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-all"
             />
-            <button className="px-4 py-2.5 bg-gold/10 text-gold border border-gold/20 rounded-lg text-sm font-medium cursor-pointer hover:bg-gold/20 transition-colors">
+            <button className="px-4 py-2.5 bg-gold/10 text-gold border border-gold/20 rounded-lg text-sm font-bold cursor-pointer hover:bg-gold/20 transition-all hover:shadow-[0_0_10px_rgba(212,168,67,0.1)]">
               Chanje
             </button>
           </div>
@@ -85,18 +92,18 @@ export default function AccountSettings() {
           ].map(({ key, label }) => (
             <label
               key={key}
-              className="flex items-center justify-between cursor-pointer"
+              className="flex items-center justify-between cursor-pointer group"
             >
-              <span className="text-gray-400 text-sm">{label}</span>
+              <span className="text-gray-400 text-sm group-hover:text-white transition-colors">{label}</span>
               <button
                 onClick={() => toggleNotif(key)}
-                className={`w-10 h-5 rounded-full transition-colors relative cursor-pointer border-none ${
-                  notifPrefs[key] ? "bg-gold" : "bg-white/10"
+                className={`w-11 h-6 rounded-full transition-all relative cursor-pointer border-none ${
+                  notifPrefs[key] ? "bg-gold shadow-[0_0_8px_rgba(212,168,67,0.2)]" : "bg-white/10"
                 }`}
               >
                 <div
-                  className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-transform ${
-                    notifPrefs[key] ? "translate-x-5" : "translate-x-0.5"
+                  className={`w-4.5 h-4.5 bg-white rounded-full absolute top-[3px] transition-transform shadow-sm ${
+                    notifPrefs[key] ? "translate-x-[22px]" : "translate-x-[3px]"
                   }`}
                 />
               </button>
@@ -116,9 +123,9 @@ export default function AccountSettings() {
               <button
                 key={lang.key}
                 onClick={() => setLanguage(lang.key)}
-                className={`px-4 py-2 rounded-lg text-xs font-medium cursor-pointer border transition-colors ${
+                className={`px-4 py-2 rounded-lg text-xs font-medium cursor-pointer border transition-all ${
                   language === lang.key
-                    ? "bg-gold/10 text-gold border-gold/20"
+                    ? "bg-gold/10 text-gold border-gold/20 shadow-[0_0_8px_rgba(212,168,67,0.1)]"
                     : "bg-white/5 text-gray-400 border-white/10 hover:border-white/20"
                 }`}
               >

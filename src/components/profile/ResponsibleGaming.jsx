@@ -17,13 +17,16 @@ export default function ResponsibleGaming() {
   ];
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-white font-semibold text-lg flex items-center gap-2">
-        <ShieldAlert size={20} className="text-gold" />
-        Jwèt Responsab
-      </h2>
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <div className="w-1 h-5 rounded-full bg-warning" />
+        <h2 className="text-white font-bold text-lg flex items-center gap-2">
+          <ShieldAlert size={18} className="text-gold" />
+          Jwèt Responsab
+        </h2>
+      </div>
 
-      <div className="bg-dark-surface border border-white/10 rounded-xl divide-y divide-white/5">
+      <div className="glass-card rounded-xl divide-y divide-white/5 overflow-hidden">
         {/* Deposit limits */}
         <div className="p-5 space-y-4">
           <p className="text-gray-300 text-sm font-medium">Limit Depo</p>
@@ -37,7 +40,7 @@ export default function ResponsibleGaming() {
                 value={dailyLimit}
                 onChange={(e) => setDailyLimit(e.target.value)}
                 placeholder="Pa gen limit"
-                className="w-full px-3 py-2 bg-dark-accent border border-white/10 rounded-lg text-white text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold placeholder-gray-600"
+                className="w-full px-3 py-2 bg-dark-accent/50 border border-white/10 rounded-lg text-white text-sm focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 placeholder-gray-600 transition-all"
               />
             </div>
             <div>
@@ -49,11 +52,11 @@ export default function ResponsibleGaming() {
                 value={weeklyLimit}
                 onChange={(e) => setWeeklyLimit(e.target.value)}
                 placeholder="Pa gen limit"
-                className="w-full px-3 py-2 bg-dark-accent border border-white/10 rounded-lg text-white text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold placeholder-gray-600"
+                className="w-full px-3 py-2 bg-dark-accent/50 border border-white/10 rounded-lg text-white text-sm focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 placeholder-gray-600 transition-all"
               />
             </div>
           </div>
-          <button className="px-4 py-2 bg-gold/10 text-gold border border-gold/20 rounded-lg text-xs font-medium cursor-pointer hover:bg-gold/20 transition-colors">
+          <button className="px-4 py-2 bg-gold/10 text-gold border border-gold/20 rounded-lg text-xs font-bold cursor-pointer hover:bg-gold/20 transition-all hover:shadow-[0_0_10px_rgba(212,168,67,0.1)]">
             Anrejistre Limit
           </button>
         </div>
@@ -72,7 +75,7 @@ export default function ResponsibleGaming() {
                   setBreakDuration(opt.key);
                   setShowBreakConfirm(true);
                 }}
-                className={`px-4 py-2 rounded-lg text-xs font-medium cursor-pointer border transition-colors ${
+                className={`px-4 py-2 rounded-lg text-xs font-medium cursor-pointer border transition-all ${
                   opt.key === "permanent"
                     ? "bg-danger/10 text-danger border-danger/20 hover:bg-danger/20"
                     : "bg-white/5 text-gray-400 border-white/10 hover:text-white hover:border-white/20"
@@ -84,7 +87,7 @@ export default function ResponsibleGaming() {
           </div>
 
           {showBreakConfirm && (
-            <div className="bg-danger/10 border border-danger/20 rounded-lg p-4 space-y-3">
+            <div className="bg-danger/5 border border-danger/20 rounded-xl p-4 space-y-3">
               <div className="flex items-start gap-2">
                 <AlertTriangle
                   size={16}
@@ -127,7 +130,7 @@ export default function ResponsibleGaming() {
                 Aksyon sa a pèmanan. Tout done ou ap efase.
               </p>
             </div>
-            <button className="px-4 py-2 bg-danger/10 text-danger border border-danger/20 rounded-lg text-xs font-medium cursor-pointer hover:bg-danger/20 transition-colors">
+            <button className="px-4 py-2 bg-danger/10 text-danger border border-danger/20 rounded-lg text-xs font-bold cursor-pointer hover:bg-danger/20 transition-all">
               Fèmen Kont
             </button>
           </div>
@@ -142,7 +145,7 @@ export default function ResponsibleGaming() {
               </p>
               <p className="text-xs mt-0.5">
                 <span
-                  className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
                     user.kycStatus === "verified"
                       ? "bg-success/10 text-success"
                       : user.kycStatus === "pending"
@@ -150,6 +153,15 @@ export default function ResponsibleGaming() {
                         : "bg-white/10 text-gray-400"
                   }`}
                 >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      user.kycStatus === "verified"
+                        ? "bg-success"
+                        : user.kycStatus === "pending"
+                          ? "bg-warning"
+                          : "bg-gray-400"
+                    }`}
+                  />
                   {user.kycStatus === "verified"
                     ? "Verifye"
                     : user.kycStatus === "pending"
@@ -159,8 +171,8 @@ export default function ResponsibleGaming() {
               </p>
             </div>
             {user.kycStatus === "unverified" && (
-              <button className="px-4 py-2 bg-gold/10 text-gold border border-gold/20 rounded-lg text-xs font-medium cursor-pointer hover:bg-gold/20 transition-colors">
-                Verifye Idantite w, gen plis avantaj lè w verifye kont ou
+              <button className="px-4 py-2 bg-gold/10 text-gold border border-gold/20 rounded-lg text-xs font-bold cursor-pointer hover:bg-gold/20 transition-all hover:shadow-[0_0_10px_rgba(212,168,67,0.1)]">
+                Verifye Idantite
               </button>
             )}
           </div>

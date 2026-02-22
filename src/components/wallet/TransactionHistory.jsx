@@ -12,10 +12,10 @@ const typeColors = {
   Fich: "text-warning",
 };
 
-const statusColors = {
-  Konplete: "bg-success/10 text-success",
-  "An Atant": "bg-warning/10 text-warning",
-  Echwe: "bg-danger/10 text-danger",
+const statusConfig = {
+  Konplete: { bg: "bg-success/10", text: "text-success", dot: "bg-success" },
+  "An Atant": { bg: "bg-warning/10", text: "text-warning", dot: "bg-warning" },
+  Echwe: { bg: "bg-danger/10", text: "text-danger", dot: "bg-danger" },
 };
 
 const PAGE_SIZE = 8;
@@ -34,10 +34,13 @@ export default function TransactionHistory() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-white font-semibold text-lg">Istorik Tranzaksyon</h2>
+      <div className="flex items-center gap-2">
+        <div className="w-1 h-5 rounded-full bg-gold" />
+        <h2 className="text-white font-bold text-lg">Istorik Tranzaksyon</h2>
+      </div>
 
       {/* Filter tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         {typeFilters.map((f) => (
           <button
             key={f}
@@ -45,10 +48,10 @@ export default function TransactionHistory() {
               setTypeFilter(f);
               setPage(1);
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap cursor-pointer border transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap cursor-pointer border transition-all ${
               typeFilter === f
-                ? "bg-gold/10 text-gold border-gold/20"
-                : "bg-white/5 text-gray-400 border-white/10 hover:border-white/20"
+                ? "bg-gold/10 text-gold border-gold/20 shadow-[0_0_8px_rgba(212,168,67,0.1)]"
+                : "bg-dark-surface text-gray-400 border-white/10 hover:border-white/20"
             }`}
           >
             {f}
@@ -57,9 +60,9 @@ export default function TransactionHistory() {
       </div>
 
       {/* Table */}
-      <div className="bg-dark-surface border border-white/10 rounded-xl overflow-hidden">
+      <div className="glass-card rounded-xl overflow-hidden">
         {/* Header */}
-        <div className="hidden sm:grid grid-cols-6 gap-4 px-4 py-3 bg-dark-accent/50 border-b border-white/10 text-gray-500 text-xs font-medium">
+        <div className="hidden sm:grid grid-cols-6 gap-4 px-4 py-3 bg-dark-accent/50 border-b border-white/10 text-gray-500 text-xs font-bold uppercase tracking-wider">
           <span>Dat</span>
           <span>Tip</span>
           <span className="text-right">Montan</span>
@@ -72,37 +75,41 @@ export default function TransactionHistory() {
             Pa gen tranzaksyon nan kategori sa a.
           </div>
         ) : (
-          paged.map((tx, i) => (
-            <div
-              key={tx.id}
-              className={`grid grid-cols-2 sm:grid-cols-6 gap-2 sm:gap-4 px-4 py-3 text-sm items-center ${
-                i < paged.length - 1 ? "border-b border-white/5" : ""
-              }`}
-            >
-              <span className="text-gray-400 text-xs">{tx.date}</span>
-              <span
-                className={`text-xs font-medium ${typeColors[tx.type] || "text-gray-400"}`}
+          paged.map((tx, i) => {
+            const status = statusConfig[tx.status] || statusConfig.Konplete;
+            return (
+              <div
+                key={tx.id}
+                className={`grid grid-cols-2 sm:grid-cols-6 gap-2 sm:gap-4 px-4 py-3 text-sm items-center row-hover transition-colors ${
+                  i < paged.length - 1 ? "border-b border-white/5" : ""
+                }`}
               >
-                {tx.type}
-              </span>
-              <span
-                className={`text-right font-bold text-sm ${tx.amount >= 0 ? "text-success" : "text-danger"}`}
-              >
-                {tx.amount >= 0 ? "+" : ""}
-                {tx.amount.toLocaleString()} HTG
-              </span>
-              <span>
+                <span className="text-gray-400 text-xs">{tx.date}</span>
                 <span
-                  className={`text-xs px-2 py-0.5 rounded-full ${statusColors[tx.status]}`}
+                  className={`text-xs font-medium ${typeColors[tx.type] || "text-gray-400"}`}
                 >
-                  {tx.status}
+                  {tx.type}
                 </span>
-              </span>
-              <span className="text-gray-500 text-xs col-span-2 hidden sm:block font-mono">
-                {tx.ref}
-              </span>
-            </div>
-          ))
+                <span
+                  className={`text-right font-bold text-sm ${tx.amount >= 0 ? "text-success" : "text-danger"}`}
+                >
+                  {tx.amount >= 0 ? "+" : ""}
+                  {tx.amount.toLocaleString()} HTG
+                </span>
+                <span>
+                  <span
+                    className={`inline-flex items-center gap-1.5 text-xs px-2 py-0.5 rounded-full ${status.bg} ${status.text}`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
+                    {tx.status}
+                  </span>
+                </span>
+                <span className="text-gray-500 text-xs col-span-2 hidden sm:block font-mono">
+                  {tx.ref}
+                </span>
+              </div>
+            );
+          })
         )}
       </div>
 
