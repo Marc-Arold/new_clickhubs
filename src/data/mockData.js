@@ -1,12 +1,12 @@
 export const activityFeed = [
-  "Yon jwè fèk genyen 45,000 HTG nan Pronos Eliminator!",
-  "Yon split Bank Pari 8,000 HTG fèk ranpli!",
-  "Yon jwè retire 25,000 HTG via MonCash an 3 minit!",
-  "Nouvo touwa Pronos Eliminator ouvri — 200 plas deja plen!",
-  "Yon jwè genyen 12,500 HTG nan Virtual Football Pool!",
-  "Defi 15,000 HTG voye sou WhatsApp — ap tann repons!",
-  "Yon jwè siviv Round 6 nan Pronos Eliminator!",
-  "Jackpot Accumulator monte a 180,000 HTG — pèsonn pa genyen ankò!",
+  "🏆 @KingMax genyen 45,000 HTG!",
+  "💰 Bank Pari 8,000 HTG ranpli!",
+  "⚡ @Pierre retire 25,000 HTG an 3 min!",
+  "🔥 200 plas plen nan Pronos Eliminator!",
+  "🎯 @MarieJ genyen 12,500 HTG!",
+  "🎲 Defi 15,000 HTG sou WhatsApp!",
+  "✅ @PronosQueen siviv Round 6!",
+  "💎 Jackpot monte a 180,000 HTG!",
 ]
 
 export const gamePreviewsMock = [

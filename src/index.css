@@ -28,6 +28,156 @@ body {
   animation: slide-in 0.2s ease-out;
 }
 
+/* --- Landing Page Animations --- */
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(212, 168, 67, 0.3), 0 0 30px rgba(212, 168, 67, 0.1); }
+  50% { box-shadow: 0 0 25px rgba(212, 168, 67, 0.5), 0 0 50px rgba(212, 168, 67, 0.2); }
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(1deg); }
+  66% { transform: translateY(4px) rotate(-1deg); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(6px) rotate(-1deg); }
+  66% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes border-rotate {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes odds-flash {
+  0%, 100% { background-color: rgba(212, 168, 67, 0); }
+  50% { background-color: rgba(212, 168, 67, 0.15); }
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+.animate-gradient {
+  animation: gradient-shift 8s ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-ticker {
+  animation: ticker-scroll 30s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 7s ease-in-out infinite;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out both;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #D4A843, #E8C46A, #D4A843);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated gradient border wrapper */
+.gradient-border {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--angle, 0deg), #D4A843, #E8C46A, transparent 40%, transparent 60%, #D4A843);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  animation: border-rotate 4s linear infinite;
+}
+
+/* Shine sweep effect for cards */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.06), transparent);
+  animation: shine 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Glass card effect */
+.glass-card {
+  background: rgba(35, 41, 70, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
