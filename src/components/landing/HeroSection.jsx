@@ -1,15 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Users,
-  Clock,
-  Trophy,
-  Zap,
-  Star,
-  TrendingUp,
-} from "lucide-react";
-import { gamePreviewsMock } from "../../data/mockData";
+import { ArrowRight, Users, Zap, Star, TrendingUp } from "lucide-react";
+import PlayerBattleAnimation from "./PlayerBattleAnimation";
 
 function useCountUp(target, duration = 2000) {
   const [value, setValue] = useState(0);
@@ -83,18 +75,11 @@ function FloatingOrbs() {
 }
 
 export default function HeroSection() {
-  const featured = [...gamePreviewsMock].sort(
-    (a, b) => b.prizePool - a.prizePool,
-  )[0];
-  const fillPercent = Math.round(
-    (featured.playersIn / featured.maxPlayers) * 100,
-  );
-
   return (
     <section className="relative overflow-hidden py-16 sm:py-24 min-h-[90vh] flex items-center">
       {/* Multi-layered background */}
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1508344928928-7137b29de216?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat" />
-      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/95 to-dark/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/95 to-dark/60" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--color-gold)_0%,_transparent_50%)] opacity-15" />
 
@@ -131,11 +116,6 @@ export default function HeroSection() {
               </span>
             </h1>
 
-            {/* <p className="text-gray-300/80 text-lg sm:text-xl mb-10 max-w-lg leading-relaxed">
-              Clic Hubs se platfòm kote jwè yo afwonte youn lòt. Nou pa kenbe
-              anyen pase yon ti frè.
-            </p> */}
-
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/enskri"
@@ -160,7 +140,7 @@ export default function HeroSection() {
             </div>
 
             {/* Stats row */}
-            <div className="mt-14 p-6 rounded-2xl glass-card inline-flex flex-wrap items-center gap-8 sm:gap-12">
+            <div className="mt-10 p-6 rounded-2xl glass-card inline-flex flex-wrap items-center gap-8 sm:gap-12">
               {stats.map((stat, i) => (
                 <div
                   key={stat.label}
@@ -175,86 +155,22 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right: Featured Game Card — Premium Glassmorphism */}
-          <div
-            className="relative group animate-fade-up"
-            style={{ animationDelay: "0.2s" }}
-          >
-            {/* Animated gradient border glow */}
-            <div className="absolute -inset-[2px] bg-gradient-to-r from-gold via-yellow-600 to-gold rounded-3xl opacity-20 group-hover:opacity-50 blur-sm transition-all duration-700 animate-gradient" />
-
-            {/* Pulsing ring effect */}
-            <div className="absolute -inset-4 border border-gold/10 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-            <div className="glass-card rounded-3xl p-8 relative transform transition-all duration-500 hover:-translate-y-2 card-shine border-white/10">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-2 bg-success/10 px-3 py-1.5 rounded-full border border-success/20">
-                  <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-                  <span className="text-success text-xs font-bold uppercase tracking-wider">
-                    Pati ak plis lajan
-                  </span>
-                </div>
-                <div className="w-12 h-12 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center">
-                  <Trophy size={24} className="text-gold" />
-                </div>
-              </div>
-
-              <h3 className="text-white font-black text-2xl leading-tight mb-2">
-                {featured.name}
-              </h3>
-              <p className="text-gray-400 text-sm mb-6">
-                Antre:{" "}
-                <span className="text-white font-semibold">
-                  {featured.entryFee.toLocaleString()} HTG
-                </span>
-              </p>
-
-              {/* Prize pool showcase */}
-              <div className="bg-dark/60 rounded-2xl p-6 mb-8 border border-white/5 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl -mr-10 -mt-10" />
-                <div className="absolute bottom-0 left-0 w-20 h-20 bg-gold/5 rounded-full blur-xl -ml-5 -mb-5" />
-                <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2 relative z-10">
-                  Miz Total Kounye a
-                </p>
-                <p className="text-5xl sm:text-6xl font-black relative z-10">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-300 to-gold">
-                    {featured.prizePool.toLocaleString()}
-                  </span>{" "}
-                  <span className="text-2xl font-bold text-gold/60">HTG</span>
-                </p>
-              </div>
-
-              {/* Player progress */}
-              <div className="mb-8">
-                <div className="flex justify-between text-sm mb-3 font-medium">
-                  <span className="text-gray-300 flex items-center gap-2">
-                    <Users size={16} className="text-gold" />
-                    {featured.playersIn} / {featured.maxPlayers} jwè
-                  </span>
-                  <span className="text-gray-300 flex items-center gap-2">
-                    <Clock size={16} className="text-gold" />
-                    {featured.startsIn}
-                  </span>
-                </div>
-                <div className="w-full bg-dark rounded-full h-3 border border-white/5 overflow-hidden">
-                  <div
-                    className="bg-gradient-to-r from-gold via-yellow-400 to-gold rounded-full h-full transition-all duration-1000 relative"
-                    style={{ width: `${fillPercent}%` }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
-                  </div>
-                </div>
-              </div>
-
-              <Link
-                to="/enskri"
-                className="group/cta block w-full text-center bg-gradient-to-r from-gold/10 to-yellow-500/10 hover:from-gold hover:to-yellow-500 text-gold hover:text-dark border border-gold/30 hover:border-gold font-black py-4 rounded-xl transition-all duration-300 no-underline text-lg uppercase tracking-wide relative overflow-hidden"
-              >
-                <span className="relative z-10">Jwe Kounye a</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700" />
-              </Link>
+          {/* Right: Live Battle Animation */}
+          <div className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
+            {/* Label above card */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-2 h-2 rounded-full bg-danger animate-pulse" />
+              <span className="text-gray-400 text-xs font-semibold uppercase tracking-widest">
+                An Dirèk
+              </span>
             </div>
+
+            <PlayerBattleAnimation />
+
+            {/* Footnote below */}
+            <p className="text-center text-gray-600 text-xs mt-3">
+              Animasyon sa montre yon kous cheval. Rezilta yo ka varye.
+            </p>
           </div>
         </div>
       </div>

@@ -4,10 +4,39 @@ import GameCategoryBar from "../components/landing/GameCategoryBar";
 import FeaturedMatches from "../components/landing/FeaturedMatches";
 import GamePreviewCard from "../components/landing/GamePreviewCard";
 import HowItWorksMini from "../components/landing/HowItWorksMini";
+import WinningsCalculator from "../components/landing/WinningsCalculator";
 import TrustSignals from "../components/landing/TrustSignals";
 import { gamePreviewsMock } from "../data/mockData";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Trophy } from "lucide-react";
+
+/* Coin rain particles for the final CTA */
+const COIN_POSITIONS = [5, 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89, 94, 8];
+const COIN_COLORS    = ["#D4A843", "#E8C46A", "#F59E0B", "#D4A843", "#E8C46A"];
+
+function CoinRain() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
+      {COIN_POSITIONS.map((left, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left:             `${left}%`,
+            top:              "-20px",
+            width:            i % 3 === 0 ? "10px" : i % 3 === 1 ? "7px" : "5px",
+            height:           i % 3 === 0 ? "10px" : i % 3 === 1 ? "7px" : "5px",
+            background:       COIN_COLORS[i % COIN_COLORS.length],
+            opacity:          0.6 + (i % 4) * 0.1,
+            animation:        "coin-fall 3s ease-in infinite",
+            animationDelay:   `${(i * 0.19).toFixed(2)}s`,
+            animationDuration:`${2.2 + (i % 5) * 0.3}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function LandingPage() {
   return (
@@ -95,17 +124,26 @@ export default function LandingPage() {
       {/* Divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
+      {/* Winnings Calculator */}
+      <WinningsCalculator />
+
+      {/* Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
+
       <TrustSignals />
 
       {/* Divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
-      {/* Final CTA — Dramatic full-width section */}
+      {/* Final CTA — Dramatic full-width section with coin rain */}
       <section className="py-24 sm:py-32 relative overflow-hidden">
         {/* Background image with heavy overlay */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat" />
         <div className="absolute inset-0 bg-dark/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--color-gold)_0%,_transparent_60%)] opacity-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--color-gold)_0%,_transparent_60%)] opacity-12" />
+
+        {/* Coin rain particles */}
+        <CoinRain />
 
         {/* Floating orbs */}
         <div className="absolute top-10 left-[10%] w-3 h-3 bg-gold/20 rounded-full animate-float blur-[1px]" />
