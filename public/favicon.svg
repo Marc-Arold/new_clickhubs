@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F0D46A"/>
+      <stop offset="100%" stop-color="#C49228"/>
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#16213E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dark background -->
+  <rect width="32" height="32" rx="7" fill="url(#b)"/>
+
+  <!-- Outer glow ring -->
+  <circle cx="16" cy="16" r="13" stroke="url(#a)" stroke-width="0.6" opacity="0.35"/>
+
+  <!-- Main coin ring -->
+  <circle cx="16" cy="16" r="11.2" stroke="url(#a)" stroke-width="1.8" fill="rgba(212,168,67,0.07)"/>
+
+  <!-- Inner decorative ring -->
+  <circle cx="16" cy="16" r="8.4" stroke="rgba(212,168,67,0.22)" stroke-width="0.5"/>
+
+  <!-- Bold "C" letterform — arc on r≈5.66 circle centered at (16,16) -->
+  <!-- From (20,12) [upper-right] counterclockwise around left to (20,20) [lower-right] -->
+  <path d="M20 12 A5.66 5.66 0 1 0 20 20"
+        stroke="url(#a)"
+        stroke-width="3.6"
+        stroke-linecap="round"/>
+</svg>

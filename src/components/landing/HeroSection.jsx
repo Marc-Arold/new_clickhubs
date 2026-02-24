@@ -138,21 +138,6 @@ export default function HeroSection() {
                 Wè Jwèt Yo
               </Link>
             </div>
-
-            {/* Stats row */}
-            <div className="mt-10 p-6 rounded-2xl glass-card inline-flex flex-wrap items-center gap-8 sm:gap-12">
-              {stats.map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className="flex items-center gap-8 sm:gap-12"
-                >
-                  <StatItem {...stat} />
-                  {i < stats.length - 1 && (
-                    <div className="w-px h-14 bg-gradient-to-b from-transparent via-gold/20 to-transparent" />
-                  )}
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Right: Live Battle Animation */}
