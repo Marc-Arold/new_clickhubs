@@ -11,9 +11,9 @@ import GamesLobbyPage from './pages/GamesLobbyPage'
 import WalletPage from './pages/WalletPage'
 import LeaderboardPage from './pages/LeaderboardPage'
 import ProfilePage from './pages/ProfilePage'
-import TournamentLobbyPage from './pages/TournamentLobbyPage'
-import RoundPredictionPage from './pages/RoundPredictionPage'
-import RoundResultPage from './pages/RoundResultPage'
+import PronosEliminatorLobbyPage from './pages/PronosEliminatorLobbyPage'
+import PronosContestPage from './pages/PronosContestPage'
+import PronosPalmaresPage from './pages/PronosPalmaresPage'
 import BankPariLobbyPage from './pages/BankPariLobbyPage'
 import CreateSplitPage from './pages/CreateSplitPage'
 import SplitDetailPage from './pages/SplitDetailPage'
@@ -21,6 +21,7 @@ import DenyeSivivanLobbyPage from './pages/DenyeSivivanLobbyPage'
 import LastManStandingPage from './pages/LastManStandingPage'
 import WeeklyPickPage from './pages/WeeklyPickPage'
 import VirtualFootballPage from './pages/VirtualFootballPage'
+import VirtualHorseRacingLobbyPage from './pages/VirtualHorseRacingLobbyPage'
 import VirtualHorseRacingPage from './pages/VirtualHorseRacingPage'
 import CardShowdownPage from './pages/CardShowdownPage'
 import PredictionDuelPage from './pages/PredictionDuelPage'
@@ -81,9 +82,9 @@ function App() {
         <Route path="/profil" element={<ProfilePage />} />
 
         {/* Section 3: Sports Game Flows */}
-        <Route path="/tounwa/:id" element={<TournamentLobbyPage />} />
-        <Route path="/tounwa/:id/round/:roundId" element={<RoundPredictionPage />} />
-        <Route path="/tounwa/:id/round/:roundId/rezilta" element={<RoundResultPage />} />
+        <Route path="/pronos" element={<PronosEliminatorLobbyPage />} />
+        <Route path="/pronos/:contestId" element={<PronosContestPage />} />
+        <Route path="/pronos/:contestId/palmares" element={<PronosPalmaresPage />} />
         <Route path="/bank-pari" element={<BankPariLobbyPage />} />
         <Route path="/bank-pari/kreye" element={<CreateSplitPage />} />
         <Route path="/bank-pari/:splitId" element={<SplitDetailPage />} />
@@ -93,6 +94,7 @@ function App() {
 
         {/* Section 4: Simulated Game Flows */}
         <Route path="/virtual/football/:matchId" element={<VirtualFootballPage />} />
+        <Route path="/virtual/horses" element={<VirtualHorseRacingLobbyPage />} />
         <Route path="/virtual/horses/:raceId" element={<VirtualHorseRacingPage />} />
         <Route path="/virtual/cards" element={<CardShowdownPage />} />
         <Route path="/duels/:duelId" element={<PredictionDuelPage />} />

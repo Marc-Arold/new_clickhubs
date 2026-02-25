@@ -39,21 +39,21 @@ function useCountUp(target, duration = 2500) {
 const signals = [
   {
     icon: Wallet,
-    title: "Powered by MonCash",
+    title: "Tranzaksyon MonCash",
     desc: "Depo & retrè an sekirite avèk metòd peman lokal ou konnen.",
     color: "from-emerald-500/20 to-emerald-700/10",
     iconColor: "text-emerald-400",
   },
   {
     icon: Lock,
-    title: "Eskrow Sekirize",
+    title: "Sekirize",
     desc: "Lajan w pwoteje nan yon kont eskrow jiskaske rezilta soti.",
     color: "from-blue-500/20 to-blue-700/10",
     iconColor: "text-blue-400",
   },
   {
     icon: Shield,
-    title: "Lisansye & Transparan",
+    title: "Transparans",
     desc: "Tout tranzaksyon verifye epi ouvè pou tout moun wè.",
     color: "from-purple-500/20 to-purple-700/10",
     iconColor: "text-purple-400",
@@ -79,12 +79,9 @@ export default function TrustSignals() {
         {/* Counter — focal point */}
         <div className="text-center mb-16">
           <p className="text-gray-500 text-sm font-bold uppercase tracking-widest mb-4">
-            Total Lajan Peye Bay Jwè Yo
+            Total Lajan Nou Deja Peye
           </p>
-          <div
-            ref={elRef}
-            className="relative inline-block"
-          >
+          <div ref={elRef} className="relative inline-block">
             {/* Glow behind counter */}
             <div className="absolute inset-0 bg-gold/10 blur-3xl rounded-full scale-150 pointer-events-none" />
             <p className="text-5xl sm:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold relative">
@@ -93,9 +90,6 @@ export default function TrustSignals() {
           </div>
           <div className="flex items-center justify-center gap-2 mt-4">
             <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-            <p className="text-gray-500 text-xs font-medium">
-              aktyalize an tan reyèl
-            </p>
           </div>
         </div>
 

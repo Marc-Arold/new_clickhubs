@@ -12,6 +12,14 @@ import {
 } from "lucide-react";
 
 const typeConfig = {
+  "pronos-eliminator": {
+    icon: Trophy,
+    gradient: "from-rose-500 to-red-700",
+    iconColor: "text-rose-400",
+    bgImage:
+      "url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=600&auto=format&fit=crop')",
+    emoji: "🏆",
+  },
   sports: {
     icon: Trophy,
     gradient: "from-emerald-500 to-emerald-700",
@@ -25,6 +33,14 @@ const typeConfig = {
     iconColor: "text-purple-400",
     bgImage:
       "url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop')",
+  },
+  "horse-race": {
+    icon: Trophy,
+    gradient: "from-amber-500 to-yellow-700",
+    iconColor: "text-amber-400",
+    bgImage:
+      "url('https://images.unsplash.com/photo-1504169322887-91b1d3649bbc?q=80&w=600&auto=format&fit=crop')",
+    emoji: "🐎",
   },
   "bank-pari": {
     icon: Landmark,
@@ -74,7 +90,10 @@ export default function GameLobbyCard({ game }) {
 
           {/* Icon */}
           <div className="relative z-10 p-4 bg-dark/50 rounded-xl backdrop-blur-md border border-white/10 group-hover:border-gold/30 transition-all duration-500 group-hover:scale-105">
-            <Icon size={28} className="text-gold" />
+            {config.emoji
+              ? <span className="text-3xl leading-none">{config.emoji}</span>
+              : <Icon size={28} className="text-gold" />
+            }
           </div>
 
           {/* Status badge */}
@@ -163,33 +182,113 @@ export default function GameLobbyCard({ game }) {
         {/* Expanded detail */}
         {expanded && (
           <div className="border-t border-white/10 px-5 py-4 bg-dark-accent/30">
-            <h4 className="text-white font-bold text-sm mb-2">Règ yo</h4>
-            <ul className="space-y-1.5 text-gray-400 text-xs">
-              <li className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                Chak jwè peye frè antre a pou antre nan pòt la.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                Genyan an resevwa pòt total la mwens 10% frè platfòm.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                Tout lajan kenbe an eskwo jiskaske rezilta konfime.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                Si match la anile, tout lajan retounen otomatikman.
-              </li>
-            </ul>
-            <div className="mt-3 glass-card-gold rounded-lg p-3">
-              <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-1">
-                Estrikti Peman
-              </p>
-              <p className="text-gold text-sm font-bold">
-                1ye plas: 90% pòt • 2yèm-3yèm: 10% pòt
-              </p>
-            </div>
+            {game.type === 'pronos-eliminator' ? (
+              <>
+                <h4 className="text-white font-bold text-sm mb-2">Règ Pronos Eliminator</h4>
+                <ul className="space-y-1.5 text-gray-400 text-xs mb-3">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Bati yon fich ak kote kominèd ≥ 20 (jiska 1000).
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Limit 2 fich pa jwè — 2yèm fich rele "Remiz".
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Distribisyon pwopòsyonèl: pi gwo kote = pi gwo pati jackpot.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Si pa genyan, jackpot akimile pou semèn pwochèn.
+                  </li>
+                </ul>
+                <div className="glass-card-gold rounded-lg p-3">
+                  <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tye Kote</p>
+                  <div className="flex gap-1.5 flex-wrap">
+                    {[20, 30, 50, 100, 150, 200, 1000].map(t => (
+                      <span key={t} className="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20 font-bold">×{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ) : game.type === 'horse-race' ? (
+              <>
+                <h4 className="text-white font-bold text-sm mb-2">Règ Kous la</h4>
+                <ul className="space-y-1.5 text-gray-400 text-xs mb-3">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Chak jwè vin ak cheval pa yo — pa gen chwa cheval.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Ou wè cheval ou ak 5 lòt konpetitè pandan kous la.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Rezilta detèmine pa yon RNG ki ka verifye (seed hash).
+                  </li>
+                </ul>
+                <div className="glass-card-gold rounded-lg p-3 space-y-1.5">
+                  <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-2">
+                    Distribisyon Pòt ({game.maxPlayers} jwè × {game.entryFee.toLocaleString()} HTG)
+                  </p>
+                  {(() => {
+                    const net = game.entryFee * game.maxPlayers * 0.95
+                    return (
+                      <>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-gray-400">🥇 1ye Plas (65%)</span>
+                          <span className="text-gold font-bold">{Math.round(net * 0.65).toLocaleString()} HTG</span>
+                        </div>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-gray-400">🥈 2yèm Plas (25%)</span>
+                          <span className="text-gray-300 font-medium">{Math.round(net * 0.25).toLocaleString()} HTG</span>
+                        </div>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-gray-400">🥉 3yèm Plas (10%)</span>
+                          <span className="text-gray-300 font-medium">{Math.round(net * 0.10).toLocaleString()} HTG</span>
+                        </div>
+                        <div className="border-t border-white/10 pt-1.5 flex justify-between text-[10px]">
+                          <span className="text-gray-600">Frè platfòm (5%)</span>
+                          <span className="text-gray-600">{Math.round(game.entryFee * game.maxPlayers * 0.05).toLocaleString()} HTG</span>
+                        </div>
+                      </>
+                    )
+                  })()}
+                </div>
+              </>
+            ) : (
+              <>
+                <h4 className="text-white font-bold text-sm mb-2">Règ yo</h4>
+                <ul className="space-y-1.5 text-gray-400 text-xs">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Chak jwè peye frè antre a pou antre nan pòt la.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Genyan an resevwa pòt total la mwens 10% frè platfòm.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Tout lajan kenbe an eskwo jiskaske rezilta konfime.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
+                    Si match la anile, tout lajan retounen otomatikman.
+                  </li>
+                </ul>
+                <div className="mt-3 glass-card-gold rounded-lg p-3">
+                  <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-1">
+                    Estrikti Peman
+                  </p>
+                  <p className="text-gold text-sm font-bold">
+                    1ye plas: 90% pòt • 2yèm-3yèm: 10% pòt
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

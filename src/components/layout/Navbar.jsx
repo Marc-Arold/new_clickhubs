@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
-  const isActive = (path) => location.pathname === path
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="bg-dark-accent/80 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
@@ -24,15 +24,19 @@ export default function Navbar() {
             <Link
               to="/kijan-li-mache"
               className={`text-sm font-medium no-underline transition-colors ${
-                isActive('/kijan-li-mache') ? 'text-gold' : 'text-gray-300 hover:text-white'
+                isActive("/kijan-li-mache")
+                  ? "text-gold"
+                  : "text-gray-300 hover:text-white"
               }`}
             >
-              Kijan li mache
+              Kijan sa mache
             </Link>
             <Link
               to="/konekte"
               className={`text-sm font-medium no-underline transition-colors ${
-                isActive('/konekte') ? 'text-gold' : 'text-gray-300 hover:text-white'
+                isActive("/konekte")
+                  ? "text-gold"
+                  : "text-gray-300 hover:text-white"
               }`}
             >
               Konekte
@@ -49,7 +53,7 @@ export default function Navbar() {
           <button
             className="md:hidden text-gray-300 hover:text-white bg-transparent border-none p-2"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? 'Fèmen meni' : 'Ouvri meni'}
+            aria-label={menuOpen ? "Fèmen meni" : "Ouvri meni"}
             aria-expanded={menuOpen}
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -66,7 +70,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="text-gray-300 hover:text-white no-underline py-2 text-sm font-medium"
             >
-              Kijan li mache
+              Kijan sa mache
             </Link>
             <Link
               to="/konekte"
@@ -86,5 +90,5 @@ export default function Navbar() {
         </div>
       )}
     </nav>
-  )
+  );
 }

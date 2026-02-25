@@ -18,12 +18,12 @@ import LeaderboardTeaser from "../components/dashboard/LeaderboardTeaser";
 const quickActions = [
   {
     label: "Pronos Eliminator",
-    desc: "Tounwa eliminasyon",
+    desc: "Jackpot parlay semèn nan",
     icon: Trophy,
-    route: "/tounwa/pe-001",
-    gradient: "from-emerald-500/20 to-emerald-700/10",
-    iconColor: "text-emerald-400",
-    bgImage: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=400&auto=format&fit=crop",
+    route: "/pronos",
+    gradient: "from-rose-500/20 to-red-700/10",
+    iconColor: "text-rose-400",
+    bgImage: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=400&auto=format&fit=crop",
   },
   {
     label: "Bank Pari",

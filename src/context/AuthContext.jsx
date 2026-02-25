@@ -32,6 +32,7 @@ const mockUser = {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(mockUser);
   const [isAuthenticated, setIsAuthenticated] = useState(true); // true for dev
+  const [userHorse, setUserHorse] = useState({ name: 'Mon Cheval', color: 'bg-red-500' });
 
   const login = () => {
     setIsAuthenticated(true);
@@ -51,9 +52,13 @@ export function AuthProvider({ children }) {
     }));
   };
 
+  const updateUserHorse = (name, color) => {
+    setUserHorse({ name, color });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, logout, updateBalance }}
+      value={{ user, isAuthenticated, login, logout, updateBalance, userHorse, updateUserHorse }}
     >
       {children}
     </AuthContext.Provider>

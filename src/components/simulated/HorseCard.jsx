@@ -17,11 +17,6 @@ export default function HorseCard({ horse, selected, disabled, onSelect }) {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-white font-medium text-sm">{horse.name}</p>
-          <p className="text-gray-500 text-xs">{horse.form}</p>
-        </div>
-        <div className="text-right shrink-0">
-          <p className="text-gold font-bold text-sm">{horse.odds}x</p>
-          <p className="text-gray-500 text-xs">Kòt</p>
         </div>
       </div>
     </button>

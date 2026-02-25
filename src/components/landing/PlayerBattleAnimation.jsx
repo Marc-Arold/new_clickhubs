@@ -181,6 +181,25 @@ export default function PlayerBattleAnimation() {
   const [arenaFlash,   setFlash]   = useState(false);
   const [mountKey,     setMountKey]= useState(0);
 
+  /* 3D tilt state */
+  const containerRef = useRef(null);
+  const tiltRef      = useRef({ x: 0, y: 0 });
+  const innerRef     = useRef(null);
+
+  const handleTiltMove = useCallback((e) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect || !innerRef.current) return;
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 9;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 9;
+    tiltRef.current = { x, y };
+    innerRef.current.style.transform = `perspective(1200px) rotateY(${x}deg) rotateX(${-y}deg)`;
+  }, []);
+
+  const handleTiltLeave = useCallback(() => {
+    if (!innerRef.current) return;
+    innerRef.current.style.transform = "perspective(1200px) rotateY(0deg) rotateX(0deg)";
+  }, []);
+
   const timers = useRef([]);
   const clear  = () => timers.current.forEach(clearTimeout);
 
@@ -283,7 +302,13 @@ export default function PlayerBattleAnimation() {
       : "none";
 
   return (
-    <div className="relative group">
+    <div
+      ref={containerRef}
+      className="relative group"
+      onMouseMove={handleTiltMove}
+      onMouseLeave={handleTiltLeave}
+      style={{ perspective: "1200px" }}
+    >
       {/* Animated gradient border glow */}
       <div
         className={`absolute -inset-[2px] rounded-3xl blur-sm transition-all duration-700 animate-gradient ${
@@ -294,11 +319,13 @@ export default function PlayerBattleAnimation() {
       />
 
       <div
+        ref={innerRef}
         className="glass-card rounded-3xl p-6 relative overflow-hidden card-shine"
         style={{
-          minHeight:  "420px",
-          boxShadow:  cardShadow,
-          transition: "box-shadow 0.3s ease",
+          minHeight:       "420px",
+          boxShadow:       cardShadow,
+          transition:      "transform 0.12s ease-out, box-shadow 0.3s ease",
+          transformStyle:  "preserve-3d",
         }}
       >
         {/* Background glow blobs */}
