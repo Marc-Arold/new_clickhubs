@@ -5,21 +5,21 @@ const typeConfig = {
   sports: {
     icon: Trophy,
     bgImage:
-      "url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop')",
+      "url('/images/p2p_football_haiti.png')",
     accent: "from-emerald-500 to-emerald-700",
     accentBg: "bg-emerald-500/10",
   },
   simulated: {
     icon: Monitor,
     bgImage:
-      "url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop')",
+      "url('/images/p2p_horse_racing.png')",
     accent: "from-purple-500 to-purple-700",
     accentBg: "bg-purple-500/10",
   },
   "bank-pari": {
     icon: Landmark,
     bgImage:
-      "url('https://images.unsplash.com/photo-1518605368461-1ee7c53206fb?q=80&w=800&auto=format&fit=crop')",
+      "url('/images/p2p_casino_haiti.png')",
     accent: "from-blue-500 to-blue-700",
     accentBg: "bg-blue-500/10",
   },

@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import HeroSection from "../components/landing/HeroSection";
+import PromoSlider from "../components/landing/PromoSlider";
 import LiveActivityFeed from "../components/landing/LiveActivityFeed";
 import GameCategoryBar from "../components/landing/GameCategoryBar";
 import GamePreviewCard from "../components/landing/GamePreviewCard";
 import HowItWorksMini from "../components/landing/HowItWorksMini";
 import WinningsCalculator from "../components/landing/WinningsCalculator";
 import TrustSignals from "../components/landing/TrustSignals";
+import PlayerBattleAnimation from "../components/landing/PlayerBattleAnimation";
 import { gamePreviewsMock } from "../data/mockData";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Trophy, ChevronUp } from "lucide-react";
+import { ArrowRight, Sparkles, Trophy, ChevronUp, Crown, Swords, Zap } from "lucide-react";
 
 /* ── Coin rain particles for the final CTA ── */
 const COIN_POSITIONS = [5, 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89, 94, 8];
@@ -131,23 +132,139 @@ function AnimateOnScroll({ children, delay = 0, direction = "up", className = ""
   );
 }
 
+/* ── Sports categories for the showcase section ── */
+const SPORT_CATEGORIES = [
+  {
+    title: "Foutbòl",
+    sub: "Parie sou gwo match mondyal",
+    image:
+      "/images/p2p_football_haiti.png",
+    color: "#22C55E",
+    badge: "⚽ SPORTS",
+  },
+  {
+    title: "Kous Cheval",
+    sub: "Kous an dirèk chak 5 minit",
+    image:
+      "/images/p2p_horse_racing.png",
+    color: "#EF4444",
+    badge: "🏇 LIVE",
+  },
+  {
+    title: "Jeu Kat & Kazino",
+    sub: "Blackjack, Card Showdown",
+    image:
+      "/images/p2p_casino_haiti.png",
+    color: "#A855F7",
+    badge: "🃏 CASINO",
+  },
+];
+
 export default function LandingPage() {
   return (
     <div>
-      <HeroSection />
+      {/* ── 1. Full-screen promo slider (hero) ── */}
+      <PromoSlider />
 
+      {/* ── 2. Live activity ticker ── */}
       <AnimateOnScroll>
         <LiveActivityFeed />
       </AnimateOnScroll>
 
+      {/* ── 3. Game category quick links ── */}
       <AnimateOnScroll delay={80}>
         <GameCategoryBar />
       </AnimateOnScroll>
 
-      {/* Divider */}
+      {/* ── 4. Sports showcase — 3 big image cards ── */}
+      <section className="py-16 sm:py-20 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-gold/3 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <AnimateOnScroll direction="up">
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-1 h-5 rounded-full bg-gold" />
+                <span className="text-gold text-xs font-black uppercase tracking-widest">
+                  Kategori Jwèt
+                </span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-white">
+                Chwazi Fason Ou Vle Jwe
+              </h2>
+              <p className="text-gray-500 text-sm mt-1">
+                Spò reyèl, kous cheval oswa jwèt kat — tout la pou ou.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {SPORT_CATEGORIES.map((cat, i) => (
+              <AnimateOnScroll key={cat.title} direction="up" delay={i * 100}>
+                <Link
+                  to="/enskri"
+                  className="group relative rounded-2xl overflow-hidden no-underline block"
+                  style={{ height: "280px" }}
+                >
+                  {/* Background image with zoom on hover */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                    style={{ backgroundImage: `url('${cat.image}')` }}
+                  />
+
+                  {/* Dark gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark/95 via-dark/50 to-dark/15" />
+
+                  {/* Color accent on hover */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background: `linear-gradient(to top, ${cat.color}45 0%, transparent 55%)`,
+                    }}
+                  />
+
+                  {/* Top badge */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <span
+                      className="text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-sm"
+                      style={{
+                        background: "rgba(0,0,0,0.55)",
+                        border: `1px solid ${cat.color}60`,
+                      }}
+                    >
+                      {cat.badge}
+                    </span>
+                  </div>
+
+                  {/* Bottom content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                    <h3 className="text-white font-black text-2xl leading-tight">
+                      {cat.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm mt-1 mb-3">{cat.sub}</p>
+                    <div
+                      className="inline-flex items-center gap-2 text-sm font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0"
+                      style={{ color: cat.color }}
+                    >
+                      Jwe kounye a <ArrowRight size={14} />
+                    </div>
+                  </div>
+
+                  {/* Border glow on hover */}
+                  <div
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ boxShadow: `inset 0 0 0 1.5px ${cat.color}50` }}
+                  />
+                </Link>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
-      {/* Popular Games */}
+      {/* ── 5. Popular live games ── */}
       <section className="py-16 sm:py-24 bg-dark-accent/20 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-gold/3 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-purple-500/3 rounded-full blur-[100px] pointer-events-none" />
@@ -201,52 +318,134 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
+
+      {/* ── 6. P2P Battle demo ── */}
+      <section className="py-16 sm:py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-dark/95 z-0" />
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            backgroundImage: "url('/images/lotus_casino_table.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.15,
+            mixBlendMode: "overlay"
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 800px 500px at 80% 50%, rgba(212,168,67,0.08) 0%, transparent 70%)",
+          }}
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left — description */}
+            <AnimateOnScroll direction="left">
+              <div className="flex items-center gap-2 mb-4">
+                <Swords size={16} className="text-gold" />
+                <span className="text-gold text-xs font-black uppercase tracking-widest">
+                  Platfòm P2P
+                </span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 leading-tight">
+                Jwe Dirèkteman{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold animate-gradient">
+                  Kont Lòt Moun
+                </span>
+              </h2>
+
+              <p className="text-gray-400 text-base leading-relaxed mb-6">
+                Pa gen "Kay" ki genyen tout tan. Ou menm ak lòt jwè yo mete lajan ansanm —
+                pi bon jwè a ranmase tout miz la. Platfòm nou an jis pran yon ti frè sèvis.
+              </p>
+
+              <div className="space-y-3 mb-8">
+                {[
+                  { icon: Crown, label: "Mize lajan kont lòt amatè reyèl" },
+                  { icon: Zap, label: "Rezilta an dirèk, peman nan 5 minit" },
+                  { icon: Trophy, label: "Pa gen riz — sistèm transparan" },
+                ].map((bullet) => {
+                  const BulletIcon = bullet.icon;
+                  return (
+                    <div key={bullet.label} className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
+                        <BulletIcon size={13} className="text-gold" />
+                      </div>
+                      <span className="text-gray-300 text-sm font-medium">{bullet.label}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Link
+                to="/enskri"
+                className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-dark font-black px-6 py-3 rounded-xl no-underline transition-all hover:scale-[1.03]"
+              >
+                Kòmanse Jwe
+                <ArrowRight size={16} />
+              </Link>
+            </AnimateOnScroll>
+
+            {/* Right — live animation */}
+            <AnimateOnScroll direction="right" delay={100}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-2 h-2 rounded-full bg-danger animate-pulse" />
+                <span className="text-gray-400 text-xs font-semibold uppercase tracking-widest">
+                  An Dirèk
+                </span>
+              </div>
+              <PlayerBattleAnimation />
+              <p className="text-center text-gray-600 text-xs mt-3">
+                Animasyon sa montre yon kous cheval. Rezilta yo ka varye epi plen lòt jwèt.
+              </p>
+            </AnimateOnScroll>
+          </div>
+        </div>
+      </section>
+
       <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
       <AnimateOnScroll direction="left">
         <HowItWorksMini />
       </AnimateOnScroll>
 
-      {/* Divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
       <AnimateOnScroll direction="right">
         <WinningsCalculator />
       </AnimateOnScroll>
 
-      {/* Divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
       <AnimateOnScroll direction="up">
         <TrustSignals />
       </AnimateOnScroll>
 
-      {/* Divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
 
-      {/* Final CTA — Dramatic full-width section with coin rain */}
+      {/* ── 7. Final CTA ── */}
       <AnimateOnScroll direction="scale">
         <section className="py-24 sm:py-32 relative overflow-hidden">
-          {/* Background image with heavy overlay */}
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat" />
-          <div className="absolute inset-0 bg-dark/90" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--color-gold)_0%,_transparent_60%)] opacity-12" />
+          <div className="absolute inset-0 bg-[url('/images/lotus_winner_hero.png')] bg-cover bg-center bg-no-repeat" />
+          <div className="absolute inset-0 bg-dark/85" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--color-gold)_0%,_transparent_60%)] opacity-15" />
 
-          {/* Coin rain particles */}
           <CoinRain />
 
-          {/* Floating orbs */}
           <div className="absolute top-10 left-[10%] w-3 h-3 bg-gold/20 rounded-full animate-float blur-[1px]" />
           <div className="absolute bottom-20 right-[15%] w-2 h-2 bg-gold/30 rounded-full animate-float-delayed" />
           <div className="absolute top-[40%] right-[8%] w-4 h-4 bg-gold/10 rounded-full animate-float blur-[2px]" />
 
-          {/* Grid pattern */}
           <div
-            className="absolute inset-0 opacity-[0.02]"
+            className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage:
-                "linear-gradient(rgba(212,168,67,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,168,67,0.5) 1px, transparent 1px)",
+                "linear-gradient(rgba(212,168,67,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(212,168,67,0.6) 1px, transparent 1px)",
               backgroundSize: "80px 80px",
             }}
           />
@@ -266,8 +465,7 @@ export default function LandingPage() {
               </span>
             </h2>
             <p className="text-gray-300/80 text-lg sm:text-xl mb-12 max-w-lg mx-auto leading-relaxed">
-              Enskri gratis epi kòmanse jwe kont lòt amatè yo jodi a. Premye pari
-              w ap tann ou.
+              Enskri gratis epi kòmanse jwe kont lòt amatè yo jodi a. Premye pari w ap tann ou.
             </p>
 
             <Link
@@ -281,13 +479,10 @@ export default function LandingPage() {
                   className="group-hover:translate-x-1 transition-transform"
                 />
               </span>
-              {/* Shine sweep */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </Link>
 
-            <p className="text-gray-600 text-sm mt-6">
-              Pa gen frè kache. Anile nenpòt lè.
-            </p>
+            <p className="text-gray-600 text-sm mt-6">Pa gen frè kache. Anile nenpòt lè.</p>
           </div>
         </section>
       </AnimateOnScroll>

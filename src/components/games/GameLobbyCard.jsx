@@ -17,7 +17,7 @@ const typeConfig = {
     gradient: "from-rose-500 to-red-700",
     iconColor: "text-rose-400",
     bgImage:
-      "url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=600&auto=format&fit=crop')",
+      "url('/images/p2p_football_haiti.png')",
     emoji: "🏆",
   },
   sports: {
@@ -25,21 +25,21 @@ const typeConfig = {
     gradient: "from-emerald-500 to-emerald-700",
     iconColor: "text-emerald-400",
     bgImage:
-      "url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=600&auto=format&fit=crop')",
+      "url('/images/p2p_football_haiti.png')",
   },
   simulated: {
     icon: Monitor,
     gradient: "from-purple-500 to-purple-700",
     iconColor: "text-purple-400",
     bgImage:
-      "url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop')",
+      "url('/images/p2p_horse_racing.png')",
   },
   "horse-race": {
     icon: Trophy,
     gradient: "from-amber-500 to-yellow-700",
     iconColor: "text-amber-400",
     bgImage:
-      "url('https://images.unsplash.com/photo-1504169322887-91b1d3649bbc?q=80&w=600&auto=format&fit=crop')",
+      "url('/images/p2p_horse_racing.png')",
     emoji: "🐎",
   },
   "bank-pari": {
@@ -47,7 +47,7 @@ const typeConfig = {
     gradient: "from-blue-500 to-blue-700",
     iconColor: "text-blue-400",
     bgImage:
-      "url('https://images.unsplash.com/photo-1518605368461-1ee7c53206fb?q=80&w=600&auto=format&fit=crop')",
+      "url('/images/p2p_casino_haiti.png')",
   },
 };
 

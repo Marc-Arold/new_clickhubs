@@ -47,14 +47,17 @@ const stats = [
 function StatItem({ target, label, icon: StatIcon, format }) {
   const value = useCountUp(target, target > 10000 ? 2500 : 1500);
   return (
-    <div className="text-center flex flex-col items-center">
-      <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center mb-2">
-        <StatIcon size={14} className="text-gold" />
+    <div className="flex flex-col">
+      <div className="flex items-center gap-1.5 mb-0.5">
+        <StatIcon size={12} className="text-gold" />
+        <p
+          className="text-gold text-xl sm:text-2xl font-black leading-none"
+          style={{ textShadow: "0 0 16px rgba(212,168,67,0.5)" }}
+        >
+          {format(value)}
+        </p>
       </div>
-      <p className="text-gold text-xl sm:text-2xl font-black leading-none">
-        {format(value)}
-      </p>
-      <p className="text-gray-500 text-[11px] mt-1.5 uppercase tracking-wider font-medium">
+      <p className="text-gray-500 text-[10px] uppercase tracking-wider font-medium">
         {label}
       </p>
     </div>
@@ -178,17 +181,25 @@ export default function HeroSection() {
         className="absolute inset-0 bg-cover bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1508344928928-7137b29de216?q=80&w=2000&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1459865264687-595d652de67e?q=80&w=2000&auto=format&fit=crop')",
           backgroundPositionX: "center",
           backgroundPositionY: `calc(50% + ${bgY}px)`,
           willChange: "background-position",
         }}
       />
 
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/95 to-dark/60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--color-gold)_0%,_transparent_50%)] opacity-15" />
+      {/* Gradient overlays — less heavy so the image breathes */}
+      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/80 to-dark/30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-dark/40 via-transparent to-dark" />
+      {/* Gold top-right radial glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--color-gold)_0%,_transparent_50%)] opacity-25" />
+      {/* Emerald bottom glow — casino/money feel */}
+      <div
+        className="absolute bottom-0 left-[20%] w-[600px] h-[250px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(16,185,129,0.08) 0%, transparent 70%)",
+        }}
+      />
 
       {/* Grid pattern overlay */}
       <div
@@ -261,6 +272,38 @@ export default function HeroSection() {
               >
                 Wè Jwèt Yo
               </Link>
+            </div>
+
+            {/* Sports category chips */}
+            <div
+              className="flex flex-wrap gap-2 animate-fade-up"
+              style={{ animationDelay: "0.35s" }}
+            >
+              {[
+                { emoji: "⚽", label: "Foutbòl" },
+                { emoji: "🏇", label: "Kous Cheval" },
+                { emoji: "🃏", label: "Jeu Kat" },
+                { emoji: "🎯", label: "Pati H2H" },
+                { emoji: "🏆", label: "Eliminas" },
+              ].map(({ emoji, label }) => (
+                <span
+                  key={label}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-gray-300 border border-white/15 bg-white/5 backdrop-blur-sm hover:border-gold/40 hover:text-gold transition-colors cursor-default"
+                >
+                  <span>{emoji}</span>
+                  <span>{label}</span>
+                </span>
+              ))}
+            </div>
+
+            {/* Live stats row */}
+            <div
+              className="flex gap-6 pt-2 animate-fade-up"
+              style={{ animationDelay: "0.45s" }}
+            >
+              {stats.map((s, i) => (
+                <StatItem key={i} {...s} />
+              ))}
             </div>
           </div>
 

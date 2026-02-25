@@ -56,106 +56,96 @@ export default function WinningsCalculator() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/4 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-purple-500/4 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/20 mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/20 mb-4 backdrop-blur-sm">
             <Calculator size={12} className="text-gold" />
             <span className="text-gold text-xs font-bold uppercase tracking-wider">
               Benefis Posib
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
-            Kalkile Sa Ou Ka{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold animate-gradient">
-              Touche
+          <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 z-10 relative">
+            Pa Kite Lajan w Dòmi,{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold animate-gradient block sm:inline">
+              Fè l Travay!
             </span>
           </h2>
-          <p className="text-gray-400 max-w-md mx-auto text-sm leading-relaxed">
-            Chanje miz ak kantite jwè pou wè egzakteman konbyen lajan ou ka
-            genyen.
+          <p className="text-gray-400 max-w-lg mx-auto text-base leading-relaxed relative z-10">
+            Chwazi konbyen w vle mize epi wè konbyen fwa ou ka miltipliye kòb la fasil.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* ── Left: Controls ── */}
-          <div className="space-y-6">
+        <div className="grid lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
+          {/* ── Left: Controls (5 columns) ── */}
+          <div className="lg:col-span-5 space-y-6 flex flex-col justify-center">
             {/* Entry fee selector */}
-            <div className="glass-card rounded-2xl p-5">
+            <div className="glass-card rounded-2xl p-6 border border-white/5 shadow-lg">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg bg-gold/10 flex items-center justify-center">
-                  <Coins size={13} className="text-gold" />
+                <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center">
+                  <Coins size={16} className="text-gold" />
                 </div>
-                <p className="text-white font-bold text-sm">Pri pou w antre</p>
+                <p className="text-white font-bold text-sm">Pri pou w antre (HTG)</p>
               </div>
               <div className="grid grid-cols-5 gap-2">
                 {ENTRY_OPTIONS.map((v) => (
                   <button
                     key={v}
                     onClick={() => setEntry(v)}
-                    className="py-2.5 rounded-xl text-xs font-black transition-all duration-200 relative overflow-hidden"
+                    className="py-3 rounded-xl text-xs font-black transition-all duration-200 relative overflow-hidden"
                     style={
                       entry === v
                         ? {
                             background:
                               "linear-gradient(135deg, #D4A843, #E8C46A)",
                             color: "#1A1A2E",
-                            boxShadow: "0 0 16px rgba(212,168,67,0.4)",
+                            boxShadow: "0 4px 15px rgba(212,168,67,0.3)",
                             transform: "scale(1.05)",
                           }
                         : {
-                            background: "rgba(255,255,255,0.04)",
-                            color: "rgba(255,255,255,0.55)",
-                            border: "1px solid rgba(255,255,255,0.07)",
+                            background: "rgba(255,255,255,0.03)",
+                            color: "rgba(255,255,255,0.6)",
+                            border: "1px solid rgba(255,255,255,0.05)",
                           }
                     }
                   >
                     {v >= 1000 ? `${v / 1000}k` : v}
-                    <span className="block text-[8px] font-medium mt-0.5 opacity-70">
-                      HTG
-                    </span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Player count selector */}
-            <div className="glass-card rounded-2xl p-5">
+            <div className="glass-card rounded-2xl p-6 border border-white/5 shadow-lg">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                  <Users size={13} className="text-purple-400" />
+                <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                  <Users size={16} className="text-purple-400" />
                 </div>
-                <p className="text-white font-bold text-sm">Kantite jwè</p>
-                <span className="ml-auto text-gray-500 text-xs">
-                  ou genyen yo tout
-                </span>
+                <p className="text-white font-bold text-sm">Kantite jwè w ap bat</p>
               </div>
               <div className="grid grid-cols-5 gap-2">
                 {PLAYER_OPTIONS.map((v) => (
                   <button
                     key={v}
                     onClick={() => setPlayers(v)}
-                    className="py-2.5 rounded-xl text-xs font-black transition-all duration-200"
+                    className="py-3 rounded-xl text-xs font-black transition-all duration-200"
                     style={
                       players === v
                         ? {
                             background:
                               "linear-gradient(135deg, #A855F7, #7C3AED)",
                             color: "#fff",
-                            boxShadow: "0 0 16px rgba(168,85,247,0.3)",
+                            boxShadow: "0 4px 15px rgba(168,85,247,0.3)",
                             transform: "scale(1.05)",
                           }
                         : {
-                            background: "rgba(255,255,255,0.04)",
-                            color: "rgba(255,255,255,0.55)",
-                            border: "1px solid rgba(255,255,255,0.07)",
+                            background: "rgba(255,255,255,0.03)",
+                            color: "rgba(255,255,255,0.6)",
+                            border: "1px solid rgba(255,255,255,0.05)",
                           }
                     }
                   >
                     {v}
-                    <span className="block text-[8px] font-medium mt-0.5 opacity-70">
-                      jwè
-                    </span>
                   </button>
                 ))}
               </div>
@@ -163,135 +153,99 @@ export default function WinningsCalculator() {
 
             {/* Multiplier badge */}
             <div
-              className="rounded-2xl p-4 flex items-center gap-4 border"
+              className="rounded-2xl p-5 flex items-center justify-between border shadow-lg"
               style={{
-                background: "rgba(212,168,67,0.06)",
+                background: "rgba(212,168,67,0.05)",
                 borderColor: "rgba(212,168,67,0.2)",
               }}
             >
-              <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
-                <TrendingUp size={20} className="text-gold" />
+              <div className="flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+                   <TrendingUp size={20} className="text-gold" />
+                 </div>
+                 <p className="text-gray-300 font-medium text-sm">Miltiplikatè</p>
               </div>
-              <div>
-                <p className="text-gray-400 text-xs mb-0.5">Retou sou miz ou</p>
-                <p className="text-gold font-black text-2xl leading-none">
-                  {multiplier}
-                  <span className="text-gold/60 text-base ml-1">× retou</span>
-                </p>
-              </div>
+              <p className="text-gold font-black text-3xl leading-none">
+                {multiplier}x
+              </p>
             </div>
           </div>
 
-          {/* ── Right: Result Card ── */}
-          <div className="relative">
+          {/* ── Right: Massive Visual Result Card (7 columns) ── */}
+          <div className="lg:col-span-7 relative h-[450px] sm:h-full min-h-[450px]">
             {/* Border glow */}
-            <div className="absolute -inset-[2px] rounded-3xl bg-gradient-to-br from-gold via-yellow-500/50 to-gold opacity-20 blur-sm animate-gradient" />
+            <div className="absolute -inset-[1px] rounded-[2rem] bg-gradient-to-br from-gold/40 via-purple-500/20 to-gold/20 opacity-50 blur-[2px] pointer-events-none" />
 
-            <div className="glass-card rounded-3xl p-6 relative">
-              {/* Glow inside */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-gold/5 rounded-full blur-2xl pointer-events-none" />
+            <div className="relative h-full w-full rounded-[2rem] overflow-hidden border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.6)] group">
+               
+               {/* Background Image of the Winner */}
+               <div 
+                 className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 group-hover:scale-105"
+                 style={{ backgroundImage: "url('/images/p2p_mobile_haiti.png')" }}
+               />
+               
+               {/* Gradients to make text readable */}
+               <div className="absolute inset-0 bg-gradient-to-b from-dark/95 via-dark/40 to-dark/95" />
+               <div className="absolute inset-0 bg-gradient-to-r from-dark/80 via-dark/40 to-transparent" />
+               
+               {/* Result Content Positioned Over Image */}
+               <div className="relative z-10 p-8 sm:p-10 h-full flex flex-col justify-between">
+                 
+                 {/* Top Stats */}
+                 <div className="space-y-4 max-w-[280px]">
+                   <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                     <span className="text-gray-300 text-sm font-medium">Miz Ou</span>
+                     <span className="text-white font-black text-base">
+                       {entry.toLocaleString()} HTG
+                     </span>
+                   </div>
+                   <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                     <span className="text-gray-300 text-sm font-medium">Total Pot</span>
+                     <span className="text-white font-black text-base" key={aPot}>
+                       {aPot.toLocaleString()} HTG
+                     </span>
+                   </div>
+                 </div>
 
-              <div className="relative z-10">
-                <p className="text-gray-400 text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
-                  <Zap size={11} className="text-gold" />
-                  Si ou genyen...
-                </p>
+                 {/* Center Big Win Amount */}
+                 <div className="mt-auto mb-8 sm:mb-12">
+                   <div className="inline-flex items-center gap-2 bg-success/20 border border-success/30 px-3 py-1 rounded-full mb-3 backdrop-blur-md">
+                     <Zap size={14} className="text-success" />
+                     <span className="text-success font-bold text-xs uppercase tracking-wider drop-shadow-md">Si w bat yo tout</span>
+                   </div>
+                   <p className="text-gray-200 text-lg font-medium mb-1 drop-shadow-lg">Ou pran:</p>
+                   <p
+                     className="font-black leading-none drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)]"
+                     key={aWinnings}
+                     style={{
+                       fontSize: "clamp(3.5rem, 8vw, 5rem)",
+                       background: "linear-gradient(to bottom right, #FFFFFF, #FACC15, #D4A843)",
+                       WebkitBackgroundClip: "text",
+                       WebkitTextFillColor: "transparent",
+                       backgroundClip: "text",
+                       lineHeight: "1",
+                     }}
+                   >
+                     {aWinnings.toLocaleString()}
+                     <span className="text-3xl sm:text-4xl ml-2 drop-shadow-md" style={{WebkitTextFillColor: "rgba(255,255,255,0.9)"}}>HTG</span>
+                   </p>
+                   <p className="text-success font-black text-xl sm:text-2xl mt-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" key={aProfit}>
+                     +{aProfit.toLocaleString()} HTG Pwofi Nèt
+                   </p>
+                 </div>
 
-                {/* Row: mize */}
-                <div className="flex items-center justify-between py-2.5 border-b border-white/5">
-                  <span className="text-gray-400 text-sm">Miz Ou</span>
-                  <span className="text-white font-bold text-sm">
-                    {entry.toLocaleString()} HTG
-                  </span>
-                </div>
-
-                {/* Row: total pot */}
-                <div className="flex items-center justify-between py-2.5 border-b border-white/5">
-                  <span className="text-gray-400 text-sm">Total</span>
-                  <span className="text-white font-semibold text-sm" key={aPot}>
-                    {aPot.toLocaleString()} HTG
-                  </span>
-                </div>
-
-                {/* Row: platform cut */}
-                <div className="flex items-center justify-between py-2.5 border-b border-white/5">
-                  <span className="text-gray-500 text-xs">
-                    Frè platfòm (10%)
-                  </span>
-                  <span className="text-gray-500 text-xs">
-                    −{(pot * PLATFORM_CUT).toLocaleString()} HTG
-                  </span>
-                </div>
-
-                {/* Big win amount */}
-                <div className="py-5 text-center">
-                  <p className="text-gray-500 text-xs uppercase tracking-widest mb-2">
-                    Ou resevwa
-                  </p>
-                  <p
-                    className="font-black leading-none animate-number-pop"
-                    key={aWinnings}
-                    style={{
-                      fontSize: "clamp(2.2rem, 6vw, 3rem)",
-                      background:
-                        "linear-gradient(135deg, #D4A843, #E8C46A, #D4A843)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      textShadow: "none",
-                      filter: "drop-shadow(0 0 16px rgba(212,168,67,0.4))",
-                    }}
-                  >
-                    {aWinnings.toLocaleString()}
-                    <span
-                      style={{
-                        fontSize: "1.2rem",
-                        WebkitTextFillColor: "rgba(212,168,67,0.6)",
-                      }}
-                      className="ml-2"
+                 {/* Bottom Action */}
+                 <div className="relative z-20">
+                    <Link
+                      to="/enskri"
+                      className="group/btn inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-gradient-to-r from-gold to-yellow-500 hover:from-yellow-400 hover:to-yellow-300 text-dark font-black px-8 py-4 rounded-xl transition-all duration-300 hover:scale-[1.03] shadow-[0_10px_30px_rgba(212,168,67,0.4)] hover:shadow-[0_15px_40px_rgba(212,168,67,0.6)] no-underline"
                     >
-                      HTG
-                    </span>
-                  </p>
-                </div>
+                      Kòmanse Jwe Kounye a
+                      <ArrowRight size={18} className="group/btn-hover:translate-x-1 transition-transform" />
+                    </Link>
+                 </div>
 
-                {/* Net profit */}
-                <div
-                  className="rounded-xl p-3 flex items-center justify-between mb-5"
-                  style={{
-                    background: "rgba(34,197,94,0.08)",
-                    border: "1px solid rgba(34,197,94,0.2)",
-                  }}
-                >
-                  <span className="text-success text-sm font-semibold">
-                    Benefis
-                  </span>
-                  <span
-                    className="text-success font-black text-lg"
-                    key={aProfit}
-                  >
-                    +{aProfit.toLocaleString()} HTG
-                  </span>
-                </div>
-
-                <Link
-                  to="/enskri"
-                  className="group flex items-center justify-center gap-2 w-full bg-gradient-to-r from-gold to-yellow-500 hover:from-yellow-400 hover:to-yellow-300 text-dark font-black py-3.5 rounded-xl transition-all duration-300 hover:scale-[1.02] no-underline relative overflow-hidden"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Kòmanse
-                    <ArrowRight
-                      size={16}
-                      className="group-hover:translate-x-1 transition-transform"
-                    />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                </Link>
-
-                <p className="text-center text-gray-600 text-xs mt-3">
-                  Mize reyèl yo ka varye. Chif sa yo se yon estimasyon.
-                </p>
-              </div>
+               </div>
             </div>
           </div>
         </div>

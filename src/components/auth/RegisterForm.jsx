@@ -57,7 +57,6 @@ export default function RegisterForm() {
 
   const canSubmitStep1 =
     form.fullName.trim() &&
-    form.email.trim() &&
     form.phone.trim() &&
     form.password.length >= 8 &&
     form.password === form.confirmPassword &&

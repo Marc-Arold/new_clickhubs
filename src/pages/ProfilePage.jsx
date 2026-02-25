@@ -25,7 +25,7 @@ export default function ProfilePage() {
         <div className="relative glass-card rounded-2xl overflow-hidden z-10">
           {/* Background banner */}
           <div className="h-24 sm:h-32 bg-gradient-to-r from-dark-accent via-dark-surface to-dark-accent relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center opacity-10" />
+            <div className="absolute inset-0 bg-[url('/images/p2p_abstract_bg.png')] bg-cover bg-center opacity-10" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-dark-surface" />
             {/* Decorative elements */}
             <div className="absolute top-4 left-[10%] w-2 h-2 bg-gold/20 rounded-full animate-float blur-[1px]" />

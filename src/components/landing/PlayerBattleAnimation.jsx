@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Crown, Trophy, Zap } from "lucide-react";
+import { Crown, Trophy, Zap, Coins } from "lucide-react";
 
 /* ─────────────────────────────────────────────
    CONFIG
@@ -24,7 +24,6 @@ const OPPONENTS  = ALL_PLAYERS.filter((p) => !p.isYou);
 
 /*
   Elimination offsets from battleStart (ms).
-  Varied intentionally for tension — some fast, some with a pause.
 */
 const ELIM_OFFSETS = [480, 1020, 1600, 2080, 2700, 3350, 4000];
 
@@ -35,51 +34,46 @@ const PHASE_DURATION = {
   RESET:  900,
 };
 
-/* Radial coin burst style for winner */
-function coinStyle(i, total) {
-  const angle = (360 / total) * i + (i % 3) * 10;
-  const rad   = (angle * Math.PI) / 180;
-  const dist  = 55 + (i % 4) * 20;
-  return {
-    "--tx":             `${Math.round(Math.cos(rad) * dist)}px`,
-    "--ty":             `${Math.round(Math.sin(rad) * dist)}px`,
-    animationDelay:     `${i * 30}ms`,
-    animationDuration:  "0.85s",
-    animationFillMode:  "both",
-    animationName:      "coin-scatter",
-    animationTimingFunction: "ease-out",
-  };
-}
-
 /* ─────────────────────────────────────────────
-   PLAYER TOKEN
+   PLAYER TOKEN (SEATED AT TABLE)
 ───────────────────────────────────────────── */
 function PlayerToken({ player, visible, eliminated, isWinnerPhase, isShaking, isSurviving }) {
   const isWinner = player.isYou && isWinnerPhase;
 
   /* Build dynamic class list */
   const cls = [
-    "relative w-12 h-12 rounded-full flex items-center justify-center font-black select-none",
-    "transition-opacity duration-300",
+    "relative w-14 h-14 rounded-full flex items-center justify-center font-black select-none z-10",
+    "transition-all duration-300",
     visible && !eliminated && !isShaking && !isSurviving && !isWinner
       ? "animate-battle-enter"
       : "",
     isShaking   ? "animate-shake"       : "",
-    isSurviving ? "animate-survive"     : "",
-    isWinner    ? "animate-winner-glow" : "",
+    isSurviving ? "animate-survive scale-110 shadow-[0_0_20px_rgba(212,168,67,0.4)]" : "",
+    isWinner    ? "animate-winner-glow scale-125 z-50 shadow-[0_0_40px_rgba(212,168,67,0.8)]" : "",
+    eliminated  ? "scale-90 opacity-20 filter grayscale" : "shadow-lg",
   ]
     .filter(Boolean)
     .join(" ");
 
   return (
     <div
-      className="relative flex flex-col items-center gap-1"
+      className="relative flex flex-col items-center gap-1.5"
       style={{
-        opacity:    visible ? (eliminated ? 0.1 : 1) : 0,
+        opacity:    visible ? 1 : 0,
         transition: "opacity 0.5s ease",
-        filter:     eliminated ? "grayscale(1) blur(0.5px)" : "none",
       }}
     >
+      {/* Laser line from eliminated player to pot (simulated) */}
+      {eliminated && !isWinnerPhase && (
+        <div className="absolute top-1/2 left-1/2 w-[1px] bg-red-500/50 h-[100px] origin-top -mt-7 -ml-[0.5px] pointer-events-none" 
+             style={{ 
+               transform: `rotate(${Math.atan2(150 - 0, 150 - 0)}rad)`, /* Simplified aiming to center */
+               opacity: 0,
+               animation: 'fade-out-laser 0.6s ease-out' 
+             }} 
+        />
+      )}
+
       {/* Token circle */}
       <div
         className={cls}
@@ -87,20 +81,20 @@ function PlayerToken({ player, visible, eliminated, isWinnerPhase, isShaking, is
           background:     player.bg,
           border:         `2px solid ${player.color}`,
           color:          player.color,
-          fontSize:       player.isYou ? "10px" : "11px",
+          fontSize:       player.isYou ? "12px" : "11px",
           animationDelay:
             visible && !eliminated && !isShaking && !isSurviving && !isWinner
               ? `${player.id * 0.26}s`
               : undefined,
-          transform:      player.isYou ? "scale(1.18)" : "scale(1)",
-          zIndex:         isWinner ? 10 : 1,
+          backgroundSize: "cover",
+          backgroundImage: player.isYou ? "linear-gradient(135deg, rgba(212,168,67,0.4), rgba(16,18,27,0.8))" : "none"
         }}
       >
         {/* Crown for YOU */}
         {player.isYou && (
           <Crown
-            size={9}
-            className="absolute -top-2.5 left-1/2 -translate-x-1/2"
+            size={12}
+            className="absolute -top-3 left-1/2 -translate-x-1/2"
             style={{ color: "#D4A843", fill: "#D4A843" }}
           />
         )}
@@ -113,38 +107,21 @@ function PlayerToken({ player, visible, eliminated, isWinnerPhase, isShaking, is
           <span>{player.name.slice(0, 3)}</span>
         )}
 
-        {/* Eliminated X */}
+        {/* Eliminated X overlay */}
         {eliminated && (
-          <div className="absolute inset-0 rounded-full flex items-center justify-center bg-danger/40">
+          <div className="absolute inset-0 rounded-full flex items-center justify-center bg-dark/80 backdrop-blur-sm">
             <span className="text-danger font-black text-xl leading-none">✕</span>
-          </div>
-        )}
-
-        {/* Winner coin burst */}
-        {isWinner && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full"
-                style={{
-                  width:      i % 3 === 0 ? "10px" : i % 3 === 1 ? "7px" : "5px",
-                  height:     i % 3 === 0 ? "10px" : i % 3 === 1 ? "7px" : "5px",
-                  background: i % 2 === 0 ? "#D4A843" : "#E8C46A",
-                  ...coinStyle(i, 20),
-                }}
-              />
-            ))}
           </div>
         )}
       </div>
 
       {/* Name label */}
       <span
-        className="text-[9px] font-semibold truncate max-w-[52px] text-center leading-none"
+        className="text-[10px] font-semibold truncate max-w-[60px] text-center leading-none px-2 py-0.5 rounded-sm bg-dark/60 backdrop-blur-sm"
         style={{
-          color:      player.isYou ? "#D4A843" : "rgba(255,255,255,0.4)",
+          color:      player.isYou ? "#D4A843" : "rgba(255,255,255,0.6)",
           fontWeight: player.isYou ? 900 : 600,
+          border:     player.isYou ? "1px solid rgba(212,168,67,0.3)" : "none"
         }}
       >
         {player.isYou ? "VOU" : player.name}
@@ -159,11 +136,11 @@ function PlayerToken({ player, visible, eliminated, isWinnerPhase, isShaking, is
 function EliminationToast({ name }) {
   return (
     <div
-      className="absolute top-2 right-2 bg-danger/10 border border-danger/30 rounded-lg px-3 py-1.5 flex items-center gap-1.5 z-30 pointer-events-none"
-      style={{ animation: "toast-in-out 1.5s ease both" }}
+      className="absolute top-4 right-4 bg-danger/20 backdrop-blur-md border border-danger/50 rounded-lg px-4 py-2 flex items-center gap-2 z-40 pointer-events-none shadow-[0_0_15px_rgba(239,68,68,0.4)]"
+      style={{ animation: "toast-in-out 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both" }}
     >
-      <span className="text-danger text-xs font-black">✕</span>
-      <span className="text-danger text-xs font-bold">{name} pèdi!</span>
+      <span className="text-danger text-sm font-black">✕</span>
+      <span className="text-white text-xs font-bold">{name} kraze!</span>
     </div>
   );
 }
@@ -189,15 +166,15 @@ export default function PlayerBattleAnimation() {
   const handleTiltMove = useCallback((e) => {
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect || !innerRef.current) return;
-    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 9;
-    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 9;
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 12;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 12;
     tiltRef.current = { x, y };
-    innerRef.current.style.transform = `perspective(1200px) rotateY(${x}deg) rotateX(${-y}deg)`;
+    innerRef.current.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
   }, []);
 
   const handleTiltLeave = useCallback(() => {
     if (!innerRef.current) return;
-    innerRef.current.style.transform = "perspective(1200px) rotateY(0deg) rotateX(0deg)";
+    innerRef.current.style.transform = "perspective(1000px) rotateY(0deg) rotateX(0deg)";
   }, []);
 
   const timers = useRef([]);
@@ -254,13 +231,13 @@ export default function PlayerBattleAnimation() {
           setLastElim(opp.name);
           setFlash(true);
           addTimer(() => setFlash(false), 580);
-          addTimer(() => setLastElim(null), 1500);
+          addTimer(() => setLastElim(null), 1200);
         },
         battleStart + offset,
       );
     });
 
-    /* ── WINNER ── */
+    /* ── WINNER "SWEEP" PHASE ── */
     const winnerStart = battleStart + PHASE_DURATION.BATTLE;
     addTimer(() => {
       setPhase("WINNER");
@@ -294,11 +271,11 @@ export default function PlayerBattleAnimation() {
   const isWinnerPhase  = phase === "WINNER";
   const isBattlePhase  = phase === "BATTLE";
 
-  /* Dynamic card shadow */
+  /* Dynamic card shadow for impact */
   const cardShadow = arenaFlash
-    ? "inset 0 0 80px rgba(239,68,68,0.45), 0 0 40px rgba(239,68,68,0.2)"
+    ? "0 0 40px rgba(239,68,68,0.2)"
     : isWinnerPhase
-      ? "inset 0 0 60px rgba(212,168,67,0.15), 0 0 60px rgba(212,168,67,0.3)"
+      ? "0 0 60px rgba(212,168,67,0.4)"
       : "none";
 
   return (
@@ -307,161 +284,184 @@ export default function PlayerBattleAnimation() {
       className="relative group"
       onMouseMove={handleTiltMove}
       onMouseLeave={handleTiltLeave}
-      style={{ perspective: "1200px" }}
+      style={{ perspective: "1000px" }}
     >
+      <style>{`
+        @keyframes pot-sweep {
+          0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+          40% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; filter: drop-shadow(0 0 30px #D4A843); }
+          100% { transform: translate(-50%, 150px) scale(0.5); opacity: 0; filter: drop-shadow(0 0 50px #D4A843); }
+        }
+        .animate-pot-sweep {
+          animation: pot-sweep 1s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+        }
+        @keyframes fade-out-laser {
+          0% { opacity: 1; box-shadow: 0 0 10px #ef4444; }
+          100% { opacity: 0; box-shadow: 0 0 0px transparent; }
+        }
+      `}</style>
+
       {/* Animated gradient border glow */}
       <div
-        className={`absolute -inset-[2px] rounded-3xl blur-sm transition-all duration-700 animate-gradient ${
+        className={`absolute -inset-[2px] rounded-3xl blur-[14px] transition-all duration-700 ${
           isWinnerPhase
-            ? "opacity-70 bg-gradient-to-r from-gold via-yellow-200 to-gold"
-            : "opacity-25 bg-gradient-to-r from-gold via-yellow-600 to-gold group-hover:opacity-45"
+            ? "opacity-100 bg-gradient-to-r from-gold via-yellow-200 to-gold shadow-[0_0_50px_rgba(212,168,67,0.6)]"
+            : "opacity-40 bg-gradient-to-r from-gold via-[#10121b] to-gold group-hover:opacity-70"
         }`}
       />
 
       <div
         ref={innerRef}
-        className="glass-card rounded-3xl p-6 relative overflow-hidden card-shine"
+        className="glass-card rounded-3xl relative overflow-hidden card-shine border border-white/10"
         style={{
-          minHeight:       "420px",
+          minHeight:       "460px",
           boxShadow:       cardShadow,
-          transition:      "transform 0.12s ease-out, box-shadow 0.3s ease",
+          transition:      "transform 0.1s ease-out, box-shadow 0.4s ease",
           transformStyle:  "preserve-3d",
         }}
       >
-        {/* Background glow blobs */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-gold/5 rounded-full blur-3xl -mr-12 -mt-12" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl -ml-8 -mb-8" />
-          {isWinnerPhase && (
-            <div className="absolute inset-0 bg-gradient-to-b from-gold/10 to-transparent animate-pulse rounded-3xl" />
-          )}
-        </div>
+        {/* HYPER PREMIUM LOTUS TABLE BACKGROUND */}
+        <div 
+          className={`absolute inset-0 bg-cover bg-center transition-all duration-[3000ms] ease-out ${isWinnerPhase ? 'scale-110 brightness-110 filter contrast-125' : 'scale-100 opacity-60'}`}
+          style={{ backgroundImage: "url('/images/lotus_casino_table.png')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/90 via-dark/40 to-dark/90 mix-blend-multiply" />
+        
+        {/* Arena Edge Glow */}
+        <div className={`absolute inset-0 border-2 rounded-3xl transition-colors duration-500 pointer-events-none ${isWinnerPhase ? 'border-gold/30' : 'border-white/5'}`} />
 
         {/* ── Header ── */}
-        <div className="flex items-center justify-between mb-5 relative z-10">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between p-5 relative z-20 bg-gradient-to-b from-dark/80 to-transparent">
+          <div className="flex items-center gap-3">
             <div
-              className="w-8 h-8 rounded-lg border flex items-center justify-center transition-all duration-500"
-              style={
+              className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-500 shadow-lg ${
                 isWinnerPhase
-                  ? { background: "rgba(212,168,67,0.2)", borderColor: "rgba(212,168,67,0.45)" }
-                  : { background: "rgba(212,168,67,0.08)", borderColor: "rgba(212,168,67,0.18)" }
-              }
+                  ? "bg-gold/20 border-gold/50 shadow-[0_0_15px_rgba(212,168,67,0.3)]"
+                  : "bg-dark-surface/80 border-white/10"
+              }`}
             >
-              <Trophy size={15} className="text-gold" />
+              <Coins size={18} className="text-gold" />
             </div>
             <div>
-              <p className="text-white font-black text-sm leading-none">Kous Cheval</p>
-              <p className="text-gray-500 text-[10px] mt-0.5">An dirèk</p>
+              <p className="text-white font-black text-base shadow-sm">High-Stakes P2P</p>
+              <p className="text-gold/80 text-[11px] font-bold uppercase tracking-wider mt-0.5">Winner Takes All</p>
             </div>
           </div>
 
           {/* Phase badge */}
           <div
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider transition-all duration-500"
-            style={
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-black uppercase tracking-widest transition-all duration-500 shadow-xl backdrop-blur-md ${
               isWinnerPhase
-                ? { background: "rgba(212,168,67,0.15)", borderColor: "rgba(212,168,67,0.4)",  color: "#D4A843" }
+                ? "bg-gold/20 border-gold/50 text-gold"
                 : isBattlePhase
-                  ? { background: "rgba(239,68,68,0.12)", borderColor: "rgba(239,68,68,0.35)", color: "#EF4444" }
-                  : { background: "rgba(34,197,94,0.1)",  borderColor: "rgba(34,197,94,0.3)",  color: "#22C55E" }
-            }
+                  ? "bg-danger/20 border-danger/50 text-danger"
+                  : "bg-success/20 border-success/50 text-success"
+            }`}
           >
             <span
-              className="w-1.5 h-1.5 rounded-full inline-block"
-              style={{ background: "currentColor", animation: "pulse 1s ease infinite" }}
+              className="w-2 h-2 rounded-full inline-block"
+              style={{ background: "currentColor", animation: "pulse 1s ease infinite", boxShadow: `0 0 8px currentColor` }}
             />
-            {isWinnerPhase ? "Viktwa!" : isBattlePhase ? "Kous" : "Antre"}
+            {isWinnerPhase ? "VIKTWA!" : isBattlePhase ? "BATAy" : "ANTRE"}
           </div>
         </div>
 
-        {/* ── Prize Pool ── */}
-        <div
-          className="rounded-xl p-3 mb-5 border relative z-10 transition-all duration-400"
-          style={{
-            background:  isWinnerPhase ? "rgba(34,197,94,0.08)"   : "rgba(0,0,0,0.35)",
-            borderColor: isWinnerPhase ? "rgba(34,197,94,0.28)"   : "rgba(255,255,255,0.07)",
-          }}
-        >
-          <p className="text-gray-500 text-[10px] uppercase tracking-widest mb-1">
-            {isWinnerPhase ? "Ou resevwa" : "Miz total"}
-          </p>
-          <div className="flex items-baseline gap-2 flex-wrap">
-            <span
-              className="font-black text-3xl leading-none animate-number-pop"
-              key={prizeDisplay}
-              style={{
-                color:      isWinnerPhase ? "#22C55E" : "#D4A843",
-                textShadow: isWinnerPhase
-                  ? "0 0 24px rgba(34,197,94,0.55)"
-                  : "0 0 20px rgba(212,168,67,0.45)",
-              }}
-            >
-              {prizeDisplay.toLocaleString()}
-            </span>
-            <span className="text-gold/60 text-sm font-bold">HTG</span>
-            {isWinnerPhase && (
-              <span className="ml-auto text-success text-xs font-black animate-winner-text flex items-center gap-1">
-                <Zap size={11} className="fill-current" />
-                +{(YOUR_PRIZE - ENTRY_FEE).toLocaleString()} HTG benefis
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* ── Arena: Player Grid ── */}
-        <div className="relative z-10 mb-4">
-          {/* Elimination toast — key forces remount on each new elimination */}
+        {/* ── THE TABLE ARENA ── */}
+        <div className="relative z-10 h-[300px] w-full flex items-center justify-center">
+          
+          {/* Elimination toast */}
           {lastElim && <EliminationToast key={lastElim} name={lastElim} />}
 
-          <div className="grid grid-cols-4 gap-3 justify-items-center">
-            {ALL_PLAYERS.map((player) => (
-              <PlayerToken
-                key={player.id}
-                player={player}
-                visible={visibleCount >= player.id}
-                eliminated={eliminated.has(player.id)}
-                isWinnerPhase={isWinnerPhase}
-                isShaking={shakingId === player.id}
-                isSurviving={isBattlePhase && player.isYou && !eliminated.has(player.id)}
-              />
-            ))}
+          {/* THE CENTER POT */}
+          <div 
+            className={`absolute top-1/2 left-1/2 z-20 flex flex-col items-center justify-center transition-all duration-300 ${isWinnerPhase ? 'animate-pot-sweep' : '-translate-x-1/2 -translate-y-1/2'}`}
+          >
+            <div className={`p-4 rounded-full border-[3px] backdrop-blur-md transition-all duration-300 ${isWinnerPhase ? 'bg-gold/20 border-gold shadow-[0_0_60px_rgba(212,168,67,0.8)] scale-110' : 'bg-dark/80 border-gold/40 shadow-[0_0_30px_rgba(212,168,67,0.2)]'}`}>
+              <p className="text-gray-400 text-[9px] uppercase font-black tracking-widest mb-1 text-center">
+                Miz Total
+              </p>
+              <span
+                className="font-black text-3xl leading-none animate-number-pop text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 to-gold"
+                key={prizeDisplay}
+                style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
+              >
+                {prizeDisplay.toLocaleString()}
+              </span>
+              <p className="text-gold/60 text-xs font-bold text-center mt-0.5">HTG</p>
+            </div>
           </div>
+
+          {/* Players arranged in an oval around the table */}
+          {/* Top Row */}
+          <div className="absolute top-[20px] w-full flex justify-around px-12">
+            <PlayerToken player={ALL_PLAYERS[1]} visible={visibleCount >= 2} eliminated={eliminated.has(ALL_PLAYERS[1].id)} isWinnerPhase={isWinnerPhase} isShaking={shakingId === ALL_PLAYERS[1].id} />
+            <PlayerToken player={ALL_PLAYERS[2]} visible={visibleCount >= 3} eliminated={eliminated.has(ALL_PLAYERS[2].id)} isWinnerPhase={isWinnerPhase} isShaking={shakingId === ALL_PLAYERS[2].id} />
+            <PlayerToken player={ALL_PLAYERS[3]} visible={visibleCount >= 4} eliminated={eliminated.has(ALL_PLAYERS[3].id)} isWinnerPhase={isWinnerPhase} isShaking={shakingId === ALL_PLAYERS[3].id} />
+          </div>
+
+          {/* Middle Row (Sides) */}
+          <div className="absolute top-[130px] w-full flex justify-between px-6">
+            <PlayerToken player={ALL_PLAYERS[0]} visible={visibleCount >= 1} eliminated={eliminated.has(ALL_PLAYERS[0].id)} isWinnerPhase={isWinnerPhase} isShaking={shakingId === ALL_PLAYERS[0].id} />
+            <PlayerToken player={ALL_PLAYERS[5]} visible={visibleCount >= 6} eliminated={eliminated.has(ALL_PLAYERS[5].id)} isWinnerPhase={isWinnerPhase} isShaking={shakingId === ALL_PLAYERS[5].id} />
+          </div>
+
+          {/* Bottom Row */}
+          <div className="absolute bottom-[20px] w-full flex justify-around px-16 items-end">
+            <PlayerToken player={ALL_PLAYERS[6]} visible={visibleCount >= 7} eliminated={eliminated.has(ALL_PLAYERS[6].id)} isWinnerPhase={isWinnerPhase} isShaking={shakingId === ALL_PLAYERS[6].id} />
+            
+            {/* YOU ARE FRONT AND CENTER */}
+            <div className="mb-4">
+              <PlayerToken 
+                player={ALL_PLAYERS[4]} 
+                visible={visibleCount >= 5} 
+                eliminated={eliminated.has(ALL_PLAYERS[4].id)} 
+                isWinnerPhase={isWinnerPhase} 
+                isShaking={shakingId === ALL_PLAYERS[4].id} 
+                isSurviving={isBattlePhase} 
+              />
+            </div>
+
+            <PlayerToken player={ALL_PLAYERS[7]} visible={visibleCount >= 8} eliminated={eliminated.has(ALL_PLAYERS[7].id)} isWinnerPhase={isWinnerPhase} isShaking={shakingId === ALL_PLAYERS[7].id} />
+          </div>
+
         </div>
 
         {/* ── Bottom Status Bar ── */}
-        <div className="relative z-10">
+        <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-dark via-dark/80 to-transparent z-20">
           {isWinnerPhase ? (
-            <div className="text-center py-2 animate-winner-text">
-              <p className="text-gold font-black text-xl tracking-wide">
-                GENYEN YO TOUT!
+            <div className="text-center animate-winner-text bg-dark/60 backdrop-blur-md p-3 rounded-2xl border border-gold/30 shadow-[0_0_30px_rgba(212,168,67,0.2)] mx-auto max-w-[80%]">
+              <p className="text-gold font-black text-2xl tracking-tight leading-none mb-1 shadow-sm">
+                OU PRAN TOUT LAJAN AN!
               </p>
-              <p className="text-gray-400 text-xs mt-1">
-                {ENTRY_FEE.toLocaleString()} HTG mize &rarr; {YOUR_PRIZE.toLocaleString()} HTG touche
+              <p className="text-white text-xs font-bold flex items-center justify-center gap-1.5 opacity-90">
+                <Zap size={12} className="text-success fill-success" />
+                <span className="text-success">+{(YOUR_PRIZE - ENTRY_FEE).toLocaleString()} HTG</span> pwofi nèt
               </p>
             </div>
           ) : (
-            <div>
-              <div className="flex justify-between text-[10px] text-gray-500 mb-1.5">
+            <div className="max-w-[80%] mx-auto">
+              <div className="flex justify-between text-[10px] text-white font-bold mb-2 uppercase tracking-wider backdrop-blur-sm px-2 py-0.5 rounded-full bg-dark/40 border border-white/5 inline-flex mx-auto w-full">
                 <span>
                   {phase === "INTRO"
-                    ? `${visibleCount} / ${ALL_PLAYERS.length} jwè antre...`
-                    : `${remainingCount + 1} jwè rete`}
+                    ? `${visibleCount} / ${ALL_PLAYERS.length} patisipan...`
+                    : `${remainingCount + 1} sivivan rete`}
                 </span>
-                <span>{ALL_PLAYERS.length} × {ENTRY_FEE} HTG</span>
+                <span className="text-gold">{ALL_PLAYERS.length} × {ENTRY_FEE} HTG</span>
               </div>
-              <div className="w-full h-1.5 bg-dark rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-dark rounded-full overflow-hidden shadow-inner border border-white/10">
                 <div
-                  className="h-full rounded-full transition-all duration-500"
+                  className="h-full rounded-full transition-all duration-500 relative"
                   style={{
                     width: phase === "INTRO"
                       ? `${(visibleCount / ALL_PLAYERS.length) * 100}%`
                       : `${((remainingCount + 1) / ALL_PLAYERS.length) * 100}%`,
                     background: isBattlePhase
-                      ? "linear-gradient(90deg, #EF4444, #F97316)"
-                      : "linear-gradient(90deg, #D4A843, #E8C46A)",
+                      ? "linear-gradient(90deg, #b91c1c, #f97316)"
+                      : "linear-gradient(90deg, #D4A843, #F59E0B)",
                   }}
-                />
+                >
+                   <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                </div>
               </div>
             </div>
           )}
@@ -469,20 +469,21 @@ export default function PlayerBattleAnimation() {
 
         {/* ── Coin rain during winner phase ── */}
         {isWinnerPhase && (
-          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-20">
-            {Array.from({ length: 26 }).map((_, i) => (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-30">
+            {Array.from({ length: 40 }).map((_, i) => (
               <div
                 key={i}
                 className="absolute rounded-full"
                 style={{
-                  width:              i % 3 === 0 ? "10px" : i % 3 === 1 ? "7px" : "4px",
-                  height:             i % 3 === 0 ? "10px" : i % 3 === 1 ? "7px" : "4px",
-                  left:               `${3 + ((i * 3.7) % 94)}%`,
-                  top:                "-14px",
+                  width:              i % 3 === 0 ? "12px" : i % 3 === 1 ? "8px" : "5px",
+                  height:             i % 3 === 0 ? "12px" : i % 3 === 1 ? "8px" : "5px",
+                  left:               `${2 + ((i * 5.7) % 96)}%`,
+                  top:                "-20px",
                   background:         i % 3 === 0 ? "#D4A843" : i % 3 === 1 ? "#E8C46A" : "#F59E0B",
-                  animation:          `coin-fall ${0.85 + (i % 5) * 0.18}s ease-in both`,
-                  animationDelay:     `${i * 55}ms`,
-                  opacity:            0.9,
+                  animation:          `coin-fall ${0.9 + (i % 5) * 0.15}s ease-in both`,
+                  animationDelay:     `${i * 45}ms`,
+                  opacity:            0.95,
+                  boxShadow:          "0 0 10px rgba(212,168,67,0.6)",
                 }}
               />
             ))}

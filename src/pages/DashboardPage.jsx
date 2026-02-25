@@ -23,7 +23,7 @@ const quickActions = [
     route: "/pronos",
     gradient: "from-rose-500/20 to-red-700/10",
     iconColor: "text-rose-400",
-    bgImage: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=400&auto=format&fit=crop",
+    bgImage: "/images/p2p_abstract_bg.png",
   },
   {
     label: "Bank Pari",
@@ -32,7 +32,7 @@ const quickActions = [
     route: "/bank-pari",
     gradient: "from-blue-500/20 to-blue-700/10",
     iconColor: "text-blue-400",
-    bgImage: "https://images.unsplash.com/photo-1518605368461-1ee7c53206fb?q=80&w=400&auto=format&fit=crop",
+    bgImage: "/images/p2p_abstract_bg.png",
   },
   {
     label: "Dènye Sivivan",
@@ -41,7 +41,7 @@ const quickActions = [
     route: "/sivivan",
     gradient: "from-orange-500/20 to-orange-700/10",
     iconColor: "text-orange-400",
-    bgImage: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=400&auto=format&fit=crop",
+    bgImage: "/images/p2p_abstract_bg.png",
   },
 ];
 
