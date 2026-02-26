@@ -1,25 +1,29 @@
 import { Link } from "react-router-dom";
-import { Clock, Trophy, Monitor, Landmark, Users, ArrowRight } from "lucide-react";
+import {
+  Clock,
+  Trophy,
+  Monitor,
+  Landmark,
+  Users,
+  ArrowRight,
+} from "lucide-react";
 
 const typeConfig = {
   sports: {
     icon: Trophy,
-    bgImage:
-      "url('/images/p2p_football_haiti.png')",
+    bgImage: "url('/images/p2p_football_haiti.png')",
     accent: "from-emerald-500 to-emerald-700",
     accentBg: "bg-emerald-500/10",
   },
   simulated: {
     icon: Monitor,
-    bgImage:
-      "url('/images/p2p_horse_racing.png')",
+    bgImage: "url('/images/p2p_horse_racing.png')",
     accent: "from-purple-500 to-purple-700",
     accentBg: "bg-purple-500/10",
   },
   "bank-pari": {
     icon: Landmark,
-    bgImage:
-      "url('/images/p2p_casino_haiti.png')",
+    bgImage: "url('/images/p2p_football_betting.png')",
     accent: "from-blue-500 to-blue-700",
     accentBg: "bg-blue-500/10",
   },

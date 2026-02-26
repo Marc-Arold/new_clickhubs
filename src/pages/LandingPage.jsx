@@ -9,10 +9,20 @@ import TrustSignals from "../components/landing/TrustSignals";
 import PlayerBattleAnimation from "../components/landing/PlayerBattleAnimation";
 import { gamePreviewsMock } from "../data/mockData";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Trophy, ChevronUp, Crown, Swords, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  Trophy,
+  ChevronUp,
+  Crown,
+  Swords,
+  Zap,
+} from "lucide-react";
 
 /* ── Coin rain particles for the final CTA ── */
-const COIN_POSITIONS = [5, 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89, 94, 8];
+const COIN_POSITIONS = [
+  5, 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89, 94, 8,
+];
 const COIN_COLORS = ["#D4A843", "#E8C46A", "#F59E0B", "#D4A843", "#E8C46A"];
 
 function CoinRain() {
@@ -81,7 +91,8 @@ function ScrollToTopButton() {
             : "translateY(0) scale(1)"
           : "translateY(22px) scale(0.7)",
         pointerEvents: visible ? "auto" : "none",
-        transition: "opacity 0.35s ease, transform 0.35s ease, box-shadow 0.2s ease",
+        transition:
+          "opacity 0.35s ease, transform 0.35s ease, box-shadow 0.2s ease",
       }}
     >
       <ChevronUp size={20} strokeWidth={2.5} />
@@ -90,7 +101,12 @@ function ScrollToTopButton() {
 }
 
 /* ── Animate-on-scroll via IntersectionObserver ── */
-function AnimateOnScroll({ children, delay = 0, direction = "up", className = "" }) {
+function AnimateOnScroll({
+  children,
+  delay = 0,
+  direction = "up",
+  className = "",
+}) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -104,15 +120,15 @@ function AnimateOnScroll({ children, delay = 0, direction = "up", className = ""
           observer.unobserve(el);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
   const hiddenStyle = {
-    up:    { opacity: 0, transform: "translateY(55px)" },
-    left:  { opacity: 0, transform: "translateX(-55px)" },
+    up: { opacity: 0, transform: "translateY(55px)" },
+    left: { opacity: 0, transform: "translateX(-55px)" },
     right: { opacity: 0, transform: "translateX(55px)" },
     scale: { opacity: 0, transform: "scale(0.88)" },
   }[direction] ?? { opacity: 0, transform: "translateY(55px)" };
@@ -122,7 +138,8 @@ function AnimateOnScroll({ children, delay = 0, direction = "up", className = ""
       ref={ref}
       className={className}
       style={{
-        transition: "opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
+        transition:
+          "opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
         transitionDelay: `${delay}ms`,
         ...(visible ? { opacity: 1, transform: "none" } : hiddenStyle),
       }}
@@ -136,27 +153,24 @@ function AnimateOnScroll({ children, delay = 0, direction = "up", className = ""
 const SPORT_CATEGORIES = [
   {
     title: "Foutbòl",
-    sub: "Parie sou gwo match mondyal",
-    image:
-      "/images/p2p_football_haiti.png",
+    sub: "Parye sou gwo match kont lòt amatè yo",
+    image: "/images/p2p_football_haiti.png",
     color: "#22C55E",
-    badge: "⚽ SPORTS",
+    badge: "⚽ ESPÒ",
   },
   {
     title: "Kous Cheval",
-    sub: "Kous an dirèk chak 5 minit",
-    image:
-      "/images/p2p_horse_racing.png",
+    sub: "Kous cheval dirèk kont lòt amatè",
+    image: "/images/p2p_horse_racing.png",
     color: "#EF4444",
-    badge: "🏇 LIVE",
+    badge: "🏇 CHEVAL",
   },
   {
-    title: "Jeu Kat & Kazino",
-    sub: "Blackjack, Card Showdown",
-    image:
-      "/images/p2p_casino_haiti.png",
+    title: "Jwèt Kat, Domino, elatriye",
+    sub: "Albou, Casino, Domino, ...",
+    image: "/images/p2p_casino_haiti.png",
     color: "#A855F7",
-    badge: "🃏 CASINO",
+    badge: "🃏 Aza",
   },
 ];
 
@@ -193,7 +207,8 @@ export default function LandingPage() {
                 Chwazi Fason Ou Vle Jwe
               </h2>
               <p className="text-gray-500 text-sm mt-1">
-                Spò reyèl, kous cheval oswa jwèt kat — tout la pou ou.
+                Spò reyèl, kous cheval oswa jwèt tradisyonèl yo, chwazi sa w vle
+                jwe.
               </p>
             </div>
           </AnimateOnScroll>
@@ -278,7 +293,7 @@ export default function LandingPage() {
                     <Trophy size={16} className="text-gold" />
                   </div>
                   <span className="text-gold text-xs font-bold uppercase tracking-wider">
-                    Jwèt Ouvri Kounye a
+                    Jwèt Ki Ouvri Kounye a
                   </span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-black text-white">
@@ -330,7 +345,7 @@ export default function LandingPage() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             opacity: 0.15,
-            mixBlendMode: "overlay"
+            mixBlendMode: "overlay",
           }}
         />
         <div
@@ -348,20 +363,20 @@ export default function LandingPage() {
               <div className="flex items-center gap-2 mb-4">
                 <Swords size={16} className="text-gold" />
                 <span className="text-gold text-xs font-black uppercase tracking-widest">
-                  Platfòm P2P
+                  Platfòm A2A
                 </span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 leading-tight">
                 Jwe Dirèkteman{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold animate-gradient">
-                  Kont Lòt Moun
+                  Kont Lòt Amatè
                 </span>
               </h2>
 
               <p className="text-gray-400 text-base leading-relaxed mb-6">
-                Pa gen "Kay" ki genyen tout tan. Ou menm ak lòt jwè yo mete lajan ansanm —
-                pi bon jwè a ranmase tout miz la. Platfòm nou an jis pran yon ti frè sèvis.
+                Ou menm ak lòt Amatè yo jwe ansanm — Sa ki Genyen a ranmase tout
+                miz la. Platfòm nou an jis pran frè sèvis.
               </p>
 
               <div className="space-y-3 mb-8">
@@ -376,7 +391,9 @@ export default function LandingPage() {
                       <div className="w-7 h-7 rounded-lg bg-gold/10 flex items-center justify-center shrink-0">
                         <BulletIcon size={13} className="text-gold" />
                       </div>
-                      <span className="text-gray-300 text-sm font-medium">{bullet.label}</span>
+                      <span className="text-gray-300 text-sm font-medium">
+                        {bullet.label}
+                      </span>
                     </div>
                   );
                 })}
@@ -401,7 +418,8 @@ export default function LandingPage() {
               </div>
               <PlayerBattleAnimation />
               <p className="text-center text-gray-600 text-xs mt-3">
-                Animasyon sa montre yon kous cheval. Rezilta yo ka varye epi plen lòt jwèt.
+                Animasyon sa montre yon kous cheval. Rezilta yo ka varye epi
+                plen lòt jwèt.
               </p>
             </AnimateOnScroll>
           </div>
@@ -459,13 +477,14 @@ export default function LandingPage() {
             </div>
 
             <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
-              Prè pou w{" "}
+              Pare pou w{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold animate-gradient">
                 Genyen?
               </span>
             </h2>
             <p className="text-gray-300/80 text-lg sm:text-xl mb-12 max-w-lg mx-auto leading-relaxed">
-              Enskri gratis epi kòmanse jwe kont lòt amatè yo jodi a. Premye pari w ap tann ou.
+              Enskri gratis epi kòmanse jwe kont lòt amatè yo jodi a. Premye
+              pari w ap tann ou.
             </p>
 
             <Link
@@ -482,7 +501,9 @@ export default function LandingPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </Link>
 
-            <p className="text-gray-600 text-sm mt-6">Pa gen frè kache. Anile nenpòt lè.</p>
+            <p className="text-gray-600 text-sm mt-6">
+              Pa gen frè kache. Anile nenpòt lè.
+            </p>
           </div>
         </section>
       </AnimateOnScroll>

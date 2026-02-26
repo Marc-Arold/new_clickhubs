@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronLeft, ChevronRight, TrendingUp, Users, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  TrendingUp,
+  Users,
+  Zap,
+} from "lucide-react";
 
 const SLIDES = [
   {
     id: 0,
-    image:
-      "/images/lotus_winner_hero.png",
+    image: "/images/lotus_winner_hero.png",
     colorOverlay:
       "linear-gradient(108deg, rgba(16,18,27,0.85) 0%, rgba(16,18,27,0.60) 45%, rgba(16,18,27,0.1) 100%)",
     accentColor: "#D4A843",
@@ -21,8 +27,7 @@ const SLIDES = [
   },
   {
     id: 1,
-    image:
-      "/images/p2p_horse_racing.png",
+    image: "/images/p2p_horse_racing.png",
     colorOverlay:
       "linear-gradient(108deg, rgba(69,10,10,0.92) 0%, rgba(69,10,10,0.72) 42%, rgba(69,10,10,0.10) 100%)",
     accentColor: "#EF4444",
@@ -41,8 +46,7 @@ const SLIDES = [
   },
   {
     id: 2,
-    image:
-      "/images/p2p_casino_haiti.png",
+    image: "/images/p2p_casino_haiti.png",
     colorOverlay:
       "linear-gradient(108deg, rgba(46,16,101,0.92) 0%, rgba(46,16,101,0.72) 42%, rgba(46,16,101,0.10) 100%)",
     accentColor: "#A855F7",
@@ -57,8 +61,7 @@ const SLIDES = [
   },
   {
     id: 3,
-    image:
-      "/images/p2p_mobile_haiti.png",
+    image: "/images/p2p_mobile_haiti.png",
     colorOverlay:
       "linear-gradient(108deg, rgba(92,55,0,0.92) 0%, rgba(92,55,0,0.72) 42%, rgba(92,55,0,0.10) 100%)",
     accentColor: "#D4A843",
@@ -105,7 +108,10 @@ export default function PromoSlider() {
           <div
             key={slide.id}
             className="absolute inset-0 transition-opacity duration-700"
-            style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 2 : 1 }}
+            style={{
+              opacity: i === current ? 1 : 0,
+              zIndex: i === current ? 2 : 1,
+            }}
           >
             {/* Background image — slow zoom on active slide */}
             <div
@@ -184,7 +190,9 @@ export default function PromoSlider() {
                         borderColor: `${slide.accentColor}45`,
                       }}
                     >
-                      <span className="text-gray-300 text-xs font-semibold">{o.label}</span>
+                      <span className="text-gray-300 text-xs font-semibold">
+                        {o.label}
+                      </span>
                       <span
                         className="font-black text-lg leading-none"
                         style={{
@@ -246,9 +254,13 @@ export default function PromoSlider() {
                 width: i === current ? "28px" : "8px",
                 height: "8px",
                 background:
-                  i === current ? SLIDES[current].accentColor : "rgba(255,255,255,0.3)",
+                  i === current
+                    ? SLIDES[current].accentColor
+                    : "rgba(255,255,255,0.3)",
                 boxShadow:
-                  i === current ? `0 0 12px ${SLIDES[current].accentColor}` : "none",
+                  i === current
+                    ? `0 0 12px ${SLIDES[current].accentColor}`
+                    : "none",
               }}
             />
           ))}

@@ -74,7 +74,7 @@ export default function GameCategoryBar() {
         <div className="flex items-center gap-2 mb-3">
           <ChevronRight size={14} className="text-gold" />
           <span className="text-gray-500 text-[10px] font-bold uppercase tracking-widest">
-            Chwazi yon jwèt
+            jwèt Sou platfòm nan
           </span>
         </div>
 

@@ -72,7 +72,7 @@ export default function TrustSignals() {
   return (
     <section className="py-20 sm:py-28 relative overflow-hidden bg-dark">
       {/* Immersive Stadium Background behind the counter */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 transition-transform duration-1000 scale-100"
         style={{ backgroundImage: "url('/images/p2p_football_haiti.png')" }}
       />
@@ -96,7 +96,9 @@ export default function TrustSignals() {
             <p className="text-6xl sm:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#FFF] via-[#FACC15] to-[#D4A843] relative drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] leading-none py-2">
               {value.toLocaleString()}
             </p>
-            <span className="block text-2xl sm:text-4xl text-gold font-bold mt-2 tracking-wide drop-shadow-lg">GOUD RETIRE</span>
+            <span className="block text-2xl sm:text-4xl text-gold font-bold mt-2 tracking-wide drop-shadow-lg">
+              GOUD RETIRE
+            </span>
           </div>
         </div>
 
@@ -108,18 +110,22 @@ export default function TrustSignals() {
               className="relative p-[1px] rounded-3xl overflow-hidden group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)]"
             >
               {/* Animated gradient border */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${signal.gradient} opacity-30 group-hover:opacity-100 transition-opacity duration-500`} />
-              
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${signal.gradient} opacity-30 group-hover:opacity-100 transition-opacity duration-500`}
+              />
+
               <div className="relative h-full bg-dark/95 backdrop-blur-xl rounded-[23px] p-8 flex flex-col items-center text-center">
                 {/* Glow ring around icon */}
-                <div 
+                <div
                   className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 relative transition-transform duration-500 group-hover:scale-110"
                   style={{ backgroundColor: signal.color }}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${signal.gradient} opacity-20 rounded-2xl animate-pulse`} />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${signal.gradient} opacity-20 rounded-2xl animate-pulse`}
+                  />
                   <signal.icon size={28} className="text-white relative z-10" />
                 </div>
-                
+
                 <h3 className="text-white font-black text-lg mb-3 tracking-wide">
                   {signal.title}
                 </h3>
@@ -132,7 +138,7 @@ export default function TrustSignals() {
         </div>
 
         {/* Trust badges row */}
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-16 pt-10 border-t border-white/5">
+        {/* <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-16 pt-10 border-t border-white/5">
           {trustBadges.map((badge, i) => (
             <div
               key={i}
@@ -142,7 +148,7 @@ export default function TrustSignals() {
               {badge.label}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

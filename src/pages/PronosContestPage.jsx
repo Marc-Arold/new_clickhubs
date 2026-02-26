@@ -1,120 +1,185 @@
-import { useState, useMemo } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Users, Clock, Repeat, ShieldCheck, Trophy, Edit3, CheckCircle } from 'lucide-react'
-import { pronosContestsMock, upcomingMatchesMock } from '../data/mockData'
-import { useAuth } from '../context/AuthContext'
-import MatchPick from '../components/pronos/MatchPick'
-import FicheSlip from '../components/pronos/FicheSlip'
+import { useState, useMemo, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  ArrowLeft,
+  Users,
+  Clock,
+  Repeat,
+  ShieldCheck,
+  Trophy,
+  Edit3,
+  CheckCircle,
+  ChevronUp,
+  ChevronDown,
+  Filter,
+} from "lucide-react";
+import {
+  pronosContestsMock,
+  upcomingMatchesMock,
+  countryFilters,
+} from "../data/mockData";
+import { useAuth } from "../context/AuthContext";
+import MatchPick from "../components/pronos/MatchPick";
+import FicheSlip from "../components/pronos/FicheSlip";
 
-const OUTCOME_LABELS = { home: '1', draw: 'X', away: '2' }
+const OUTCOME_LABELS = { home: "1", draw: "X", away: "2" };
 const OUTCOME_NAMES = {
   home: (match) => match.home,
-  draw: () => 'Egalite',
+  draw: () => "Egalite",
   away: (match) => match.away,
-}
+};
 
 // Group matches by competition
 function groupByCompetition(matches) {
   return matches.reduce((acc, m) => {
-    if (!acc[m.competition]) acc[m.competition] = []
-    acc[m.competition].push(m)
-    return acc
-  }, {})
+    if (!acc[m.competition]) acc[m.competition] = [];
+    acc[m.competition].push(m);
+    return acc;
+  }, {});
 }
 
 export default function PronosContestPage() {
-  const { contestId } = useParams()
-  const navigate = useNavigate()
-  const { user, updateBalance } = useAuth()
+  const { contestId } = useParams();
+  const navigate = useNavigate();
+  const { user, updateBalance } = useAuth();
 
-  const contest = pronosContestsMock.find(c => c.id === contestId)
-  const [phase, setPhase] = useState('info') // info | builder | review | confirmed
+  const contest = pronosContestsMock.find((c) => c.id === contestId);
+  const [phase, setPhase] = useState("builder"); // builder | review | confirmed
   // picks: { [matchId]: { matchId, matchName, outcome, odds } }
-  const [picks, setPicks] = useState({})
-  const [ficheCount, setFicheCount] = useState(0) // fiches already submitted this session
+  const [picks, setPicks] = useState({});
+  const [ficheCount, setFicheCount] = useState(0); // fiches already submitted this session
+
+  // Filters
+  const [selectedSport, setSelectedSport] = useState("all");
+  const [selectedCountry, setSelectedCountry] = useState("all");
+
+  // Mobile FicheSlip
+  const [isMobileSlipOpen, setIsMobileSlipOpen] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+
+  // Prevent background scrolling when mobile slip is open
+  useEffect(() => {
+    if (isMobileSlipOpen && phase === "builder") {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileSlipOpen, phase]);
 
   if (!contest) {
     return (
       <div className="max-w-4xl space-y-6">
-        <button onClick={() => navigate('/pronos')} className="flex items-center gap-1 text-gray-400 hover:text-white text-sm bg-transparent border-none cursor-pointer p-0">
-          <ArrowLeft size={16} /> Tout Konkurans
+        <button
+          onClick={() => navigate("/pronos")}
+          className="flex items-center gap-1 text-gray-400 hover:text-white text-sm bg-transparent border-none cursor-pointer p-0"
+        >
+          <ArrowLeft size={16} /> Tout Jackpòt yo
         </button>
         <div className="text-center py-16 bg-dark-surface border border-white/10 rounded-2xl">
-          <p className="text-gray-400 text-sm">Konkurans sa a pa egziste.</p>
+          <p className="text-gray-400 text-sm">Jackpòt sa a pa egziste.</p>
         </div>
       </div>
-    )
+    );
   }
 
-  const picksArray = Object.values(picks)
-  const totalOdds = picksArray.reduce((acc, p) => acc * p.odds, 1)
-  const displayOdds = picksArray.length === 0 ? 0 : totalOdds
-  const grouped = useMemo(() => groupByCompetition(upcomingMatchesMock), [])
+  const picksArray = Object.values(picks);
+  const totalOdds = picksArray.reduce((acc, p) => acc * p.odds, 1);
+  const displayOdds = picksArray.length === 0 ? 0 : totalOdds;
 
-  const deadline = new Date(contest.deadline)
-  const now = new Date()
-  const daysLeft = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24))
+  const filteredMatches = useMemo(() => {
+    return upcomingMatchesMock.filter((m) => {
+      const sportMatch = selectedSport === "all" || m.sport === selectedSport;
+      const countryMatch =
+        selectedCountry === "all" || m.country === selectedCountry;
+      return sportMatch && countryMatch;
+    });
+  }, [selectedSport, selectedCountry]);
 
-  function handlePick(matchId, outcome, odds) {
-    const match = upcomingMatchesMock.find(m => m.id === matchId)
-    setPicks(prev => {
-      if (prev[matchId]?.outcome === outcome) {
-        // Deselect
-        const next = { ...prev }
-        delete next[matchId]
-        return next
+  const grouped = useMemo(
+    () => groupByCompetition(filteredMatches),
+    [filteredMatches],
+  );
+
+  const deadline = new Date(contest.deadline);
+  const now = new Date();
+  const daysLeft = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
+
+  function handlePick(
+    matchId,
+    outcomeKey,
+    odds,
+    marketName = "Rezilta Match",
+    outcomeName = null,
+  ) {
+    const match = upcomingMatchesMock.find((m) => m.id === matchId);
+    // If outcomeName isn't provided (for classic 1X2), attempt to use OUTCOME_NAMES
+    const finalOutcomeName =
+      outcomeName ||
+      (OUTCOME_NAMES[outcomeKey]
+        ? OUTCOME_NAMES[outcomeKey](match)
+        : outcomeKey);
+
+    setPicks((prev) => {
+      // If same exact pick, deselect
+      if (prev[matchId]?.outcome === outcomeKey) {
+        const next = { ...prev };
+        delete next[matchId];
+        return next;
       }
       return {
         ...prev,
         [matchId]: {
           matchId,
           matchName: `${match.home} vs ${match.away}`,
-          outcome,
+          outcome: outcomeKey, // Just the raw key for MatchPick to know what is selected
           odds,
+          marketName,
+          outcomeName: finalOutcomeName,
         },
-      }
-    })
+      };
+    });
   }
 
   function handleRemovePick(matchId) {
-    setPicks(prev => {
-      const next = { ...prev }
-      delete next[matchId]
-      return next
-    })
+    setPicks((prev) => {
+      const next = { ...prev };
+      delete next[matchId];
+      return next;
+    });
   }
 
   function handleConfirm() {
     updateBalance(
       user.availableBalance - contest.entryFee,
-      user.escrowedBalance + contest.entryFee
-    )
-    setFicheCount(prev => prev + 1)
-    setPhase('confirmed')
+      user.escrowedBalance + contest.entryFee,
+    );
+    setFicheCount((prev) => prev + 1);
+    setPhase("confirmed");
   }
 
   function handleRemiser() {
-    setPicks({})
-    setPhase('builder')
+    setPicks({});
+    setPhase("builder");
   }
 
-  const ficheId = `PE-${contest.id.toUpperCase()}-${Date.now().toString(36).toUpperCase()}`
+  const ficheId = `PE-${contest.id.toUpperCase()}-${Date.now().toString(36).toUpperCase()}`;
 
   return (
     <div className="max-w-4xl space-y-5">
       {/* Header nav */}
       <div className="flex items-center gap-4">
         <button
-          onClick={() => phase === 'builder' ? setPhase('info') : navigate('/pronos')}
+          onClick={() => navigate("/pronos")}
           className="flex items-center gap-1 text-gray-400 hover:text-white text-sm bg-transparent border-none cursor-pointer p-0"
         >
           <ArrowLeft size={16} />
-          {phase === 'builder' ? 'Retounen' : 'Tout Konkurans'}
+          Tout Jackpòt yo
         </button>
         <span className="text-gray-700 text-xs">|</span>
-        <button onClick={() => navigate('/pronos')} className="text-gray-500 hover:text-white text-xs bg-transparent border-none cursor-pointer p-0">
-          Lòbi Pronos
-        </button>
+        <span className="text-gray-500 text-xs">Lòbi Jackpòt Yo</span>
       </div>
 
       {/* Contest info bar — always visible */}
@@ -141,12 +206,16 @@ export default function PronosContestPage() {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div>
-            <p className="text-gray-500 text-xs mb-0.5">Jackpot</p>
-            <p className="text-gold font-black">{contest.jackpot.toLocaleString()} HTG</p>
+            <p className="text-gray-500 text-xs mb-0.5">Jackpòt</p>
+            <p className="text-gold font-black">
+              {contest.jackpot.toLocaleString()} HTG
+            </p>
           </div>
           <div>
             <p className="text-gray-500 text-xs mb-0.5">Antre</p>
-            <p className="text-white font-bold">{contest.entryFee.toLocaleString()} HTG</p>
+            <p className="text-white font-bold">
+              {contest.entryFee.toLocaleString()} HTG
+            </p>
           </div>
           <div>
             <p className="text-gray-500 text-xs mb-0.5">Jwè</p>
@@ -163,152 +232,226 @@ export default function PronosContestPage() {
         </div>
       </div>
 
-      {/* ── Phase: INFO ── */}
-      {phase === 'info' && (
-        <div className="space-y-4">
-          {/* Odds tiers */}
-          <div className="bg-dark-surface border border-white/10 rounded-2xl p-4">
-            <p className="text-gray-400 text-xs mb-3">Tye kote disponib — plis ou riske, plis ou ka genyen:</p>
-            <div className="flex gap-2 flex-wrap">
-              {contest.oddsTiers.map(t => (
-                <div key={t} className="flex flex-col items-center px-3 py-2 bg-white/5 border border-white/10 rounded-xl">
-                  <span className="text-gold font-black text-sm">×{t}</span>
-                  <span className="text-gray-600 text-[9px] mt-0.5">
-                    {t >= 20 ? `≥ ${t}` : ''}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Distribution explainer */}
-          <div className="bg-dark-surface border border-white/10 rounded-2xl p-4 space-y-3">
-            <p className="text-white font-semibold text-sm">Kijan distribisyon an mache?</p>
-            <div className="space-y-2 text-xs text-gray-400">
-              <div className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                <p><span className="text-white font-medium">Pwopòsyonèl ak kote ou:</span> Si kote fich ou se 200 e yon lòt genyan ak kote 100, ou pran 2× pati li.</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                <p><span className="text-white font-medium">Planché garanti:</span> Chak genyan resevwa omwen kote × mise yo (tankou yon bookmaker).</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                <p><span className="text-white font-medium">Si tro anpil genyan:</span> Tout peman lise pwopòsyonèlman pou respekte planché a.</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-                <p><span className="text-white font-medium">Frè platfòm:</span> 5% kenbe sou jackpot total la.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* User fiches status */}
-          {ficheCount > 0 && (
-            <div className="bg-success/10 border border-success/20 rounded-2xl p-4">
-              <p className="text-success font-bold text-sm mb-1">✅ {ficheCount} fich soumèt</p>
-              <p className="text-gray-400 text-xs">
-                {ficheCount < 2
-                  ? `Ou ka fè ankò 1 fich (Remiz) si premye fich ou pèdi.`
-                  : 'Ou rive limit 2 fich pou konkurans sa a.'}
-              </p>
-            </div>
-          )}
-
-          {/* CTA */}
-          <div className="flex gap-3">
-            <button
-              onClick={() => { setPicks({}); setPhase('builder') }}
-              disabled={ficheCount >= 2}
-              className="flex-1 py-3.5 rounded-xl font-bold text-sm bg-gold hover:bg-gold-light text-dark cursor-pointer transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              <Edit3 size={15} />
-              {ficheCount === 0 ? 'Bati Fich Ou' : ficheCount === 1 ? 'Remiz — 2yèm Fich' : 'Limit 2 fich atenn'}
-            </button>
-            <button
-              onClick={() => navigate(`/pronos/${contestId}/palmares`)}
-              className="px-4 py-3.5 rounded-xl font-medium text-sm bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 cursor-pointer transition-colors"
-            >
-              Klasman
-            </button>
-          </div>
-
-          {user.availableBalance < contest.entryFee && (
-            <p className="text-danger text-xs text-center">
-              Balans ensizan ({user.availableBalance.toLocaleString()} HTG). Depoze plis lajan.
-            </p>
-          )}
-        </div>
-      )}
-
       {/* ── Phase: BUILDER ── */}
-      {phase === 'builder' && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <ShieldCheck size={14} className="text-gold" />
-            <p className="text-gray-400 text-xs">Chwazi yon rezilta pa match. Kote yo miltipliye youn pa lòt.</p>
+      {phase === "builder" && (
+        <div className="space-y-4 pb-32 lg:pb-0 relative">
+          <div className="flex items-center gap-3 bg-gold/10 border border-gold/20 rounded-xl p-3">
+            <ShieldCheck size={18} className="text-gold shrink-0" />
+            <p className="text-gold-light text-xs font-medium">
+              Fè on fich (kòt ≥20). Pi gwo kòt la, pran pi gwo pati nan{" "}
+              <span className="text-white font-bold">
+                {contest.jackpot.toLocaleString()} HTG
+              </span>{" "}
+              Jackpot la!
+            </p>
           </div>
 
-          <div className="grid lg:grid-cols-[1fr_300px] gap-4 items-start">
+          {/* Filters */}
+          <div className="bg-dark border border-white/10 rounded-2xl p-3 space-y-3">
+            <div
+              className="flex items-center justify-between cursor-pointer md:cursor-default"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              <div className="flex items-center gap-2 text-white font-medium text-sm">
+                <Filter size={16} className="text-gold" /> Filtre Match Yo
+                <span className="text-xs text-gray-500 italic hidden md:inline-block">
+                  ({filteredMatches.length} match disponib)
+                </span>
+              </div>
+              <button className="md:hidden text-gray-400 bg-transparent border-none p-0">
+                {showFilters ? (
+                  <ChevronUp size={16} />
+                ) : (
+                  <ChevronDown size={16} />
+                )}
+              </button>
+            </div>
+
+            <div
+              className={`space-y-3 ${showFilters ? "block" : "hidden md:block"}`}
+            >
+              <div className="flex flex-wrap gap-2">
+                {["all", "football", "basketball"].map((sport) => (
+                  <button
+                    key={sport}
+                    onClick={() => setSelectedSport(sport)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                      selectedSport === sport
+                        ? "bg-gold/20 text-gold border-gold"
+                        : "bg-white/5 text-gray-400 border-white/10 hover:border-white/20 hover:text-white"
+                    }`}
+                  >
+                    {sport === "all"
+                      ? "Tout Espò"
+                      : sport === "football"
+                        ? "Foutbòl"
+                        : "Baskètbòl"}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                {countryFilters.map((c) => (
+                  <button
+                    key={c.key}
+                    onClick={() => setSelectedCountry(c.key)}
+                    className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                      selectedCountry === c.key
+                        ? "bg-gold/20 text-gold border-gold"
+                        : "bg-white/5 text-gray-400 border-white/10 hover:border-white/20 hover:text-white"
+                    }`}
+                  >
+                    <span>{c.flag}</span>
+                    <span>{c.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-start">
             {/* Match catalog */}
             <div className="space-y-5">
-              {Object.entries(grouped).map(([competition, matches]) => (
-                <div key={competition}>
-                  <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 px-1">
-                    {competition}
+              {Object.keys(grouped).length === 0 ? (
+                <div className="text-center py-12 bg-dark-surface border border-white/10 rounded-2xl">
+                  <p className="text-gray-400 text-sm mb-3">
+                    Pa gen match ki jwenn ak Fich ou yo.
                   </p>
-                  <div className="space-y-2">
-                    {matches.map(match => (
-                      <MatchPick
-                        key={match.id}
-                        match={match}
-                        selectedPick={picks[match.id]?.outcome ?? null}
-                        onPick={handlePick}
-                      />
-                    ))}
-                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedSport("all");
+                      setSelectedCountry("all");
+                    }}
+                    className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-bold transition-colors border border-white/10 cursor-pointer"
+                  >
+                    Reyajiste Filt yo
+                  </button>
                 </div>
-              ))}
+              ) : (
+                Object.entries(grouped).map(([competition, matches]) => (
+                  <div key={competition}>
+                    <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 px-1">
+                      {competition}
+                    </p>
+                    <div className="space-y-3">
+                      {matches.map((match) => (
+                        <MatchPick
+                          key={match.id}
+                          match={match}
+                          selectedPick={picks[match.id]?.outcome ?? null}
+                          onPick={handlePick}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
-            {/* Fiche slip — sticky on large screens */}
-            <div className="lg:sticky lg:top-4">
-              <FicheSlip
-                picks={picksArray}
-                onRemove={handleRemovePick}
-                totalOdds={displayOdds}
-                entryFee={contest.entryFee}
-                onReview={() => setPhase('review')}
-              />
+            {/* Desktop Sticky Slip / Mobile Drawer */}
+            <div
+              className={`fixed inset-x-0 bottom-0 z-[100] transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] lg:static lg:block lg:z-auto ${isMobileSlipOpen ? "translate-y-0" : "translate-y-[calc(100%-64px)]"} lg:translate-y-0`}
+            >
+              {/* Mobile Handle - High Visibility */}
+              <div
+                className={`lg:hidden flex items-center justify-between px-5 py-3 cursor-pointer shadow-[0_-15px_40px_rgba(0,0,0,0.6)] rounded-t-2xl border-t border-x border-white/10 transition-colors ${picksArray.length > 0 ? "bg-gold" : "bg-dark-surface"}`}
+                onClick={() => setIsMobileSlipOpen(!isMobileSlipOpen)}
+              >
+                <div className="flex items-center gap-3 relative">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm shadow-inner ${picksArray.length > 0 ? "bg-dark text-gold" : "bg-white/10 text-gray-500"}`}
+                  >
+                    {picksArray.length}
+                  </div>
+                  <span
+                    className={`font-black text-base ${picksArray.length > 0 ? "text-dark" : "text-white"}`}
+                  >
+                    Fich Ou
+                  </span>
+                  {picksArray.length > 0 && !isMobileSlipOpen && (
+                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-danger rounded-full animate-ping" />
+                  )}
+                </div>
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`font-black text-lg drop-shadow-sm ${picksArray.length > 0 ? "text-dark w-16 text-right" : "text-gray-500"}`}
+                  >
+                    {displayOdds.toFixed(2)}
+                  </span>
+                  <div
+                    className={`p-1 rounded-full ${picksArray.length > 0 ? "bg-dark/20 text-dark" : "bg-white/5 text-gray-400"}`}
+                  >
+                    {isMobileSlipOpen ? (
+                      <ChevronDown size={20} />
+                    ) : (
+                      <ChevronUp size={20} />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Drawer Content */}
+              <div className="bg-dark-surface lg:bg-transparent h-[75vh] lg:h-auto overflow-y-auto lg:overflow-visible p-4 lg:p-0 border-x border-white/10 lg:border-none lg:sticky lg:top-6 pb-8 lg:pb-0 shadow-2xl lg:shadow-none">
+                <FicheSlip
+                  picks={picksArray}
+                  onRemove={handleRemovePick}
+                  totalOdds={displayOdds}
+                  entryFee={contest.entryFee}
+                  onReview={() => {
+                    setIsMobileSlipOpen(false);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    setPhase("review");
+                  }}
+                />
+              </div>
             </div>
+
+            {/* Overlay for mobile drawer */}
+            {isMobileSlipOpen && (
+              <div
+                className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+                onClick={() => setIsMobileSlipOpen(false)}
+              />
+            )}
           </div>
         </div>
       )}
 
       {/* ── Phase: REVIEW ── */}
-      {phase === 'review' && (
+      {phase === "review" && (
         <div className="space-y-4">
           <div className="bg-dark-surface border border-white/10 rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-white/10">
               <p className="text-white font-bold text-sm">Revize Fich Ou</p>
-              <p className="text-gray-500 text-xs mt-0.5">{picksArray.length} evènman chwazi</p>
+              <p className="text-gray-500 text-xs mt-0.5">
+                {picksArray.length} evènman chwazi
+              </p>
             </div>
 
             {/* Events table */}
             <div className="divide-y divide-white/5">
               {picksArray.map((p, i) => (
-                <div key={p.matchId} className="flex items-center gap-3 px-5 py-3">
-                  <span className="text-gray-600 text-xs w-4 shrink-0">{i + 1}</span>
+                <div
+                  key={p.matchId}
+                  className="flex items-center gap-3 px-5 py-3"
+                >
+                  <span className="text-gray-600 text-xs w-4 shrink-0">
+                    {i + 1}
+                  </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-white text-xs font-medium truncate">{p.matchName}</p>
+                    <p className="text-white text-xs font-medium truncate">
+                      {p.matchName}
+                    </p>
                     <p className="text-gray-500 text-[10px]">
-                      {OUTCOME_LABELS[p.outcome]} — {OUTCOME_NAMES[p.outcome](
-                        upcomingMatchesMock.find(m => m.id === p.matchId) || {}
-                      )}
+                      <span className="font-medium text-gray-400">
+                        {p.marketName}
+                      </span>
+                      : {p.outcomeName}
                     </p>
                   </div>
-                  <span className="text-gold font-bold text-xs shrink-0">{p.odds.toFixed(2)}</span>
+                  <span className="text-gold font-bold text-xs shrink-0">
+                    {p.odds.toFixed(2)}
+                  </span>
                 </div>
               ))}
             </div>
@@ -316,26 +459,34 @@ export default function PronosContestPage() {
             {/* Summary */}
             <div className="px-5 py-4 bg-dark/30 border-t border-white/10 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Kote kominèd</span>
-                <span className="text-gold font-black text-xl">{displayOdds.toFixed(2)}</span>
+                <span className="text-gray-400">Kot</span>
+                <span className="text-gold font-black text-xl">
+                  {displayOdds.toFixed(2)}
+                </span>
               </div>
               <div className="flex justify-between text-xs">
                 <span className="text-gray-400">Frè antre</span>
-                <span className="text-white font-medium">−{contest.entryFee.toLocaleString()} HTG</span>
+                <span className="text-white font-medium">
+                  −{contest.entryFee.toLocaleString()} HTG
+                </span>
               </div>
               <div className="flex justify-between text-xs">
                 <span className="text-gray-400">Si ou sèl genyen (min)</span>
-                <span className="text-gold font-bold">{Math.round(displayOdds * contest.entryFee).toLocaleString()} HTG</span>
+                <span className="text-gold font-bold">
+                  {Math.round(displayOdds * contest.entryFee).toLocaleString()}{" "}
+                  HTG
+                </span>
               </div>
               <p className="text-gray-600 text-[10px]">
-                Gain reyèl depan de konbyen lòt genyan ak kote yo. Distribisyon pwopòsyonèl.
+                Gen reyèl depan de konbyen lòt amatè ak kot yo. Distribisyon
+                pwopòsyonèl.
               </p>
             </div>
           </div>
 
           <div className="flex gap-3">
             <button
-              onClick={() => setPhase('builder')}
+              onClick={() => setPhase("builder")}
               className="flex-1 py-3 rounded-xl text-sm font-medium bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 cursor-pointer transition-colors flex items-center justify-center gap-2"
             >
               <Edit3 size={14} /> Modifye
@@ -352,7 +503,7 @@ export default function PronosContestPage() {
       )}
 
       {/* ── Phase: CONFIRMED ── */}
-      {phase === 'confirmed' && (
+      {phase === "confirmed" && (
         <div className="space-y-4">
           {/* Ticket */}
           <div className="bg-success/10 border border-success/20 rounded-2xl p-6 space-y-4">
@@ -361,15 +512,22 @@ export default function PronosContestPage() {
                 <CheckCircle size={24} className="text-success" />
               </div>
               <div>
-                <p className="text-success font-bold text-base">Fich Konfime!</p>
+                <p className="text-success font-bold text-base">
+                  Fich Konfime!
+                </p>
                 <p className="text-gray-400 text-xs font-mono">{ficheId}</p>
               </div>
             </div>
 
             <div className="space-y-2">
               {picksArray.map((p, i) => (
-                <div key={p.matchId} className="flex items-center justify-between text-xs">
-                  <span className="text-gray-400 truncate mr-2">{i + 1}. {p.matchName}</span>
+                <div
+                  key={p.matchId}
+                  className="flex items-center justify-between text-xs"
+                >
+                  <span className="text-gray-400 truncate mr-2">
+                    {i + 1}. {p.matchName}
+                  </span>
                   <span className="text-white font-medium shrink-0">
                     {OUTCOME_LABELS[p.outcome]} ({p.odds.toFixed(2)})
                   </span>
@@ -378,14 +536,20 @@ export default function PronosContestPage() {
             </div>
 
             <div className="border-t border-success/20 pt-3 flex justify-between">
-              <span className="text-gray-400 text-sm">Kote total</span>
-              <span className="text-gold font-black text-lg">{displayOdds.toFixed(2)}</span>
+              <span className="text-gray-400 text-sm">Kot total</span>
+              <span className="text-gold font-black text-lg">
+                {displayOdds.toFixed(2)}
+              </span>
             </div>
           </div>
 
           {ficheCount < 2 && (
             <div className="bg-dark-surface border border-white/10 rounded-xl p-4 text-center">
-              <p className="text-gray-400 text-sm">Ou ka fè ankò <span className="text-white font-bold">1 Remiz</span> si premye fich ou pèdi.</p>
+              <p className="text-gray-400 text-sm">
+                Ou ka fè ankò{" "}
+                <span className="text-white font-bold">1 Remiz</span> si premye
+                fich ou pèdi.
+              </p>
             </div>
           )}
 
@@ -397,10 +561,10 @@ export default function PronosContestPage() {
               Wè Klasman
             </button>
             <button
-              onClick={() => navigate('/pronos')}
+              onClick={() => navigate("/pronos")}
               className="flex-1 py-3 rounded-xl font-bold text-sm bg-gold hover:bg-gold-light text-dark cursor-pointer transition-all"
             >
-              Lòt Konkurans
+              Lòt Jackpòt yo
             </button>
           </div>
 
@@ -415,5 +579,5 @@ export default function PronosContestPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

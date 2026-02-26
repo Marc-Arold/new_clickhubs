@@ -36,13 +36,13 @@ export const gamePreviewsMock = [
   },
   {
     id: 3,
-    name: "Virtual Football Pool #47",
+    name: "Kous cheval #47",
     type: "simulated",
     prizePool: 95000,
     entryFee: 250,
     playersIn: 380,
     maxPlayers: 500,
-    startsIn: "45 min",
+    startsIn: "10 min",
     status: "Ap ranpli vit",
     route: "/virtual/football/vf-001",
   },
@@ -1144,6 +1144,34 @@ export const upcomingMatchesMock = [
     kickoff: "2026-02-24T20:00:00Z",
     suggestedOdds: { home: 2.1, draw: 3.3, away: 3.4 },
   },
+];
+
+export const mockSubMarkets = [
+  {
+    marketKey: 'ou25',
+    marketName: 'Total Gòl',
+    outcomes: [
+      { key: 'over', label: '+2.5', name: 'Plis pase 2.5' },
+      { key: 'under', label: '-2.5', name: 'Mwens ke 2.5' }
+    ]
+  },
+  {
+    marketKey: 'btts',
+    marketName: 'Tou 2 Ekip Fè Gòl',
+    outcomes: [
+      { key: 'yes', label: 'Wè', name: 'Wi' },
+      { key: 'no', label: 'Non', name: 'Non' }
+    ]
+  },
+  {
+    marketKey: 'dc',
+    marketName: 'Pari Doub',
+    outcomes: [
+      { key: '1x', label: '1X', name: 'Ekip Kay Oubyen Egalite' },
+      { key: '12', label: '12', name: 'Nenpòt Ekip Genyen' },
+      { key: 'x2', label: 'X2', name: 'Ekip Deplase Oubyen Egalite' }
+    ]
+  }
 ];
 
 export const bankPariSplitsMock = [
