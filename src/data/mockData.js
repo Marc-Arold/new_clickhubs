@@ -2,7 +2,7 @@ export const activityFeed = [
   "🏆 @KingMax genyen 45,000 HTG!",
   "💰 On Pati 80,000 HTG Kap monte!",
   "⚡ @Pierre retire 25,000 HTG an 3 min!",
-  "🔥 200 plas plen nan Pronos Eliminator!",
+  "🔥 200 plas plen nan Jackpòt Eliminator!",
   "🎯 @MarieJ genyen 12,500 HTG!",
   "🎲 Premye 250,000 HTG fèt sou Platfòm nan!",
   "✅ @PronosQueen genyen lotri apre Round 6!",
@@ -12,7 +12,7 @@ export const activityFeed = [
 export const gamePreviewsMock = [
   {
     id: 1,
-    name: "Pronos Eliminator #2",
+    name: "Jackpòt Eliminator #2",
     type: "pronos-eliminator",
     prizePool: 215000,
     entryFee: 500,
@@ -24,7 +24,7 @@ export const gamePreviewsMock = [
   },
   {
     id: 2,
-    name: "Bank Pari — 6.05x sou 3 match",
+    name: "Paryaj Klasik — 6.05x sou 3 match",
     type: "bank-pari",
     prizePool: 85000,
     entryFee: 1000,
@@ -94,7 +94,7 @@ export const gameTypes = [
       "Egzanp: Ou mize 1,000 HTG sou Home Win. Si genyen, ou resevwa 2,340 HTG.",
   },
   {
-    name: "Bank Pari",
+    name: "Paryaj Klasik",
     icon: "landmark",
     description:
       "Vin Bankè ou! Kreye yon split (parlay) sou plizyè match, mete kòt ou, epi kite jwè yo antre. Si yo genyen, ou peye. Si ou genyen, ou pran pwofi.",
@@ -118,7 +118,7 @@ export const gameTypes = [
 export const activeGamesMock = [
   {
     id: 101,
-    name: "Pronos Eliminator #2",
+    name: "Jackpòt Eliminator #2",
     type: "pronos-eliminator",
     status: "Fich soumèt — Ap tann rezilta",
     nextRound: "5j",
@@ -128,7 +128,7 @@ export const activeGamesMock = [
   },
   {
     id: 102,
-    name: "Bank Pari — @MaxG 6.05x",
+    name: "Paryaj Klasik — @MaxG 6.05x",
     type: "bank-pari",
     status: "3 match — Ap tann kickoff",
     nextRound: "Pwochen match nan 2j",
@@ -141,7 +141,7 @@ export const activeGamesMock = [
 export const upcomingGamesMock = [
   {
     id: 201,
-    name: "Pronos Eliminator — 4 Konkurans",
+    name: "Jackpòt Eliminator — 4 Konkurans",
     type: "pronos-eliminator",
     prizePool: 920000,
     entryFee: 200,
@@ -165,7 +165,7 @@ export const upcomingGamesMock = [
   },
   {
     id: 203,
-    name: "Jackpot Accumulator — Semèn 8",
+    name: "Jackpòt Eliminator— Semèn 8",
     type: "sports",
     prizePool: 180000,
     entryFee: 100,
@@ -180,14 +180,14 @@ export const upcomingGamesMock = [
 export const recentResultsMock = [
   {
     id: 301,
-    game: "Pronos Eliminator — Lig Chanpyon",
+    game: "Jackpòt Eliminator — Lig Chanpyon",
     result: "Genyen",
     amount: 18000,
     date: "18 Fev 2026",
   },
   {
     id: 302,
-    game: "Bank Pari — @Pierre 3.2x",
+    game: "Paryaj Klasik — @Pierre 3.2x",
     result: "Elimine",
     amount: -2000,
     date: "17 Fev 2026",
@@ -201,14 +201,14 @@ export const recentResultsMock = [
   },
   {
     id: 304,
-    game: "Pronos Eliminator — La Liga",
+    game: "Jackpòt Eliminator — La Liga",
     result: "Elimine",
     amount: -500,
     date: "15 Fev 2026",
   },
   {
     id: 305,
-    game: "Bank Pari — @MarieJ 4.5x",
+    game: " Paryaj Klasik — @MarieJ 4.5x",
     result: "Genyen",
     amount: 1900,
     date: "14 Fev 2026",
@@ -438,7 +438,7 @@ export const notificationsMock = [
   {
     id: 1,
     type: "game_start",
-    message: "Pronos Eliminator — Premier League kòmanse nan 1è!",
+    message: "Jackpòt Eliminator — Premier League kòmanse nan 1è!",
     time: "30 min pase",
     read: false,
   },
@@ -452,7 +452,7 @@ export const notificationsMock = [
   {
     id: 3,
     type: "challenge",
-    message: "@MaxG kreye yon Bank Pari 6.05x — 1,000 HTG pou antre",
+    message: "@MaxG kreye yon Paryaj Klasik 6.05x — 1,000 HTG pou antre",
     time: "3è pase",
     read: false,
   },
@@ -506,14 +506,14 @@ export const badgesMock = [
     name: "Siviv 5 Round",
     icon: "shield",
     unlocked: true,
-    hint: "Siviv 5 round nan Pronos Eliminator",
+    hint: "Siviv 5 round nan Jackpòt Eliminator",
   },
   {
     id: 3,
     name: "Premye Jackpot",
     icon: "zap",
     unlocked: false,
-    hint: "Antre nan premye Jackpot Accumulator ou",
+    hint: "Antre nan premye Jackpòt Eliminatorou",
   },
   {
     id: 4,
@@ -555,7 +555,7 @@ export const badgesMock = [
 export const lobbyGamesMock = [
   {
     id: 1,
-    name: "Pronos Eliminator #1",
+    name: "Jackpòt Eliminator #1",
     type: "pronos-eliminator",
     prizePool: 84000,
     entryFee: 200,
@@ -567,7 +567,7 @@ export const lobbyGamesMock = [
   },
   {
     id: 2,
-    name: "Bank Pari — 6.05x sou 3 match",
+    name: "Paryaj Klasik — 6.05x sou 3 match",
     type: "bank-pari",
     prizePool: 85000,
     entryFee: 1000,
@@ -591,7 +591,7 @@ export const lobbyGamesMock = [
   },
   {
     id: 4,
-    name: "Pronos Eliminator #2",
+    name: "Jackpòt Eliminator #2",
     type: "pronos-eliminator",
     prizePool: 215000,
     entryFee: 500,
@@ -603,7 +603,7 @@ export const lobbyGamesMock = [
   },
   {
     id: 15,
-    name: "Pronos Eliminator #3",
+    name: "Jackpòt Eliminator #3",
     type: "pronos-eliminator",
     prizePool: 480000,
     entryFee: 1000,
@@ -615,7 +615,7 @@ export const lobbyGamesMock = [
   },
   {
     id: 16,
-    name: "Pronos Eliminator #4",
+    name: "Jackpòt Eliminator #4",
     type: "pronos-eliminator",
     prizePool: 920000,
     entryFee: 2500,
@@ -687,7 +687,7 @@ export const lobbyGamesMock = [
   },
   {
     id: 6,
-    name: "Bank Pari — Platfòm P2P",
+    name: "Paryaj Klasik — Platfòm P2P",
     type: "bank-pari",
     prizePool: 85000,
     entryFee: 500,
@@ -699,7 +699,7 @@ export const lobbyGamesMock = [
   },
   {
     id: 7,
-    name: "Jackpot Accumulator — Semèn 8",
+    name: "Jackpòt Eliminator— Semèn 8",
     type: "sports",
     prizePool: 180000,
     entryFee: 100,
@@ -751,12 +751,12 @@ export const lobbyGamesMock = [
 // Section 3: Sports Game Flows Mock Data
 // ==========================================
 
-// --- Pronos Eliminator (Weekly Parlay Jackpot) ---
+// --- Jackpòt Eliminator (Weekly Parlay Jackpot) ---
 
 export const pronosContestsMock = [
   {
     id: "pe-001",
-    name: "Pronos Eliminator #1",
+    name: "Jackpòt Eliminator #1",
     entryFee: 200,
     jackpot: 84000,
     rolloverWeeks: 1,
@@ -769,7 +769,7 @@ export const pronosContestsMock = [
   },
   {
     id: "pe-002",
-    name: "Pronos Eliminator #2",
+    name: "Jackpòt Eliminator #2",
     entryFee: 500,
     jackpot: 215000,
     rolloverWeeks: 2,
@@ -782,7 +782,7 @@ export const pronosContestsMock = [
   },
   {
     id: "pe-003",
-    name: "Pronos Eliminator #3",
+    name: "Jackpòt Eliminator #3",
     entryFee: 1000,
     jackpot: 480000,
     rolloverWeeks: 0,
@@ -795,7 +795,7 @@ export const pronosContestsMock = [
   },
   {
     id: "pe-004",
-    name: "Pronos Eliminator #4",
+    name: "Jackpòt Eliminator #4",
     entryFee: 2500,
     jackpot: 920000,
     rolloverWeeks: 3,
@@ -920,7 +920,7 @@ export const pronosLeaderboardMock = [
   },
 ];
 
-// --- Bank Pari (P2P Parlay Exchange) ---
+// --- Paryaj Klasik (P2P Parlay Exchange) ---
 
 export const countryFilters = [
   { key: "all", label: "Tout Peyi", flag: "🌍" },
@@ -1148,30 +1148,30 @@ export const upcomingMatchesMock = [
 
 export const mockSubMarkets = [
   {
-    marketKey: 'ou25',
-    marketName: 'Total Gòl',
+    marketKey: "ou25",
+    marketName: "Total Gòl",
     outcomes: [
-      { key: 'over', label: '+2.5', name: 'Plis pase 2.5' },
-      { key: 'under', label: '-2.5', name: 'Mwens ke 2.5' }
-    ]
+      { key: "over", label: "+2.5", name: "Plis pase 2.5" },
+      { key: "under", label: "-2.5", name: "Mwens ke 2.5" },
+    ],
   },
   {
-    marketKey: 'btts',
-    marketName: 'Tou 2 Ekip Fè Gòl',
+    marketKey: "btts",
+    marketName: "Tou 2 Ekip Fè Gòl",
     outcomes: [
-      { key: 'yes', label: 'Wè', name: 'Wi' },
-      { key: 'no', label: 'Non', name: 'Non' }
-    ]
+      { key: "yes", label: "Wè", name: "Wi" },
+      { key: "no", label: "Non", name: "Non" },
+    ],
   },
   {
-    marketKey: 'dc',
-    marketName: 'Pari Doub',
+    marketKey: "dc",
+    marketName: "Pari Doub",
     outcomes: [
-      { key: '1x', label: '1X', name: 'Ekip Kay Oubyen Egalite' },
-      { key: '12', label: '12', name: 'Nenpòt Ekip Genyen' },
-      { key: 'x2', label: 'X2', name: 'Ekip Deplase Oubyen Egalite' }
-    ]
-  }
+      { key: "1x", label: "1X", name: "Ekip Kay Oubyen Egalite" },
+      { key: "12", label: "12", name: "Nenpòt Ekip Genyen" },
+      { key: "x2", label: "X2", name: "Ekip Deplase Oubyen Egalite" },
+    ],
+  },
 ];
 
 export const bankPariSplitsMock = [

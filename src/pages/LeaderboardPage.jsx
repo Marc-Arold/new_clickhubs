@@ -13,8 +13,8 @@ const timeTabs = [
 
 const gameFilters = [
   { key: "all", label: "Tout Jwèt" },
-  { key: "pronos", label: "Pronos Eliminator" },
-  { key: "bank-pari", label: "Bank Pari" },
+  { key: "pronos", label: "Jackpòt Eliminator" },
+  { key: "bank-pari", label: " Paryaj Klasik" },
   { key: "virtual", label: "Jwèt Simile" },
 ];
 

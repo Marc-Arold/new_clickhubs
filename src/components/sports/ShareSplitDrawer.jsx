@@ -1,25 +1,27 @@
-import { useState, useEffect } from 'react'
-import { X, Copy, Check, MessageCircle, Share2 } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { X, Copy, Check, MessageCircle, Share2 } from "lucide-react";
 
 export default function ShareSplitDrawer({ shareLink, split, onClose }) {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const handleEsc = (e) => { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', handleEsc)
-    return () => window.removeEventListener('keydown', handleEsc)
-  }, [onClose])
+    const handleEsc = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
 
   function handleCopy() {
-    navigator.clipboard.writeText(shareLink)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    navigator.clipboard.writeText(shareLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
 
-  const potentialPayout = Math.round(split.playerEntryFee * split.totalOdds)
+  const potentialPayout = Math.round(split.playerEntryFee * split.totalOdds);
   const whatsappMessage = encodeURIComponent(
-    `Mwen kreye yon Bank Pari ${split.totalOdds.toFixed(2)}x sou ${split.events.length} match pou ${split.playerEntryFee.toLocaleString()} HTG. Ou ka genyen ${potentialPayout.toLocaleString()} HTG! Antre kounye a: ${shareLink}`
-  )
+    `Mwen kreye yon Paryaj Klasik ${split.totalOdds.toFixed(2)}x sou ${split.events.length} match pou ${split.playerEntryFee.toLocaleString()} HTG. Ou ka genyen ${potentialPayout.toLocaleString()} HTG! Antre kounye a: ${shareLink}`,
+  );
 
   return (
     <div className="fixed inset-0 z-50">
@@ -31,7 +33,10 @@ export default function ShareSplitDrawer({ shareLink, split, onClose }) {
             <Share2 size={18} className="text-gold" />
             Pataje Split
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-white bg-transparent border-none cursor-pointer p-1">
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white bg-transparent border-none cursor-pointer p-1"
+          >
             <X size={20} />
           </button>
         </div>
@@ -78,19 +83,25 @@ export default function ShareSplitDrawer({ shareLink, split, onClose }) {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Kòt Total</span>
-              <span className="text-gold font-bold">{split.totalOdds.toFixed(2)}x</span>
+              <span className="text-gold font-bold">
+                {split.totalOdds.toFixed(2)}x
+              </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Antre</span>
-              <span className="text-white font-medium">{split.playerEntryFee.toLocaleString()} HTG</span>
+              <span className="text-white font-medium">
+                {split.playerEntryFee.toLocaleString()} HTG
+              </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Jwè ka genyen</span>
-              <span className="text-gold font-bold">{potentialPayout.toLocaleString()} HTG</span>
+              <span className="text-gold font-bold">
+                {potentialPayout.toLocaleString()} HTG
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -17,8 +17,8 @@ import LeaderboardTeaser from "../components/dashboard/LeaderboardTeaser";
 
 const quickActions = [
   {
-    label: "Pronos Eliminator",
-    desc: "Jackpot parlay semèn nan",
+    label: "Jackpòt ",
+    desc: "Pi bèl fich semèn nan",
     icon: Trophy,
     route: "/pronos",
     gradient: "from-rose-500/20 to-red-700/10",
@@ -26,8 +26,8 @@ const quickActions = [
     bgImage: "/images/p2p_abstract_bg.png",
   },
   {
-    label: "Bank Pari",
-    desc: "Kreye oswa antre nan split",
+    label: "Paryaj Klasik",
+    desc: "Kreye oswa jwe nan lòt fich",
     icon: Landmark,
     route: "/bank-pari",
     gradient: "from-blue-500/20 to-blue-700/10",
@@ -35,8 +35,8 @@ const quickActions = [
     bgImage: "/images/p2p_abstract_bg.png",
   },
   {
-    label: "Dènye Sivivan",
-    desc: "Pool sivivan chak jounen",
+    label: "Espesyalis Pwonostik ",
+    desc: "Fè konpetisyon pwonostik ak lòt amatè",
     icon: Shield,
     route: "/sivivan",
     gradient: "from-orange-500/20 to-orange-700/10",
@@ -108,14 +108,21 @@ export default function DashboardPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-dark-surface via-dark-surface/90 to-dark-surface/70" />
 
               <div className="relative flex items-center gap-3 p-4 z-10">
-                <div className={`w-11 h-11 rounded-lg bg-gradient-to-br ${action.gradient} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                <div
+                  className={`w-11 h-11 rounded-lg bg-gradient-to-br ${action.gradient} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}
+                >
                   <action.icon size={20} className={action.iconColor} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-bold text-sm group-hover:text-gold transition-colors">{action.label}</p>
+                  <p className="text-white font-bold text-sm group-hover:text-gold transition-colors">
+                    {action.label}
+                  </p>
                   <p className="text-gray-500 text-xs">{action.desc}</p>
                 </div>
-                <ArrowRight size={16} className="text-gray-600 group-hover:text-gold group-hover:translate-x-1 transition-all shrink-0" />
+                <ArrowRight
+                  size={16}
+                  className="text-gray-600 group-hover:text-gold group-hover:translate-x-1 transition-all shrink-0"
+                />
               </div>
             </button>
           ))}
@@ -136,11 +143,15 @@ export default function DashboardPage() {
               className="group flex flex-col items-center gap-2.5 bg-dark-surface border border-white/10 rounded-xl p-4 hover:border-gold/20 transition-all cursor-pointer text-center card-shine relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gold/[0.02] opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+              <div
+                className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+              >
                 <action.icon size={22} className={action.iconColor} />
               </div>
               <div className="relative z-10">
-                <p className="text-white font-bold text-sm group-hover:text-gold transition-colors">{action.label}</p>
+                <p className="text-white font-bold text-sm group-hover:text-gold transition-colors">
+                  {action.label}
+                </p>
                 <p className="text-gray-500 text-xs mt-0.5">{action.desc}</p>
               </div>
             </button>

@@ -6,7 +6,7 @@ const filters = [
   { key: "sports", label: "Espò", icon: Trophy },
   { key: "horse-race", label: "Kous Cheval", icon: null, emoji: "🐎" },
   { key: "simulated", label: "Vityèl", icon: Monitor },
-  { key: "bank-pari", label: "Bank Pari", icon: Landmark },
+  { key: "bank-pari", label: "Paryaj Klasik", icon: Landmark },
   { key: "my-entries", label: "Jwèt Mwen", icon: Gamepad2 },
 ];
 
@@ -26,7 +26,11 @@ export default function GameFilterBar({ active, onChange }) {
                 : "bg-dark-surface text-gray-400 border-white/10 hover:text-white hover:border-white/20"
             }`}
           >
-            {filter.emoji ? <span className="text-base leading-none">{filter.emoji}</span> : <Icon size={16} />}
+            {filter.emoji ? (
+              <span className="text-base leading-none">{filter.emoji}</span>
+            ) : (
+              <Icon size={16} />
+            )}
             {filter.label}
             {isActive && (
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gold rounded-full" />

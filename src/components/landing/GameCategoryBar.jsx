@@ -13,7 +13,7 @@ import {
 const categories = [
   {
     icon: Trophy,
-    label: "Pronos Eliminator",
+    label: "Jackpòt Eliminator",
     href: "/jwet?type=sports",
     hot: true,
     color: "from-emerald-500/20 to-emerald-700/10",
@@ -21,7 +21,7 @@ const categories = [
   },
   {
     icon: Landmark,
-    label: "Bank Pari",
+    label: " Paryaj Klasik",
     href: "/jwet?type=bank-pari",
     hot: true,
     color: "from-purple-500/20 to-purple-700/10",
@@ -29,7 +29,7 @@ const categories = [
   },
   {
     icon: Shield,
-    label: "Dènye Sivivan",
+    label: "Espesyalis Pwonostik ",
     href: "/jwet?type=sports",
     color: "from-blue-500/20 to-blue-700/10",
     iconColor: "text-blue-400",

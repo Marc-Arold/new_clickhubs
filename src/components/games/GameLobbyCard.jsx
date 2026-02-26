@@ -16,38 +16,33 @@ const typeConfig = {
     icon: Trophy,
     gradient: "from-rose-500 to-red-700",
     iconColor: "text-rose-400",
-    bgImage:
-      "url('/images/p2p_football_haiti.png')",
+    bgImage: "url('/images/p2p_football_haiti.png')",
     emoji: "🏆",
   },
   sports: {
     icon: Trophy,
     gradient: "from-emerald-500 to-emerald-700",
     iconColor: "text-emerald-400",
-    bgImage:
-      "url('/images/p2p_football_haiti.png')",
+    bgImage: "url('/images/p2p_football_haiti.png')",
   },
   simulated: {
     icon: Monitor,
     gradient: "from-purple-500 to-purple-700",
     iconColor: "text-purple-400",
-    bgImage:
-      "url('/images/p2p_horse_racing.png')",
+    bgImage: "url('/images/p2p_horse_racing.png')",
   },
   "horse-race": {
     icon: Trophy,
     gradient: "from-amber-500 to-yellow-700",
     iconColor: "text-amber-400",
-    bgImage:
-      "url('/images/p2p_horse_racing.png')",
+    bgImage: "url('/images/p2p_horse_racing.png')",
     emoji: "🐎",
   },
   "bank-pari": {
     icon: Landmark,
     gradient: "from-blue-500 to-blue-700",
     iconColor: "text-blue-400",
-    bgImage:
-      "url('/images/p2p_casino_haiti.png')",
+    bgImage: "url('/images/p2p_casino_haiti.png')",
   },
 };
 
@@ -90,10 +85,11 @@ export default function GameLobbyCard({ game }) {
 
           {/* Icon */}
           <div className="relative z-10 p-4 bg-dark/50 rounded-xl backdrop-blur-md border border-white/10 group-hover:border-gold/30 transition-all duration-500 group-hover:scale-105">
-            {config.emoji
-              ? <span className="text-3xl leading-none">{config.emoji}</span>
-              : <Icon size={28} className="text-gold" />
-            }
+            {config.emoji ? (
+              <span className="text-3xl leading-none">{config.emoji}</span>
+            ) : (
+              <Icon size={28} className="text-gold" />
+            )}
           </div>
 
           {/* Status badge */}
@@ -182,9 +178,11 @@ export default function GameLobbyCard({ game }) {
         {/* Expanded detail */}
         {expanded && (
           <div className="border-t border-white/10 px-5 py-4 bg-dark-accent/30">
-            {game.type === 'pronos-eliminator' ? (
+            {game.type === "pronos-eliminator" ? (
               <>
-                <h4 className="text-white font-bold text-sm mb-2">Règ Pronos Eliminator</h4>
+                <h4 className="text-white font-bold text-sm mb-2">
+                  Règ Jackpòt Eliminator
+                </h4>
                 <ul className="space-y-1.5 text-gray-400 text-xs mb-3">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
@@ -204,17 +202,26 @@ export default function GameLobbyCard({ game }) {
                   </li>
                 </ul>
                 <div className="glass-card-gold rounded-lg p-3">
-                  <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tye Kote</p>
+                  <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-1">
+                    Tye Kote
+                  </p>
                   <div className="flex gap-1.5 flex-wrap">
-                    {[20, 30, 50, 100, 150, 200, 1000].map(t => (
-                      <span key={t} className="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20 font-bold">×{t}</span>
+                    {[20, 30, 50, 100, 150, 200, 1000].map((t) => (
+                      <span
+                        key={t}
+                        className="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20 font-bold"
+                      >
+                        ×{t}
+                      </span>
                     ))}
                   </div>
                 </div>
               </>
-            ) : game.type === 'horse-race' ? (
+            ) : game.type === "horse-race" ? (
               <>
-                <h4 className="text-white font-bold text-sm mb-2">Règ Kous la</h4>
+                <h4 className="text-white font-bold text-sm mb-2">
+                  Règ Kous la
+                </h4>
                 <ul className="space-y-1.5 text-gray-400 text-xs mb-3">
                   <li className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
@@ -231,30 +238,50 @@ export default function GameLobbyCard({ game }) {
                 </ul>
                 <div className="glass-card-gold rounded-lg p-3 space-y-1.5">
                   <p className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-2">
-                    Distribisyon Pòt ({game.maxPlayers} jwè × {game.entryFee.toLocaleString()} HTG)
+                    Distribisyon Pòt ({game.maxPlayers} jwè ×{" "}
+                    {game.entryFee.toLocaleString()} HTG)
                   </p>
                   {(() => {
-                    const net = game.entryFee * game.maxPlayers * 0.95
+                    const net = game.entryFee * game.maxPlayers * 0.95;
                     return (
                       <>
                         <div className="flex justify-between text-xs">
-                          <span className="text-gray-400">🥇 1ye Plas (65%)</span>
-                          <span className="text-gold font-bold">{Math.round(net * 0.65).toLocaleString()} HTG</span>
+                          <span className="text-gray-400">
+                            🥇 1ye Plas (65%)
+                          </span>
+                          <span className="text-gold font-bold">
+                            {Math.round(net * 0.65).toLocaleString()} HTG
+                          </span>
                         </div>
                         <div className="flex justify-between text-xs">
-                          <span className="text-gray-400">🥈 2yèm Plas (25%)</span>
-                          <span className="text-gray-300 font-medium">{Math.round(net * 0.25).toLocaleString()} HTG</span>
+                          <span className="text-gray-400">
+                            🥈 2yèm Plas (25%)
+                          </span>
+                          <span className="text-gray-300 font-medium">
+                            {Math.round(net * 0.25).toLocaleString()} HTG
+                          </span>
                         </div>
                         <div className="flex justify-between text-xs">
-                          <span className="text-gray-400">🥉 3yèm Plas (10%)</span>
-                          <span className="text-gray-300 font-medium">{Math.round(net * 0.10).toLocaleString()} HTG</span>
+                          <span className="text-gray-400">
+                            🥉 3yèm Plas (10%)
+                          </span>
+                          <span className="text-gray-300 font-medium">
+                            {Math.round(net * 0.1).toLocaleString()} HTG
+                          </span>
                         </div>
                         <div className="border-t border-white/10 pt-1.5 flex justify-between text-[10px]">
-                          <span className="text-gray-600">Frè platfòm (5%)</span>
-                          <span className="text-gray-600">{Math.round(game.entryFee * game.maxPlayers * 0.05).toLocaleString()} HTG</span>
+                          <span className="text-gray-600">
+                            Frè platfòm (5%)
+                          </span>
+                          <span className="text-gray-600">
+                            {Math.round(
+                              game.entryFee * game.maxPlayers * 0.05,
+                            ).toLocaleString()}{" "}
+                            HTG
+                          </span>
                         </div>
                       </>
-                    )
+                    );
                   })()}
                 </div>
               </>
