@@ -20,6 +20,7 @@ export default function FicheSlip({
 }) {
   const currentTier = getCurrentTier(totalOdds);
   const canSubmit = totalOdds >= 20;
+  const jackpotPower = Math.pow(totalOdds, 1.25);
 
   return (
     <div className="bg-transparent lg:bg-dark-surface border-none lg:border lg:border-white/10 lg:rounded-2xl p-0 lg:p-5 flex flex-col h-full lg:h-auto gap-4 lg:gap-5">
@@ -78,19 +79,33 @@ export default function FicheSlip({
 
       {/* Running odds */}
       <div className="border-t border-white/10 pt-4 space-y-4">
-        <div className="flex items-center justify-between bg-dark-surface lg:bg-dark/50 rounded-xl p-3 border border-white/5">
-          <span className="text-gray-400 text-sm font-medium">Kòt Total</span>
-          <span
-            className={`text-2xl font-black tracking-tight ${canSubmit ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-400" : "text-gray-500"}`}
-          >
-            {totalOdds.toFixed(2)}
-          </span>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col bg-dark-surface lg:bg-dark/50 rounded-xl p-3 border border-white/5 relative overflow-hidden">
+            <span className="text-gray-400 text-xs font-medium z-10">Kòt Total</span>
+            <span
+              className={`text-xl font-black mt-1 z-10 ${canSubmit ? "text-white" : "text-gray-500"}`}
+            >
+              {totalOdds.toFixed(2)}
+            </span>
+          </div>
+          
+          <div className="flex flex-col bg-gold/5 rounded-xl p-3 border border-gold/20 relative overflow-hidden group">
+            <div className="absolute -top-6 -right-6 w-16 h-16 bg-gold/10 rounded-full blur-[20px] pointer-events-none group-hover:bg-gold/20 transition-all" />
+            <span className="text-gold/80 text-xs font-bold uppercase tracking-wide z-10 flex items-center gap-1">
+               ⚡ Puisans
+            </span>
+            <span
+              className={`text-2xl font-black mt-1 tracking-tight z-10 ${canSubmit ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-400 drop-shadow-[0_0_10px_rgba(212,168,67,0.3)]" : "text-gold/30"}`}
+            >
+              {canSubmit ? jackpotPower.toFixed(0) : "---"}
+            </span>
+          </div>
         </div>
 
         {/* Tier badges */}
         <div className="space-y-1.5">
           <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold px-1">
-            Miltiplikatè
+            Nivo Kòt
           </p>
           <div className="flex gap-1.5 flex-wrap">
             {TIERS.map((t) => {
@@ -128,21 +143,26 @@ export default function FicheSlip({
         )}
 
         {canSubmit && entryFee && (
-          <div className="bg-gradient-to-r from-gold/10 to-transparent border border-gold/20 rounded-xl p-3 relative overflow-hidden group hover:border-gold/40 transition-colors">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-gold/20 rounded-full blur-xl -mr-4 -mt-4 transition-colors group-hover:bg-gold/30" />
-            <div className="flex justify-between items-end relative z-10">
-              <div>
-                <span className="text-gray-400 text-[10px] uppercase tracking-wider font-bold block mb-0.5">
-                  Potansyèl (Min)
+          <div className="space-y-2">
+            <div className="bg-gradient-to-r from-gold/10 to-transparent border border-gold/20 rounded-xl p-3 relative overflow-hidden group hover:border-gold/40 transition-colors">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gold/20 rounded-full blur-xl -mr-4 -mt-4 transition-colors group-hover:bg-gold/30" />
+              <div className="flex justify-between items-end relative z-10">
+                <div>
+                  <span className="text-gray-400 text-[10px] uppercase tracking-wider font-bold block mb-0.5">
+                    Gany de Baz*
+                  </span>
+                  <p className="text-gray-500 text-[9px] leading-tight max-w-[120px]">
+                    Kòt × {entryFee} HTG
+                  </p>
+                </div>
+                <span className="text-gold font-black text-lg sm:text-xl drop-shadow-[0_0_8px_rgba(212,168,67,0.3)]">
+                  {Math.round(totalOdds * entryFee).toLocaleString()} HTG
                 </span>
-                <p className="text-gray-500 text-[9px] leading-tight max-w-[120px]">
-                  Baze sou kòt × mise (Si w sèl genyen)
-                </p>
               </div>
-              <span className="text-gold font-black text-lg sm:text-xl drop-shadow-[0_0_8px_rgba(212,168,67,0.3)]">
-                {Math.round(totalOdds * entryFee).toLocaleString()} HTG
-              </span>
             </div>
+            <p className="text-[9px] leading-tight text-gray-400/80 italic text-center px-2">
+              *Sou rezèv Ksafe (Lissage). Gade revizyon fiche lan.
+            </p>
           </div>
         )}
       </div>

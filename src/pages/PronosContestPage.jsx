@@ -457,30 +457,43 @@ export default function PronosContestPage() {
             </div>
 
             {/* Summary */}
-            <div className="px-5 py-4 bg-dark/30 border-t border-white/10 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Kot</span>
-                <span className="text-gold font-black text-xl">
-                  {displayOdds.toFixed(2)}
-                </span>
+            <div className="px-5 py-4 bg-dark/30 border-t border-white/10 space-y-4">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm items-center">
+                  <span className="text-gray-400">Kot Total</span>
+                  <span className="text-white font-bold text-lg">
+                    {displayOdds.toFixed(2)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm items-center bg-gold/10 border border-gold/20 -mx-2 px-2 py-1.5 rounded-lg">
+                  <span className="text-gold font-bold text-xs">⚡ Puisans Jackpòt</span>
+                  <span className="text-gold font-black text-xl drop-shadow-[0_0_8px_rgba(212,168,67,0.4)]">
+                    {Math.pow(displayOdds, 1.25).toFixed(0)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-xs items-center">
+                  <span className="text-gray-400">Frè antre</span>
+                  <span className="text-white font-medium">
+                    −{contest.entryFee.toLocaleString()} HTG
+                  </span>
+                </div>
+                <div className="flex justify-between text-xs items-center border-t border-white/5 pt-2 mt-2">
+                  <span className="text-gray-400">Gany de Baz (Kòt × Mise)</span>
+                  <span className="text-gold font-bold">
+                    {Math.round(displayOdds * contest.entryFee).toLocaleString()}{" "}
+                    HTG
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-between text-xs">
-                <span className="text-gray-400">Frè antre</span>
-                <span className="text-white font-medium">
-                  −{contest.entryFee.toLocaleString()} HTG
-                </span>
+              
+              <div className="bg-dark/50 border border-white/5 rounded-lg p-3 text-[10px] space-y-2">
+                <p className="text-gray-400 leading-relaxed">
+                  <span className="font-bold text-white">💰 Pataj Gato a:</span> Ou resevwa yon pati nan kès la baze sou <strong>Puisans Jackpòt</strong> ou. Plis ou pran risk, plis ou resevwa.
+                </p>
+                <p className="text-gray-400 leading-relaxed">
+                  <span className="font-bold text-warning">🛡️ Lissage Ksafe:</span> Si semèn nan gen <strong>twòp</strong> genyan, kès la gendwa pa sifi pou bay tout moun <em>Gany de Baz</em> la nèt. Nan ka ekstrèm sa yo, tout gany ap ajiste (Lissage) pou pèmèt sistèm nan peye tout mond en fason ekitab.
+                </p>
               </div>
-              <div className="flex justify-between text-xs">
-                <span className="text-gray-400">Si ou sèl genyen (min)</span>
-                <span className="text-gold font-bold">
-                  {Math.round(displayOdds * contest.entryFee).toLocaleString()}{" "}
-                  HTG
-                </span>
-              </div>
-              <p className="text-gray-600 text-[10px]">
-                Gen reyèl depan de konbyen lòt amatè ak kot yo. Distribisyon
-                pwopòsyonèl.
-              </p>
             </div>
           </div>
 

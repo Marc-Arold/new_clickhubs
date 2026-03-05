@@ -126,45 +126,41 @@ export default function PronosEliminatorLobbyPage() {
 
   return (
     <div className="max-w-4xl max-w-full space-y-6 pb-10">
-      {/* Hero Banner Ultra-Premium */}
-      <div className="relative bg-dark-surface border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[160px]">
-        {/* Background glow effects */}
-        <div className="absolute top-0 right-0 w-[400px] h-full bg-gradient-to-l from-gold/10 to-transparent pointer-events-none" />
-        <div className="absolute -bottom-10 left-10 w-64 h-64 bg-yellow-500/10 rounded-full blur-[100px] pointer-events-none" />
-
-        {/* Left Side: Content */}
-        <div className="relative z-10 p-6 sm:p-8 flex-1 flex flex-col justify-center">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="px-2.5 py-1 rounded-full bg-gold/15 text-gold text-[10px] font-black uppercase tracking-widest border border-gold/20">
-              Jwe ak amatè
+      {/* Hero Banner (Sportsbook style) */}
+      <div className="relative bg-gradient-to-r from-dark-surface to-dark border border-white/10 rounded-2xl overflow-hidden shadow-xl flex flex-col md:flex-row min-h-[120px] mb-6">
+        <div className="absolute inset-0 bg-gold/5 pointer-events-none" />
+        
+        {/* Left Side: Clean Call to action */}
+        <div className="relative z-10 p-5 sm:p-6 flex-1 flex flex-col justify-center">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gold text-dark">
+              Nouveau
             </span>
-            <button
-              onClick={() => setShowHowItWorks(true)}
-              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors bg-transparent border-none cursor-pointer"
-            >
-              <HelpCircle size={14} /> Kijan sa mache?
-            </button>
+            <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider flex items-center gap-1">
+               🔥 Battle de Cotes
+            </span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-white italic tracking-tight leading-none mb-3">
-            Jackpòt{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-400">
-              ELIMINATOR
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-white leading-none mb-2">
+            Jackpòt <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-400">Eliminator</span>
           </h1>
-          <p className="text-gray-400 text-sm max-w-md">
-            Fè yon fich. Si fich ou a pase ak pi gwo kòt pase tout moun, ou pran
-            plis nan <strong>kòb la!</strong>
+          <p className="text-gray-400 text-xs sm:text-sm max-w-sm mb-3 font-medium">
+            Fè yon fich, vize pi gwo kòt la e pran pi gwo pati nan kès la!
           </p>
+          <button
+            onClick={() => setShowHowItWorks(true)}
+            className="self-start px-3 py-1.5 rounded-lg border border-white/10 text-xs font-semibold text-gray-300 hover:text-white hover:border-gold/30 hover:bg-white/5 transition-all flex items-center gap-1.5 cursor-pointer"
+          >
+            <HelpCircle size={14} /> Dekouvri Règ Yo
+          </button>
         </div>
 
-        {/* Right Side: Jackpot Spotlight */}
-        <div className="relative w-full md:w-64 bg-dark/60 backdrop-blur-md border-t md:border-t-0 md:border-l border-white/10 p-6 flex flex-col justify-center items-center text-center">
-          <div className="absolute inset-0 bg-gold/5" />
+        {/* Right Side: Total Network Jackpot Spotlight */}
+        <div className="relative w-full md:w-56 bg-dark/40 border-t md:border-t-0 md:border-l border-white/10 p-5 flex flex-col justify-center items-center text-center">
           <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1 relative z-10 w-full">
-            Gwo Jackpot Semèn Sa
+            Kès Nasyonal La
           </p>
-          <p className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-300 to-gold text-4xl font-black relative z-10 drop-shadow-[0_0_15px_rgba(212,168,67,0.3)]">
-            +900K <span className="text-sm">HTG</span>
+          <p className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-300 to-gold text-3xl font-black relative z-10 drop-shadow-[0_0_15px_rgba(212,168,67,0.3)]">
+            900,000 <span className="text-xs text-gold/60">HTG</span>
           </p>
         </div>
       </div>
@@ -194,13 +190,13 @@ export default function PronosEliminatorLobbyPage() {
                   },
                   {
                     icon: "🎯",
-                    label: "2. Vize Lwen",
-                    desc: "Miltipliye kòt yo. Minimòm pou reponn se yon kòt: 20",
+                    label: "2. Vize Lwen (Puisans Jackpòt)",
+                    desc: "Miltipliye kòt yo. Chak fwa ou pran pi gwo risk, 'Puisans Jackpòt' ou a monte pi vit toujou! (Kòt ou ^ 1.25)",
                   },
                   {
                     icon: "💰",
                     label: "3. Pataje Gato a",
-                    desc: "Genyan ak pi gwo kòt pran plis la nan pòt la. Ou jwe kont pwobabilite, men kont lòt moun tou.",
+                    desc: "Lajan an separe selon kantite genyan. Moun ki gen pi gwo 'Puisans Jackpòt' la pran pli gwo moso nan gato a. Ou jwe kont pwobabilite, men kont lòt moun tou.",
                   },
                   {
                     icon: "🔄",
@@ -224,16 +220,21 @@ export default function PronosEliminatorLobbyPage() {
               </div>
 
               <div className="bg-gold/10 border border-gold/20 rounded-xl p-4 text-sm text-gold-light mt-4">
-                <p>
-                  <strong>Règ Jeneral:</strong> Chwazi ant 2 ak 8 evènman pou
-                  fich ou. Limite 2 fich pa jwè pa konkurans. 2yèm fich la rele
-                  "Remiz".
-                </p>
+                <h3 className="font-bold flex items-center justify-between mb-2">
+                  <span>Règ Jeneral</span>
+                </h3>
+                <ul className="space-y-2 text-gray-300 text-xs list-disc pl-4">
+                  <li>Chwazi ant 2 ak 8 evènman pou fich ou. Kòt minimòm dwe ≥ 20.</li>
+                  <li>Limite 2 fich pa jwè pa konkurans. 2yèm fich la rele "Remiz".</li>
+                  <li>Distribisyon pwopòsyonèl: genyan ki gen gwo <strong>'Puisans Jackpòt'</strong> ap resevwa nan kès la.</li>
+                  <li><strong>Pwoteje jwè via Ksafe (Lissage):</strong> Si gen yon pakèt genyan, pafwa kès la pa ka bay tout moun gain de base (Kòt × Mise). Lè sa a, tout gain ajiste (bese) otomatikman pou pèmèt sistèm an peye tout moun.</li>
+                  <li>Si pa gen pèsonn ki genyen, 85% kòb la plase sou jackpot kap vini an!</li>
+                </ul>
               </div>
 
               <button
                 onClick={() => setShowHowItWorks(false)}
-                className="w-full py-3.5 rounded-xl font-bold text-dark bg-gold hover:bg-yellow-400 transition-colors text-sm uppercase tracking-wider"
+                className="w-full py-3.5 rounded-xl font-bold text-dark bg-gold hover:bg-yellow-400 transition-colors text-sm uppercase tracking-wider cursor-pointer"
               >
                 Mwen Konprann
               </button>
@@ -242,8 +243,14 @@ export default function PronosEliminatorLobbyPage() {
         </div>
       )}
 
-      {/* Contest cards grid */}
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-2">
+        <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          ⚽ Jackpòt Ouvri Kounye a
+        </h2>
+      </div>
+
+      {/* Contest cards grid (Refined for Gamblers) */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-4">
         {pronosContestsMock.map((contest) => (
           <ContestCard
             key={contest.id}
@@ -251,26 +258,6 @@ export default function PronosEliminatorLobbyPage() {
             onEnter={(id) => navigate(`/pronos/${id}`)}
           />
         ))}
-      </div>
-
-      {/* Rules at bottom */}
-      <div className="bg-dark-surface border border-white/10 rounded-2xl p-5">
-        <h3 className="text-white font-bold text-sm mb-3">📋 Règ Jeneral</h3>
-        <ul className="space-y-2 text-gray-400 text-xs">
-          {[
-            "Chwazi ant 2 ak 8 evènman pou fich ou. Kote kominèd dwe ≥ 20.",
-            'Limite 2 fich pa jwè pa konkurans. 2yèm fich la rele "Remiz".',
-            "Distribisyon pwopòsyonèl: genyan ak pi gwo kote resevwa plis.",
-            "Planché minimòm: chak genyan dwe resevwa omwen kote × mise yo.",
-            "Si pa genyen semèn nan, jackpot akimile pou semèn pwochèn.",
-            "Platfòm kenbe 5% pòt la kòm frè administrasyon.",
-          ].map((rule, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="w-1 h-1 rounded-full bg-gold mt-1.5 shrink-0" />
-              {rule}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

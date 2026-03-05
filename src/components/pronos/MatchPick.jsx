@@ -27,10 +27,13 @@ export default function MatchPick({ match, selectedPick, onPick }) {
     })
   }))
 
-  const [isExpanded, setIsExpanded] = useState(false)
   const isSelected = selectedPick && !outcomes.find(o => o.key === selectedPick) 
     ? true // a submarket is picked
     : selectedPick !== null
+
+  const [isExpanded, setIsExpanded] = useState(
+    selectedPick && !outcomes.find(o => o.key === selectedPick) ? true : false
+  )
 
   const mainSelection = outcomes.find(o => o.key === selectedPick)
   let activeSubMarketLabel = null
@@ -49,14 +52,17 @@ export default function MatchPick({ match, selectedPick, onPick }) {
         ? 'border-gold bg-gradient-to-br from-gold/10 to-transparent shadow-[0_0_15px_rgba(212,168,67,0.15)] ring-1 ring-gold/50' 
         : 'border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent hover:bg-white/[0.04] hover:border-white/10'
     }`}>
-      {/* Match header */}
-      <div className="flex items-start justify-between mb-4">
+      {/* Match header (Clickable to expand) */}
+      <div 
+        className="flex items-start justify-between mb-4 cursor-pointer group"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="min-w-0 pr-4">
           <div className="flex items-center gap-1.5 mb-1.5">
             <span className="text-[10px] sm:text-xs">{flag}</span>
-            <span className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-wider">{match.competition}</span>
+            <span className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-wider group-hover:text-gold transition-colors">{match.competition}</span>
           </div>
-          <p className="text-white font-bold text-sm sm:text-base leading-tight truncate">
+          <p className="text-white font-bold text-sm sm:text-base leading-tight truncate group-hover:text-white transition-colors">
             {match.home} <span className="text-gray-500 font-normal mx-0.5 sm:mx-1">vs</span> {match.away}
           </p>
           <p className="text-gray-500 text-[10px] sm:text-xs mt-1.5 flex items-center gap-1.5 font-medium">
@@ -101,15 +107,14 @@ export default function MatchPick({ match, selectedPick, onPick }) {
         })}
       </div>
 
-      {/* Sub-markets toggle */}
-      <button 
+      {/* Sub-markets toggle visually replaced by the header click, but we show a small indicator */}
+      <div 
         onClick={() => setIsExpanded(!isExpanded)}
-        className="mt-3 w-full flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-gray-500 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-white/10"
+        className="mt-3 w-full flex items-center justify-center gap-1.5 py-1 text-xs font-bold text-gray-500 hover:text-white transition-colors cursor-pointer"
       >
-        <span>Lòt Pari</span>
-        <span className="bg-dark px-1.5 rounded">{formattedSubMarkets.length}</span>
+        <span>{isExpanded ? "Mwens opsyon" : `Plis opsyon (+${formattedSubMarkets.length})`}</span>
         {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-      </button>
+      </div>
 
       {/* Expanded Sub-markets */}
       {isExpanded && (
