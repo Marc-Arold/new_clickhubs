@@ -30,7 +30,7 @@ export default function PredictionDuelPage() {
     setSearching(true)
     try {
       await findDuelMatch('quick', stake)
-      updateBalance(user.availableBalance - stake, user.escrowedBalance + stake)
+      updateBalance(user?.availableBalance - stake, user?.escrowedBalance + stake)
       setTimeout(() => {
         setSearching(false)
         setPhase('active')
@@ -63,9 +63,9 @@ export default function PredictionDuelPage() {
         // Use refs for accurate final comparison
         if (yourScoreRef.current > opponentScoreRef.current) {
           const payout = Math.round(stake * 2 * 0.95)
-          updateBalance(user.availableBalance + payout, user.escrowedBalance - stake)
+          updateBalance(user?.availableBalance + payout, user?.escrowedBalance - stake)
         } else {
-          updateBalance(undefined, user.escrowedBalance - stake)
+          updateBalance(undefined, user?.escrowedBalance - stake)
         }
       } else {
         setCurrentQ(q => q + 1)
@@ -128,7 +128,7 @@ export default function PredictionDuelPage() {
 
             <button
               onClick={handleFindMatch}
-              disabled={searching || user.availableBalance < stake}
+              disabled={searching || user?.availableBalance < stake}
               className="px-8 py-3 rounded-xl font-bold text-sm bg-gold hover:bg-gold-light text-dark cursor-pointer transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {searching ? (
@@ -140,7 +140,7 @@ export default function PredictionDuelPage() {
                 `Kòmanse — ${stake.toLocaleString()} HTG`
               )}
             </button>
-            {user.availableBalance < stake && (
+            {user?.availableBalance < stake && (
               <p className="text-danger text-xs">Balans ensizan.</p>
             )}
           </div>

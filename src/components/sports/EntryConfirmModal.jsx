@@ -11,7 +11,7 @@ export default function EntryConfirmModal({ tournament, onClose, onConfirm }) {
     return () => window.removeEventListener('keydown', handleEsc)
   }, [onClose])
   const [step, setStep] = useState(1)
-  const canAfford = user.availableBalance >= tournament.entryFee
+  const canAfford = user?.availableBalance >= tournament.entryFee
 
   function handleConfirm() {
     onConfirm()
@@ -65,11 +65,11 @@ export default function EntryConfirmModal({ tournament, onClose, onConfirm }) {
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-400">Balans Disponib</span>
-            <span className="text-white font-medium">{user.availableBalance.toLocaleString()} HTG</span>
+            <span className="text-white font-medium">{user?.availableBalance.toLocaleString()} HTG</span>
           </div>
           <div className="border-t border-white/10 pt-2 flex justify-between text-sm">
             <span className="text-gray-400">Balans Apre</span>
-            <span className="text-white font-medium">{(user.availableBalance - tournament.entryFee).toLocaleString()} HTG</span>
+            <span className="text-white font-medium">{(user?.availableBalance - tournament.entryFee).toLocaleString()} HTG</span>
           </div>
         </div>
 

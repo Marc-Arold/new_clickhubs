@@ -45,7 +45,7 @@ export default function LastManStandingPage() {
     setEntering(true)
     try {
       await enterPool(pool.id)
-      updateBalance(user.availableBalance - pool.entryFee, user.escrowedBalance + pool.entryFee)
+      updateBalance(user?.availableBalance - pool.entryFee, user?.escrowedBalance + pool.entryFee)
     } catch {
       // API error
     }

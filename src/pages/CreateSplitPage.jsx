@@ -57,7 +57,7 @@ export default function CreateSplitPage() {
     allPicksValid &&
     entryFeeNum >= 500 &&
     escrowNum >= 10000 &&
-    escrowNum <= user.availableBalance &&
+    escrowNum <= user?.availableBalance &&
     maxPlayers >= 1;
 
   function handleOddsChange(matchId, value) {
@@ -83,8 +83,8 @@ export default function CreateSplitPage() {
         escrowAmount: escrowNum,
       });
       updateBalance(
-        user.availableBalance - escrowNum,
-        user.escrowedBalance + escrowNum,
+        user?.availableBalance - escrowNum,
+        user?.escrowedBalance + escrowNum,
       );
       setShareLink(result.shareLink);
       setCreatedSplit({

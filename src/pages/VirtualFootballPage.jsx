@@ -46,7 +46,7 @@ export default function VirtualFootballPage() {
   async function handlePlaceBet(outcome, amount) {
     try {
       await placeVirtualBet(match.id, outcome, amount)
-      updateBalance(user.availableBalance - amount, user.escrowedBalance + amount)
+      updateBalance(user?.availableBalance - amount, user?.escrowedBalance + amount)
       setBet({ outcome, amount })
       setPhase('countdown')
     } catch {
@@ -67,9 +67,9 @@ export default function VirtualFootballPage() {
         const totalPool = match.pools.home.amount + match.pools.draw.amount + match.pools.away.amount + bet.amount
         const share = bet.amount / (pool.amount + bet.amount)
         const winPayout = Math.round(share * totalPool * 0.95)
-        updateBalance(user.availableBalance + winPayout, user.escrowedBalance - bet.amount)
+        updateBalance(user?.availableBalance + winPayout, user?.escrowedBalance - bet.amount)
       } else {
-        updateBalance(undefined, user.escrowedBalance - bet.amount)
+        updateBalance(undefined, user?.escrowedBalance - bet.amount)
       }
     }
   }

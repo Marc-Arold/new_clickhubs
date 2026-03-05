@@ -63,8 +63,8 @@ export default function SplitDetailPage() {
     try {
       await joinSplit(split.id);
       updateBalance(
-        user.availableBalance - split.playerEntryFee,
-        user.escrowedBalance + split.playerEntryFee,
+        user?.availableBalance - split.playerEntryFee,
+        user?.escrowedBalance + split.playerEntryFee,
       );
       setJoined(true);
     } catch {
@@ -251,7 +251,7 @@ export default function SplitDetailPage() {
       {canJoin && !joined && (
         <button
           onClick={handleJoin}
-          disabled={joining || split.playerEntryFee > user.availableBalance}
+          disabled={joining || split.playerEntryFee > user?.availableBalance}
           className="w-full py-3 rounded-xl font-bold text-sm bg-gold hover:bg-gold-light text-dark cursor-pointer transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {joining
@@ -260,10 +260,10 @@ export default function SplitDetailPage() {
         </button>
       )}
 
-      {canJoin && split.playerEntryFee > user.availableBalance && (
+      {canJoin && split.playerEntryFee > user?.availableBalance && (
         <div className="flex items-center gap-2 bg-danger/10 border border-danger/20 text-danger text-sm px-3 py-2 rounded-lg">
           <ShieldAlert size={14} /> Ou pa gen ase lajan. Balans:{" "}
-          {user.availableBalance.toLocaleString()} HTG
+          {user?.availableBalance.toLocaleString()} HTG
         </div>
       )}
 

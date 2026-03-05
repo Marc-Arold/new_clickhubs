@@ -157,8 +157,8 @@ export default function PronosContestPage() {
       return;
     }
     updateBalance(
-      user.availableBalance - contest.entryFee,
-      user.escrowedBalance + contest.entryFee,
+      user?.availableBalance - contest.entryFee,
+      user?.escrowedBalance + contest.entryFee,
     );
     setFicheCount((prev) => prev + 1);
     setPhase("confirmed");

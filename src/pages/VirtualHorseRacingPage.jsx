@@ -55,15 +55,15 @@ export default function VirtualHorseRacingPage() {
   const spotsLeft = race.maxPlayers - race.playersJoined
 
   function handleEnterClick() {
-    if (user.availableBalance < race.entryFee) return
+    if (user?.availableBalance < race.entryFee) return
     setPhase('customize')
   }
 
   function handleCustomizeSave(name, color) {
     updateUserHorse(name, color)
     updateBalance(
-      user.availableBalance - race.entryFee,
-      user.escrowedBalance + race.entryFee
+      user?.availableBalance - race.entryFee,
+      user?.escrowedBalance + race.entryFee
     )
     setPhase('racing')
   }
@@ -203,18 +203,18 @@ export default function VirtualHorseRacingPage() {
 
           <button
             onClick={handleEnterClick}
-            disabled={user.availableBalance < race.entryFee}
+            disabled={user?.availableBalance < race.entryFee}
             className="px-8 py-3 rounded-xl font-bold text-sm bg-gold hover:bg-gold-light text-dark cursor-pointer transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Antre — {race.entryFee.toLocaleString()} HTG
           </button>
 
-          {user.availableBalance < race.entryFee && (
+          {user?.availableBalance < race.entryFee && (
             <p className="text-danger text-xs">Balans ensizan. Depoze plis lajan.</p>
           )}
 
           <p className="text-gray-600 text-xs">
-            Balans: {user.availableBalance.toLocaleString()} HTG
+            Balans: {user?.availableBalance.toLocaleString()} HTG
           </p>
         </div>
       )}

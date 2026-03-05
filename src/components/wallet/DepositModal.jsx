@@ -25,7 +25,7 @@ export default function DepositModal({ onClose }) {
       return
     }
     // API stub — would call deposit()
-    updateBalance(user.availableBalance + numAmount)
+    updateBalance(user?.availableBalance + numAmount)
     setStep(2)
   }
 
@@ -104,7 +104,7 @@ export default function DepositModal({ onClose }) {
             </div>
             <h3 className="text-xl font-bold text-white">Depo reyisi!</h3>
             <p className="text-gray-400 text-sm">
-              {numAmount.toLocaleString()} HTG ajoute nan kont ou. Balans ou: <span className="text-gold font-bold">{user.availableBalance.toLocaleString()} HTG</span>
+              {numAmount.toLocaleString()} HTG ajoute nan kont ou. Balans ou: <span className="text-gold font-bold">{user?.availableBalance.toLocaleString()} HTG</span>
             </p>
             <button
               onClick={onClose}

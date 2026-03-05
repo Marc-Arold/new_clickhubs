@@ -74,13 +74,13 @@ export default function Sidebar() {
               Balans Disponib
             </p>
             <p className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300 text-2xl font-black">
-              {user.availableBalance.toLocaleString()} HTG
+              {user?.availableBalance.toLocaleString()} HTG
             </p>
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-gold/10">
               <div>
                 <p className="text-gray-600 text-[10px]">Nan jwèt</p>
                 <p className="text-white text-sm font-semibold">
-                  {user.escrowedBalance.toLocaleString()} HTG
+                  {user?.escrowedBalance.toLocaleString()} HTG
                 </p>
               </div>
               <Link

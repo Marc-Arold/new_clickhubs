@@ -10,7 +10,7 @@ export default function EscrowCalculator({ totalOdds, entryFee, escrow, onEscrow
   const payoutPerPlayer = entryFeeNum > 0 ? Math.round(entryFeeNum * totalOdds) : 0
   const netPayoutPerPlayer = payoutPerPlayer - entryFeeNum
   const maxPlayers = netPayoutPerPlayer > 0 ? Math.floor(escrowNum / netPayoutPerPlayer) : 0
-  const canAfford = escrowNum <= user.availableBalance
+  const canAfford = escrowNum <= user?.availableBalance
 
   const creatorProfitIfWins = maxPlayers > 0
     ? Math.round(maxPlayers * entryFeeNum * 0.90)
@@ -112,7 +112,7 @@ export default function EscrowCalculator({ totalOdds, entryFee, escrow, onEscrow
       )}
       {escrowNum >= minEscrow && !canAfford && (
         <div className="flex items-center gap-2 bg-danger/10 border border-danger/20 text-danger text-sm px-3 py-2 rounded-lg">
-          <AlertCircle size={14} /> Ou pa gen ase lajan. Balans: {user.availableBalance.toLocaleString()} HTG
+          <AlertCircle size={14} /> Ou pa gen ase lajan. Balans: {user?.availableBalance.toLocaleString()} HTG
         </div>
       )}
     </div>

@@ -20,7 +20,7 @@ export default function CardShowdownPage() {
   async function handleMatch(mode, stake) {
     try {
       await findCardMatch(mode, stake)
-      updateBalance(user.availableBalance - stake, user.escrowedBalance + stake)
+      updateBalance(user?.availableBalance - stake, user?.escrowedBalance + stake)
       setMatchInfo({ mode, stake, opponent: game.opponent })
       setPhase('pre-game')
     } catch {

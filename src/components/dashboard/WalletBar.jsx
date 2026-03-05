@@ -27,7 +27,7 @@ export default function WalletBar() {
                   Balans Disponib
                 </p>
                 <p className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300 text-3xl sm:text-4xl font-black">
-                  {user.availableBalance.toLocaleString()}{" "}
+                  {user?.availableBalance.toLocaleString()}{" "}
                   <span className="text-lg text-gold/50">HTG</span>
                 </p>
               </div>
@@ -43,7 +43,7 @@ export default function WalletBar() {
                   Nan Jwèt
                 </p>
                 <p className="text-white text-lg font-bold">
-                  {user.escrowedBalance.toLocaleString()} HTG
+                  {user?.escrowedBalance.toLocaleString()} HTG
                 </p>
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function WalletBar() {
           <div className="flex items-center gap-2">
             <Lock size={14} className="text-blue-400" />
             <span className="text-gray-400 text-xs">Nan Jwèt:</span>
-            <span className="text-white text-sm font-bold">{user.escrowedBalance.toLocaleString()} HTG</span>
+            <span className="text-white text-sm font-bold">{user?.escrowedBalance.toLocaleString()} HTG</span>
           </div>
           <div className="flex items-center gap-1.5 text-success text-xs font-bold">
             <TrendingUp size={12} />

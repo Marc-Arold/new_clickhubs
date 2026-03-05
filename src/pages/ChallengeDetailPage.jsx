@@ -43,7 +43,7 @@ export default function ChallengeDetailPage() {
   async function handleAccept() {
     try {
       await acceptH2HChallenge(challenge.id, selectedPick)
-      updateBalance(user.availableBalance - challenge.stake, user.escrowedBalance + challenge.stake)
+      updateBalance(user?.availableBalance - challenge.stake, user?.escrowedBalance + challenge.stake)
       setAccepted(true)
     } catch {
       // API error — don't deduct balance

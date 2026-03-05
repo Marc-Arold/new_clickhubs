@@ -40,7 +40,7 @@ export default function WalletPage() {
                   Balans Total
                 </p>
                 <p className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300 text-4xl sm:text-5xl font-black">
-                  {(user.availableBalance + user.escrowedBalance + user.bonusBalance).toLocaleString()}
+                  {(user?.availableBalance + user?.escrowedBalance + user?.bonusBalance).toLocaleString()}
                   <span className="text-lg text-gold/50 ml-2">HTG</span>
                 </p>
               </div>

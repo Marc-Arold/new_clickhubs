@@ -19,7 +19,7 @@ export default function WithdrawModal({ onClose }) {
 
   const numAmount = parseInt(amount) || 0;
   const isValid =
-    numAmount >= 100 && numAmount <= user.availableBalance && phone.trim();
+    numAmount >= 100 && numAmount <= user?.availableBalance && phone.trim();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export default function WithdrawModal({ onClose }) {
       setError("Minimòm retrè se 100 HTG.");
       return;
     }
-    if (numAmount > user.availableBalance) {
+    if (numAmount > user?.availableBalance) {
       setError("Montan an depase balans disponib ou.");
       return;
     }
@@ -55,7 +55,7 @@ export default function WithdrawModal({ onClose }) {
             <p className="text-gray-400 text-sm">
               Disponib:{" "}
               <span className="text-gold font-bold">
-                {user.availableBalance.toLocaleString()} HTG
+                {user?.availableBalance.toLocaleString()} HTG
               </span>
             </p>
 

@@ -65,12 +65,12 @@ export default function PoolBetting({ pools, onPlaceBet, disabled }) {
         <div className="bg-dark-surface border border-white/10 rounded-xl p-4 space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-sm text-gray-400">Montan Mize (HTG)</label>
-            <span className="text-xs text-gray-500">Balans: {user.availableBalance.toLocaleString()} HTG</span>
+            <span className="text-xs text-gray-500">Balans: {user?.availableBalance.toLocaleString()} HTG</span>
           </div>
           <input
             type="number"
             min="100"
-            max={user.availableBalance}
+            max={user?.availableBalance}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Min: 100 HTG"
@@ -80,7 +80,7 @@ export default function PoolBetting({ pools, onPlaceBet, disabled }) {
             {[500, 1000, 2500, 5000].map((v) => (
               <button
                 key={v}
-                onClick={() => setAmount(String(Math.min(v, user.availableBalance)))}
+                onClick={() => setAmount(String(Math.min(v, user?.availableBalance)))}
                 className="flex-1 text-xs py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 cursor-pointer transition-colors"
               >
                 {v.toLocaleString()}
@@ -96,7 +96,7 @@ export default function PoolBetting({ pools, onPlaceBet, disabled }) {
           )}
           <button
             onClick={handleSubmit}
-            disabled={!amount || Number(amount) < 100 || Number(amount) > user.availableBalance}
+            disabled={!amount || Number(amount) < 100 || Number(amount) > user?.availableBalance}
             className="w-full py-3 rounded-xl font-bold text-sm bg-gold hover:bg-gold-light text-dark cursor-pointer transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Konfime Mize: {Number(amount || 0).toLocaleString()} HTG sou {outcomeLabels[selectedOutcome]}

@@ -6,7 +6,7 @@ export default function StakeInput({ stake, onStakeChange, rake = 5 }) {
   const stakeNum = parseInt(stake) || 0
   const potAfterFee = Math.floor(stakeNum * 2 * (1 - rake / 100))
   const isValid = stakeNum >= 500
-  const canAfford = stakeNum <= user.availableBalance
+  const canAfford = stakeNum <= user?.availableBalance
 
   const quickAmounts = [500, 1000, 2500, 5000]
 
@@ -76,7 +76,7 @@ export default function StakeInput({ stake, onStakeChange, rake = 5 }) {
       )}
       {stakeNum >= 500 && !canAfford && (
         <div className="flex items-center gap-2 bg-danger/10 border border-danger/20 text-danger text-sm px-3 py-2 rounded-lg">
-          <AlertCircle size={14} /> Ou pa gen ase lajan. Balans: {user.availableBalance.toLocaleString()} HTG
+          <AlertCircle size={14} /> Ou pa gen ase lajan. Balans: {user?.availableBalance.toLocaleString()} HTG
         </div>
       )}
     </div>

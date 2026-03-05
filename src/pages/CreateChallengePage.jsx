@@ -28,7 +28,7 @@ export default function CreateChallengePage() {
   const rake = 5
   const potAfterFee = Math.floor(stakeNum * 2 * (1 - rake / 100))
 
-  const isValid = selectedMatch && myPick && stakeNum >= 500 && stakeNum <= user.availableBalance && (opponentType !== 'friend' || opponentUsername.trim())
+  const isValid = selectedMatch && myPick && stakeNum >= 500 && stakeNum <= user?.availableBalance && (opponentType !== 'friend' || opponentUsername.trim())
 
   const pickOptions = selectedMatch ? [
     { key: 'home', label: selectedMatch.home },
@@ -46,7 +46,7 @@ export default function CreateChallengePage() {
         opponentType,
         opponentUsername,
       })
-      updateBalance(user.availableBalance - stakeNum, user.escrowedBalance + stakeNum)
+      updateBalance(user?.availableBalance - stakeNum, user?.escrowedBalance + stakeNum)
       setShareLink(result.shareLink)
       setCreatedChallenge({
         match: selectedMatch,

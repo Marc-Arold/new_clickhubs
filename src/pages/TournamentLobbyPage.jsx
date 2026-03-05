@@ -40,7 +40,7 @@ export default function TournamentLobbyPage() {
   async function handleEntry() {
     try {
       await enterTournament(tournament.id)
-      updateBalance(user.availableBalance - tournament.entryFee, user.escrowedBalance + tournament.entryFee)
+      updateBalance(user?.availableBalance - tournament.entryFee, user?.escrowedBalance + tournament.entryFee)
       setEntered(true)
     } catch {
       // API error — don't deduct balance
