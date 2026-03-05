@@ -30,8 +30,8 @@ const mockUser = {
 };
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(mockUser);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // true for dev
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // false by default so we can test auth flow on payment
   const [userHorse, setUserHorse] = useState({ name: 'Mon Cheval', color: 'bg-red-500' });
 
   const login = () => {

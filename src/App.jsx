@@ -73,32 +73,35 @@ function App() {
       />
 
       {/* Authenticated routes with PlayerLayout (Sidebar + BottomNav) */}
-      <Route element={<ProtectedRoute />}>
       <Route element={<PlayerLayout />}>
+        {/* Open Routes (Can be explored without login) */}
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/jwet" element={<GamesLobbyPage />} />
-        <Route path="/potfey" element={<WalletPage />} />
         <Route path="/klasman" element={<LeaderboardPage />} />
-        <Route path="/profil" element={<ProfilePage />} />
 
-        {/* Section 3: Sports Game Flows */}
+        {/* Section 3: Sports Game Flows (Open to explore, auth on payment) */}
         <Route path="/pronos" element={<PronosEliminatorLobbyPage />} />
         <Route path="/pronos/:contestId" element={<PronosContestPage />} />
         <Route path="/pronos/:contestId/palmares" element={<PronosPalmaresPage />} />
         <Route path="/bank-pari" element={<BankPariLobbyPage />} />
-        <Route path="/bank-pari/kreye" element={<CreateSplitPage />} />
         <Route path="/bank-pari/:splitId" element={<SplitDetailPage />} />
         <Route path="/sivivan" element={<DenyeSivivanLobbyPage />} />
         <Route path="/sivivan/:id" element={<LastManStandingPage />} />
         <Route path="/sivivan/:id/chwazi" element={<WeeklyPickPage />} />
 
-        {/* Section 4: Simulated Game Flows */}
+        {/* Section 4: Simulated Game Flows (Open to explore, auth on payment) */}
         <Route path="/virtual/football/:matchId" element={<VirtualFootballPage />} />
         <Route path="/virtual/horses" element={<VirtualHorseRacingLobbyPage />} />
         <Route path="/virtual/horses/:raceId" element={<VirtualHorseRacingPage />} />
         <Route path="/virtual/cards" element={<CardShowdownPage />} />
         <Route path="/duels/:duelId" element={<PredictionDuelPage />} />
-      </Route>
+
+        {/* Protected Routes (Require Login immediately) */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/potfey" element={<WalletPage />} />
+          <Route path="/profil" element={<ProfilePage />} />
+          <Route path="/bank-pari/kreye" element={<CreateSplitPage />} />
+        </Route>
       </Route>
     </Routes>
   )

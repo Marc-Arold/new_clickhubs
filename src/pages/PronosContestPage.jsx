@@ -41,7 +41,7 @@ function groupByCompetition(matches) {
 export default function PronosContestPage() {
   const { contestId } = useParams();
   const navigate = useNavigate();
-  const { user, updateBalance } = useAuth();
+  const { user, isAuthenticated, updateBalance } = useAuth();
 
   const contest = pronosContestsMock.find((c) => c.id === contestId);
   const [phase, setPhase] = useState("builder"); // builder | review | confirmed
@@ -152,6 +152,10 @@ export default function PronosContestPage() {
   }
 
   function handleConfirm() {
+    if (!isAuthenticated || !user) {
+      navigate('/konekte', { state: { returnUrl: `/pronos/${contestId}` } });
+      return;
+    }
     updateBalance(
       user.availableBalance - contest.entryFee,
       user.escrowedBalance + contest.entryFee,
@@ -506,7 +510,7 @@ export default function PronosContestPage() {
             </button>
             <button
               onClick={handleConfirm}
-              disabled={user.availableBalance < contest.entryFee}
+              disabled={isAuthenticated && user?.availableBalance < contest.entryFee}
               className="flex-1 py-3 rounded-xl font-bold text-sm bg-gold hover:bg-gold-light text-dark cursor-pointer transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Konfime & Peye {contest.entryFee.toLocaleString()} HTG

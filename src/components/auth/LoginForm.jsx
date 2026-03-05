@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, AlertCircle, Lock } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import ForgotPasswordModal from "./ForgotPasswordModal";
@@ -7,6 +7,9 @@ import ForgotPasswordModal from "./ForgotPasswordModal";
 export default function LoginForm() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnUrl = location.state?.returnUrl || "/dashboard";
+
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +41,7 @@ export default function LoginForm() {
     // Mock login: accept any non-empty credentials
     if (identifier.trim() && password) {
       login({ identifier, password });
-      navigate("/dashboard");
+      navigate(returnUrl);
       return;
     }
 
